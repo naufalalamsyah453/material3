@@ -3,6 +3,24 @@
 A Material 3 (Android 17 / Material You) component suite for GNOME Shell 51.
 The suite is modular; Quick Settings is the first completed feature.
 
+## Screenshots
+
+**Quick Settings** — capsule sliders, expressive tiles, media card:
+
+<img src="docs/screenshots/quick-settings.jpg" alt="Material 3 Quick Settings" width="380">
+
+**Dock** — floating pill dock with running indicators and the palette button:
+
+<img src="docs/screenshots/dock.jpg" alt="Material 3 dock">
+
+**App menu** — search, category pills, app grid and theme/power buttons:
+
+<img src="docs/screenshots/app-menu.jpg" alt="Material 3 app menu" width="560">
+
+**Settings** — GTK 4 replacement for GNOME Settings:
+
+<img src="docs/screenshots/settings.jpg" alt="Material 3 Settings">
+
 ## Quick Settings
 
 A 1:1 static replica of the lavender Android 17 Quick Settings panel:
