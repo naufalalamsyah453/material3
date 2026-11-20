@@ -1,0 +1,9 @@
+{
+  "uuid": "material3@local",
+  "name": "Material 3",
+  "description": "Material 3 components for GNOME Shell. Quick Settings first.",
+  "shell-version": ["51"],
+  "gettext-domain": "material3",
+  "settings-schema": "org.gnome.shell.extensions.material3",
+  "version": 1
+}

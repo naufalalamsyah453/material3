@@ -1,0 +1,1405 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: material3\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "%d Connected"
+msgstr ""
+
+msgid "%s of %s used"
+msgstr ""
+
+msgid "1 day"
+msgstr ""
+
+msgid "1 hour"
+msgstr ""
+
+msgid "1 minute"
+msgstr ""
+
+msgid "1.00 is the default size"
+msgstr ""
+
+msgid "10 minutes"
+msgstr ""
+
+msgid "15 minutes"
+msgstr ""
+
+msgid "24-hour"
+msgstr ""
+
+msgid "3 minutes"
+msgstr ""
+
+msgid "30 days"
+msgstr ""
+
+msgid "30 minutes"
+msgstr ""
+
+msgid "30 seconds"
+msgstr ""
+
+msgid "5 minutes"
+msgstr ""
+
+msgid "7 days"
+msgstr ""
+
+msgid "AM/PM"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "Above %s"
+msgstr ""
+
+msgid "Acceleration"
+msgstr ""
+
+msgid "Accent"
+msgstr ""
+
+msgid "Accent color"
+msgstr ""
+
+msgid "Accessibility"
+msgstr ""
+
+msgid "Accounts, password and login"
+msgstr ""
+
+msgid "Accounts, printers, more"
+msgstr ""
+
+msgid "Active screen edges"
+msgstr ""
+
+msgid "Adaptive"
+msgstr ""
+
+msgid "Add and manage printers"
+msgstr ""
+
+msgid "Add category"
+msgstr ""
+
+msgid "Advanced network settings"
+msgstr ""
+
+msgid "Airplane mode"
+msgstr ""
+
+msgid "Allow apps to add results to the overview search"
+msgstr ""
+
+msgid "Allow scales such as 125% and 150%"
+msgstr ""
+
+msgid "Allow volume above 100%"
+msgstr ""
+
+msgid "Always show accessibility menu"
+msgstr ""
+
+msgid "Animation speed"
+msgstr ""
+
+msgid "Animations"
+msgstr ""
+
+msgid "App Menu"
+msgstr ""
+
+msgid "App menu"
+msgstr ""
+
+msgid "App menu height"
+msgstr ""
+
+msgid "App menu size"
+msgstr ""
+
+msgid "App menu width"
+msgstr ""
+
+msgid "App switching"
+msgstr ""
+
+msgid "Appearance"
+msgstr ""
+
+msgid "Apply"
+msgstr ""
+
+msgid "Apps"
+msgstr ""
+
+msgid "Areas"
+msgstr ""
+
+msgid "Ask"
+msgstr ""
+
+msgid "Auto-hide"
+msgstr ""
+
+msgid "Automatic"
+msgstr ""
+
+msgid "Automatic date and time"
+msgstr ""
+
+msgid "Automatic screen lock"
+msgstr ""
+
+msgid "Automatically delete temporary files"
+msgstr ""
+
+msgid "Automatically empty trash"
+msgstr ""
+
+msgid "Automatically remove empty workspaces"
+msgstr ""
+
+msgid "Background"
+msgstr ""
+
+msgid "Background changed"
+msgstr ""
+
+msgid "Balanced"
+msgstr ""
+
+msgid "Banners and lock screen"
+msgstr ""
+
+msgid "Banners, lock screen"
+msgstr ""
+
+msgid "Battery"
+msgstr ""
+
+msgid "Below %s"
+msgstr ""
+
+msgid "Blank screen delay"
+msgstr ""
+
+msgid "Block new USB devices while the screen is locked"
+msgstr ""
+
+msgid "Bluetooth"
+msgstr ""
+
+msgid "Bluetooth is off"
+msgstr ""
+
+msgid "Bluetooth is unavailable"
+msgstr ""
+
+msgid "Border and corners of each surface, set separately. A width of 0 removes the border."
+msgstr ""
+
+msgid "Borders and corners"
+msgstr ""
+
+msgid "Bounce keys"
+msgstr ""
+
+msgid "Built-in"
+msgstr ""
+
+msgid "Built-in display"
+msgstr ""
+
+msgid "CONTINUE WHERE YOU LEFT OFF"
+msgstr ""
+
+msgid "Calendar"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Cards with colored icons"
+msgstr ""
+
+msgid "Categories"
+msgstr ""
+
+msgid "Changes the size of text in every app"
+msgstr ""
+
+msgid "Changing the system language needs administrator rights"
+msgstr ""
+
+msgid "Choose a background"
+msgstr ""
+
+msgid "Choose a short name; it is shown on the category pill."
+msgstr ""
+
+msgid "Choose apps"
+msgstr ""
+
+msgid "Choose image..."
+msgstr ""
+
+msgid "Choose the name shown next to the avatar."
+msgstr ""
+
+msgid "Cleanup"
+msgstr ""
+
+msgid "Clear Search"
+msgstr ""
+
+msgid "Click method"
+msgstr ""
+
+msgid "Clock"
+msgstr ""
+
+msgid "Clock, time zone"
+msgstr ""
+
+msgid "Clock, time zone and automatic time"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Close All Windows"
+msgstr ""
+
+msgid "Color"
+msgstr ""
+
+msgid "Color GTK apps"
+msgstr ""
+
+msgid "Color temperature"
+msgstr ""
+
+msgid "Color the shell"
+msgstr ""
+
+msgid "Color theme"
+msgstr ""
+
+msgid "Colors, wallpaper, fonts"
+msgstr ""
+
+msgid "Compact pills"
+msgstr ""
+
+msgid "Computer name"
+msgstr ""
+
+msgid "Configuration URL"
+msgstr ""
+
+msgid "Connect"
+msgstr ""
+
+msgid "Connect cloud and calendar accounts"
+msgstr ""
+
+msgid "Connect to %s"
+msgstr ""
+
+msgid "Connected"
+msgstr ""
+
+msgid "Connected to %s"
+msgstr ""
+
+msgid "Connections"
+msgstr ""
+
+msgid "Context menu font"
+msgstr ""
+
+msgid "Corner radius"
+msgstr ""
+
+msgid "Could not apply the display settings"
+msgstr ""
+
+msgid "Could not change the name"
+msgstr ""
+
+msgid "Could not change the setting"
+msgstr ""
+
+msgid "Could not connect"
+msgstr ""
+
+msgid "Could not empty the trash"
+msgstr ""
+
+msgid "Cursor size"
+msgstr ""
+
+msgid "Cursor theme"
+msgstr ""
+
+msgid "Custom"
+msgstr ""
+
+msgid "Custom name"
+msgstr ""
+
+msgid "Dark Style"
+msgstr ""
+
+msgid "Dark style"
+msgstr ""
+
+msgid "Date & Time"
+msgstr ""
+
+msgid "Dates, numbers and currency"
+msgstr ""
+
+msgid "Default"
+msgstr ""
+
+msgid "Default (Plus Jakarta Sans)"
+msgstr ""
+
+msgid "Default applications and removable media"
+msgstr ""
+
+msgid "Default apps"
+msgstr ""
+
+msgid "Default apps, media"
+msgstr ""
+
+msgid "Delay"
+msgstr ""
+
+msgid "Delay before a key press is accepted"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Delete category"
+msgstr ""
+
+msgid "Delete files older than"
+msgstr ""
+
+msgid "Device and software"
+msgstr ""
+
+msgid "Device name"
+msgstr ""
+
+msgid "Device name and remote access"
+msgstr ""
+
+msgid "Device name, remote access"
+msgstr ""
+
+msgid "Devices and location"
+msgstr ""
+
+msgid "Devices and pairing"
+msgstr ""
+
+msgid "Different layout per window"
+msgstr ""
+
+msgid "Dim screen when inactive"
+msgstr ""
+
+msgid "Disable camera"
+msgstr ""
+
+msgid "Disable microphone"
+msgstr ""
+
+msgid "Disable while typing"
+msgstr ""
+
+msgid "Disabled"
+msgstr ""
+
+msgid "Disabled when a mouse is connected"
+msgstr ""
+
+msgid "Disconnect"
+msgstr ""
+
+msgid "Disk usage"
+msgstr ""
+
+msgid "Display color profiles"
+msgstr ""
+
+msgid "Display language"
+msgstr ""
+
+msgid "Display settings are unavailable in this session."
+msgstr ""
+
+msgid "Display settings saved"
+msgstr ""
+
+msgid "Displays"
+msgstr ""
+
+msgid "Do Not Disturb"
+msgstr ""
+
+msgid "Do nothing"
+msgstr ""
+
+msgid "Dock"
+msgstr ""
+
+msgid "Dock and app menu"
+msgstr ""
+
+msgid "Dock behavior"
+msgstr ""
+
+msgid "Dock height"
+msgstr ""
+
+msgid "Dock size"
+msgstr ""
+
+msgid "Document font"
+msgstr ""
+
+msgid "Documents"
+msgstr ""
+
+msgid "Drag windows to the screen edges to tile them"
+msgstr ""
+
+msgid "Drawing Tablets"
+msgstr ""
+
+msgid "Dynamic color, background, text size and animations"
+msgstr ""
+
+msgid "Dynamic workspaces"
+msgstr ""
+
+msgid "Edit connections, IP and DNS"
+msgstr ""
+
+msgid "Empty"
+msgstr ""
+
+msgid "Empty trash"
+msgstr ""
+
+msgid "Enabled"
+msgstr ""
+
+msgid "Every app"
+msgstr ""
+
+msgid "Extra text scale on top of the UI scale"
+msgstr ""
+
+msgid "Favorite category"
+msgstr ""
+
+msgid "File history"
+msgstr ""
+
+msgid "Fingers"
+msgstr ""
+
+msgid "Flat"
+msgstr ""
+
+msgid "Follow the sun automatically"
+msgstr ""
+
+msgid "Follows the GNOME accent color. The palette button in the panel header cycles through these."
+msgstr ""
+
+msgid "Font"
+msgstr ""
+
+msgid "Fonts and themes"
+msgstr ""
+
+msgid "Forever"
+msgstr ""
+
+msgid "Formats"
+msgstr ""
+
+msgid "Formats and display language"
+msgstr ""
+
+msgid "Formats, language"
+msgstr ""
+
+msgid "Fractional scaling"
+msgstr ""
+
+msgid "Full name"
+msgstr ""
+
+msgid "GNOME"
+msgstr ""
+
+msgid "Gap between the dock and the bottom edge of the screen, in pixels"
+msgstr ""
+
+msgid "General"
+msgstr ""
+
+msgid "Hardware"
+msgstr ""
+
+msgid "Height of the scrolling app grid in the app menu, in pixels"
+msgstr ""
+
+msgid "Hibernate"
+msgstr ""
+
+msgid "High contrast"
+msgstr ""
+
+msgid "History"
+msgstr ""
+
+msgid "Hot corner"
+msgstr ""
+
+msgid "Hot corner, tiling, workspaces"
+msgstr ""
+
+msgid "Hot corner, window tiling and workspaces"
+msgstr ""
+
+msgid "Hover click"
+msgstr ""
+
+msgid "Icon theme"
+msgstr ""
+
+msgid "Ignore fast repeated key presses"
+msgstr ""
+
+msgid "Immediately"
+msgstr ""
+
+msgid "Include apps from the current workspace only"
+msgstr ""
+
+msgid "Input sources"
+msgstr ""
+
+msgid "Input volume"
+msgstr ""
+
+msgid "Interface font"
+msgstr ""
+
+msgid "Keep"
+msgstr ""
+
+msgid "Keep history for"
+msgstr ""
+
+msgid "Keep these display settings?"
+msgstr ""
+
+msgid "Kernel"
+msgstr ""
+
+msgid "Keyboard"
+msgstr ""
+
+msgid "Keyboard shortcuts and layouts"
+msgstr ""
+
+msgid "Landscape"
+msgstr ""
+
+msgid "Landscape (flipped)"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Layouts"
+msgstr ""
+
+msgid "Left of %s"
+msgstr ""
+
+msgid "Load only the favorite category"
+msgstr ""
+
+msgid "Loading..."
+msgstr ""
+
+msgid "Location services"
+msgstr ""
+
+msgid "Lock delay after blank"
+msgstr ""
+
+msgid "Lock screen notifications"
+msgstr ""
+
+msgid "Log Out"
+msgstr ""
+
+msgid "Longer battery life"
+msgstr ""
+
+msgid "Look of the page list in the Settings app"
+msgstr ""
+
+msgid "Mail"
+msgstr ""
+
+msgid "Make the screen warmer in the evening"
+msgstr ""
+
+msgid "Manual"
+msgstr ""
+
+msgid "Material 3 volume and brightness indicator"
+msgstr ""
+
+msgid "Maximize"
+msgstr ""
+
+msgid "Maximum performance"
+msgstr ""
+
+msgid "Memory"
+msgstr ""
+
+msgid "Microphone"
+msgstr ""
+
+msgid "Minimize"
+msgstr ""
+
+msgid "Mirrored displays are active. Use the GNOME display panel to change them."
+msgstr ""
+
+msgid "Monospace font"
+msgstr ""
+
+msgid "More Settings"
+msgstr ""
+
+msgid "Mount removable media automatically"
+msgstr ""
+
+msgid "Mouse"
+msgstr ""
+
+msgid "Mouse & Touchpad"
+msgstr ""
+
+msgid "Move earlier"
+msgstr ""
+
+msgid "Move later"
+msgstr ""
+
+msgid "Multitasking"
+msgstr ""
+
+msgid "Music"
+msgstr ""
+
+msgid "Mute"
+msgstr ""
+
+msgid "My devices"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Natural scrolling"
+msgstr ""
+
+msgid "Nearby devices"
+msgstr ""
+
+msgid "NetworkManager (nmcli) was not found on this system."
+msgstr ""
+
+msgid "Never"
+msgstr ""
+
+msgid "Never prompt or start programs on media insertion"
+msgstr ""
+
+msgid "New Window"
+msgstr ""
+
+msgid "New category"
+msgstr ""
+
+msgid "Night Light"
+msgstr ""
+
+msgid "No VPN configured"
+msgstr ""
+
+msgid "No apps found"
+msgstr ""
+
+msgid "No nearby devices"
+msgstr ""
+
+msgid "No networks found"
+msgstr ""
+
+msgid "No paired devices"
+msgstr ""
+
+msgid "No partitions found"
+msgstr ""
+
+msgid "No power modes available"
+msgstr ""
+
+msgid "No windows yet"
+msgstr ""
+
+msgid "No wired connection"
+msgstr ""
+
+msgid "Not connected"
+msgstr ""
+
+msgid "Not mounted"
+msgstr ""
+
+msgid "Nothing playing"
+msgstr ""
+
+msgid "Notification banners"
+msgstr ""
+
+msgid "Notifications"
+msgstr ""
+
+msgid "Number of workspaces"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "Off"
+msgstr ""
+
+msgid "Off (Light)"
+msgstr ""
+
+msgid "On"
+msgstr ""
+
+msgid "On (Dark)"
+msgstr ""
+
+msgid "On-screen display"
+msgstr ""
+
+msgid "Online Accounts"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Open GNOME display settings"
+msgstr ""
+
+msgid "Open folder for new media"
+msgstr ""
+
+msgid "Open the Material 3 Settings app instead of GNOME Settings (takes effect immediately)"
+msgstr ""
+
+msgid "Open the overview by moving the pointer to the top-left corner"
+msgstr ""
+
+msgid "Opens the GNOME keyboard panel"
+msgstr ""
+
+msgid "Opens the app menu on one category and reads only its apps, so the first open stays light. Other categories are read the first time you select them."
+msgstr ""
+
+msgid "Operating system"
+msgstr ""
+
+msgid "Orientation"
+msgstr ""
+
+msgid "Outline"
+msgstr ""
+
+msgid "Output volume"
+msgstr ""
+
+msgid "Overlay scroll bars"
+msgstr ""
+
+msgid "Overview search providers"
+msgstr ""
+
+msgid "Pair"
+msgstr ""
+
+msgid "Pair and manage wireless devices"
+msgstr ""
+
+msgid "Paired"
+msgstr ""
+
+msgid "Palette: %s"
+msgstr ""
+
+msgid "Panels opened with the GNOME Settings app"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Performance"
+msgstr ""
+
+msgid "Personal"
+msgstr ""
+
+msgid "Photos"
+msgstr ""
+
+msgid "Pin to Dock"
+msgstr ""
+
+msgid "PipeWire (wpctl) was not found on this system."
+msgstr ""
+
+msgid "Pointer speed"
+msgstr ""
+
+msgid "Pointer speed, scrolling and clicking"
+msgstr ""
+
+msgid "Pointer, scrolling, touchpad"
+msgstr ""
+
+msgid "Pointing and clicking"
+msgstr ""
+
+msgid "Portrait (left)"
+msgstr ""
+
+msgid "Portrait (right)"
+msgstr ""
+
+msgid "Position"
+msgstr ""
+
+msgid "Power"
+msgstr ""
+
+msgid "Power Mode"
+msgstr ""
+
+msgid "Power Saver"
+msgstr ""
+
+msgid "Power button"
+msgstr ""
+
+msgid "Power mode"
+msgstr ""
+
+msgid "Power mode, battery"
+msgstr ""
+
+msgid "Power mode, battery and suspend"
+msgstr ""
+
+msgid "Power profiles are unavailable"
+msgstr ""
+
+msgid "Press shortcut keys one at a time"
+msgstr ""
+
+msgid "Primary button on the right"
+msgstr ""
+
+msgid "Primary display"
+msgstr ""
+
+msgid "Printers"
+msgstr ""
+
+msgid "Privacy & Security"
+msgstr ""
+
+msgid "Processor"
+msgstr ""
+
+msgid "Proxy"
+msgstr ""
+
+msgid "Quick Settings"
+msgstr ""
+
+msgid "Quick Settings header"
+msgstr ""
+
+msgid "Refresh rate"
+msgstr ""
+
+msgid "Region & Language"
+msgstr ""
+
+msgid "Remote access"
+msgstr ""
+
+msgid "Remote desktop, media sharing and file sharing are configured by their own services. Open More Settings to launch the full GNOME panel."
+msgstr ""
+
+msgid "Remote login, users and admin"
+msgstr ""
+
+msgid "Removable"
+msgstr ""
+
+msgid "Removable media"
+msgstr ""
+
+msgid "Rename"
+msgstr ""
+
+msgid "Rename category"
+msgstr ""
+
+msgid "Reorder the pills with the arrows, hide the ones you do not need, or add your own. Apps in a custom category also stay in their built-in one."
+msgstr ""
+
+msgid "Repeat interval"
+msgstr ""
+
+msgid "Repeat keys"
+msgstr ""
+
+msgid "Replace GNOME Settings"
+msgstr ""
+
+msgid "Replaces the shell's own on-screen display"
+msgstr ""
+
+msgid "Resolution"
+msgstr ""
+
+msgid "Resolution, scale, Night Light"
+msgstr ""
+
+msgid "Resolution, scale, orientation, arrangement and Night Light"
+msgstr ""
+
+msgid "Restart"
+msgstr ""
+
+msgid "Revert"
+msgstr ""
+
+msgid "Reverting in %d seconds"
+msgstr ""
+
+msgid "Right of %s"
+msgstr ""
+
+msgid "Same as language"
+msgstr ""
+
+msgid "Same as the font above"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Scale"
+msgstr ""
+
+msgid "Scale the Quick Settings panel, dock and app menu, and choose their font. Changes apply immediately."
+msgstr ""
+
+msgid "Scan"
+msgstr ""
+
+msgid "Scan for devices"
+msgstr ""
+
+msgid "Scanning..."
+msgstr ""
+
+msgid "Scans for ten seconds"
+msgstr ""
+
+msgid "Screen keyboard"
+msgstr ""
+
+msgid "Screen lock"
+msgstr ""
+
+msgid "Screen lock, location and file history"
+msgstr ""
+
+msgid "Screen lock, location, history"
+msgstr ""
+
+msgid "Screen reader"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Search apps"
+msgstr ""
+
+msgid "Search apps, tools, or settings..."
+msgstr ""
+
+msgid "Search from other apps"
+msgstr ""
+
+msgid "Search results"
+msgstr ""
+
+msgid "Search results in the app overview"
+msgstr ""
+
+msgid "Search settings"
+msgstr ""
+
+msgid "Secondary"
+msgstr ""
+
+msgid "Secured"
+msgstr ""
+
+msgid "Seeing"
+msgstr ""
+
+msgid "Seeing, hearing and typing aids"
+msgstr ""
+
+msgid "Seeing, hearing, typing"
+msgstr ""
+
+msgid "Send problem reports"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Settings app"
+msgstr ""
+
+msgid "Settings sidebar buttons"
+msgstr ""
+
+msgid "Settings updated"
+msgstr ""
+
+msgid "Sharing"
+msgstr ""
+
+msgid "Show"
+msgstr ""
+
+msgid "Show battery percentage"
+msgstr ""
+
+msgid "Show date"
+msgstr ""
+
+msgid "Show dock"
+msgstr ""
+
+msgid "Show in the app menu"
+msgstr ""
+
+msgid "Show notifications while the screen is locked"
+msgstr ""
+
+msgid "Show or hide the sidebar"
+msgstr ""
+
+msgid "Show recent window"
+msgstr ""
+
+msgid "Show seconds"
+msgstr ""
+
+msgid "Show week numbers"
+msgstr ""
+
+msgid "Show weekday"
+msgstr ""
+
+msgid "Shut Down"
+msgstr ""
+
+msgid "Simulated secondary click"
+msgstr ""
+
+msgid "Size and font"
+msgstr ""
+
+msgid "Size, behavior, categories and fonts of the dock, app menu and Quick Settings"
+msgstr ""
+
+msgid "Slow keys"
+msgstr ""
+
+msgid "Sound"
+msgstr ""
+
+msgid "Standard performance and battery"
+msgstr ""
+
+msgid "Start a media player"
+msgstr ""
+
+msgid "Static"
+msgstr ""
+
+msgid "Static keeps the dock in view and stops maximized windows above it"
+msgstr ""
+
+msgid "Sticky keys"
+msgstr ""
+
+msgid "Storage"
+msgstr ""
+
+msgid "Sunset to sunrise"
+msgstr ""
+
+msgid "Suspend"
+msgstr ""
+
+msgid "Suspend and power button"
+msgstr ""
+
+msgid "Suspend on battery"
+msgstr ""
+
+msgid "Suspend when on AC power"
+msgstr ""
+
+msgid "Switch Material You Palette"
+msgstr ""
+
+msgid "Switch Palette"
+msgstr ""
+
+msgid "Sync the clock over the network"
+msgstr ""
+
+msgid "System"
+msgstr ""
+
+msgid "System sounds"
+msgstr ""
+
+msgid "Tablet and stylus settings"
+msgstr ""
+
+msgid "Tap to click"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Text size"
+msgstr ""
+
+msgid "The apps themselves are not removed."
+msgstr ""
+
+msgid "The card at the bottom of the app menu that reopens the last used window"
+msgstr ""
+
+msgid "The category the app menu opens on"
+msgstr ""
+
+msgid "The floating dock at the bottom of the screen and the app menu it opens."
+msgstr ""
+
+msgid "The indicator shown when you change the volume or brightness."
+msgstr ""
+
+msgid "Theme"
+msgstr ""
+
+msgid "Theme: %s"
+msgstr ""
+
+msgid "This device and its software"
+msgstr ""
+
+msgid "This page could not be loaded"
+msgstr ""
+
+msgid "Thunderbolt"
+msgstr ""
+
+msgid "Thunderbolt devices"
+msgstr ""
+
+msgid "Time format"
+msgstr ""
+
+msgid "Time zone"
+msgstr ""
+
+msgid "Toggle Light/Dark Mode"
+msgstr ""
+
+msgid "Top bar, menus and notifications use the theme colors (dark mode)"
+msgstr ""
+
+msgid "Touchpad"
+msgstr ""
+
+msgid "Trash emptied"
+msgstr ""
+
+msgid "Turn off for Do Not Disturb"
+msgstr ""
+
+msgid "Turns off Wi-Fi and Bluetooth"
+msgstr ""
+
+msgid "Two-finger scrolling"
+msgstr ""
+
+msgid "Typing"
+msgstr ""
+
+msgid "Typing, layouts"
+msgstr ""
+
+msgid "Typing, layouts and shortcuts"
+msgstr ""
+
+msgid "UI scale"
+msgstr ""
+
+msgid "USB protection"
+msgstr ""
+
+msgid "Unavailable"
+msgstr ""
+
+msgid "Unpin from Dock"
+msgstr ""
+
+msgid "Untitled"
+msgstr ""
+
+msgid "Use the dark color scheme across the system"
+msgstr ""
+
+msgid "Use the default font"
+msgstr ""
+
+msgid "Use the font above"
+msgstr ""
+
+msgid "Username"
+msgstr ""
+
+msgid "Users"
+msgstr ""
+
+msgid "Video"
+msgstr ""
+
+msgid "Volume and system sounds"
+msgstr ""
+
+msgid "Volume, system sounds"
+msgstr ""
+
+msgid "Web"
+msgstr ""
+
+msgid "Wi-Fi"
+msgstr ""
+
+msgid "Wi-Fi & Network"
+msgstr ""
+
+msgid "Wi-Fi is off"
+msgstr ""
+
+msgid "Wi-Fi is unavailable"
+msgstr ""
+
+msgid "Wi-Fi networks"
+msgstr ""
+
+msgid "Wi-Fi, VPN, proxy"
+msgstr ""
+
+msgid "Wi-Fi, wired connections, VPN and proxy"
+msgstr ""
+
+msgid "Width"
+msgstr ""
+
+msgid "Width of the app menu in pixels; the app cards share it evenly"
+msgstr ""
+
+msgid "Windowing system"
+msgstr ""
+
+msgid "Wired"
+msgstr ""
+
+msgid "Workspaces"
+msgstr ""
+
+msgid "Workspaces on primary display only"
+msgstr ""
+
+msgid "Writes colors to ~/.config/gtk-4.0 and gtk-3.0; apps pick them up when started"
+msgstr ""
+
+msgid "Zoom"
+msgstr ""
+
+msgid "apps"
+msgstr ""
+
+msgid "bluetoothctl was not found on this system."
+msgstr ""
+
+msgid "gnome-control-center is not installed, so these panels are unavailable."
+msgstr ""

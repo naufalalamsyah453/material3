@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.material3"
+          path="/org/gnome/shell/extensions/material3/">
+    <key name="name-source" type="s">
+      <choices>
+        <choice value="real-name"/>
+        <choice value="username"/>
+        <choice value="hostname"/>
+        <choice value="custom"/>
+      </choices>
+      <default>"real-name"</default>
+      <summary>Header name source</summary>
+      <description>Where the name shown in the Quick Settings header comes from: the account's full name, the login name, the computer's host name, or a custom name.</description>
+    </key>
+    <key name="theme" type="s">
+      <choices>
+        <choice value="lavender"/>
+        <choice value="sage"/>
+        <choice value="ocean"/>
+        <choice value="terracotta"/>
+      </choices>
+      <default>"lavender"</default>
+      <summary>Color theme</summary>
+      <description>Material You tonal palette used by the Quick Settings panel.</description>
+    </key>
+    <key name="custom-name" type="s">
+      <default>""</default>
+      <summary>Custom header name</summary>
+      <description>Name shown in the Quick Settings header when the name source is "custom".</description>
+    </key>
+    <key name="show-dock" type="b">
+      <default>true</default>
+      <summary>Show the dock and app menu</summary>
+      <description>Show the floating Material 3 dock at the bottom of the screen, together with the app menu it opens.</description>
+    </key>
+    <key name="ui-scale" type="d">
+      <range min="0.75" max="1.5"/>
+      <default>1.0</default>
+      <summary>Quick Settings UI scale</summary>
+      <description>Scale factor for the size of the whole Quick Settings panel (tiles, sliders, spacing and icons).</description>
+    </key>
+    <key name="font-scale" type="d">
+      <range min="0.8" max="1.4"/>
+      <default>1.0</default>
+      <summary>Quick Settings text size</summary>
+      <description>Extra scale factor for the text size, applied on top of the UI scale.</description>
+    </key>
+    <key name="font-family" type="s">
+      <default>""</default>
+      <summary>Quick Settings font</summary>
+      <description>Font family used for the text of the Quick Settings panel. Empty keeps the default (Plus Jakarta Sans).</description>
+    </key>
+    <key name="theme-shell" type="b">
+      <default>true</default>
+      <summary>Color the shell with the theme</summary>
+      <description>In dark mode, give the top bar, popup menus and notifications the same accent-tinted dark colors as Quick Settings.</description>
+    </key>
+    <key name="theme-apps" type="b">
+      <default>true</default>
+      <summary>Color GTK apps with the theme</summary>
+      <description>Write the accent-tinted colors to ~/.config/gtk-4.0 and gtk-3.0 (a material3-colors.css imported from gtk.css) so GTK 3 and 4 / libadwaita apps follow the theme. Apps pick it up when they are started.</description>
+    </key>
+    <key name="show-recent" type="b">
+      <default>true</default>
+      <summary>Show the recent window card</summary>
+      <description>Show the "continue last" card at the bottom of the app menu, which reopens the most recently used window.</description>
+    </key>
+    <key name="dock-mode" type="s">
+      <choices>
+        <choice value="static"/>
+        <choice value="autohide"/>
+      </choices>
+      <default>"static"</default>
+      <summary>Dock behavior</summary>
+      <description>"static" keeps the dock visible and reserves its space, so maximized windows stop above it. "autohide" slides the dock away until the pointer touches the bottom edge.</description>
+    </key>
+    <key name="dock-scale" type="d">
+      <range min="0.7" max="1.6"/>
+      <default>1.0</default>
+      <summary>Dock size</summary>
+      <description>Scale factor for the size of the dock (buttons, icons, spacing and text).</description>
+    </key>
+    <key name="dock-margin" type="i">
+      <range min="0" max="96"/>
+      <default>12</default>
+      <summary>Dock height above the screen edge</summary>
+      <description>Gap in pixels between the bottom of the dock and the bottom edge of the screen.</description>
+    </key>
+    <key name="appmenu-scale" type="d">
+      <range min="0.7" max="1.5"/>
+      <default>1.0</default>
+      <summary>App menu size</summary>
+      <description>Scale factor for the size of the app menu (and the context menus).</description>
+    </key>
+    <key name="show-settings" type="b">
+      <default>true</default>
+      <summary>Replace GNOME Settings</summary>
+      <description>Open the Material 3 Settings window instead of GNOME Settings from the dock, app menu and Quick Settings.</description>
+    </key>
+    <key name="settings-search-hidden" type="b">
+      <default>false</default>
+      <summary>Settings search result hidden by this extension</summary>
+      <description>Internal: true when this extension added GNOME Settings to the disabled search providers.</description>
+    </key>
+    <key name="border-qs-width" type="i">
+      <range min="0" max="4"/>
+      <default>1</default>
+      <summary>Quick Settings border width</summary>
+      <description>Border width in pixels, 0 for none.</description>
+    </key>
+    <key name="border-qs-radius" type="i">
+      <range min="0" max="48"/>
+      <default>32</default>
+      <summary>Quick Settings corner radius</summary>
+      <description>Corner radius in pixels.</description>
+    </key>
+    <key name="border-qs-color" type="s">
+      <choices>
+        <choice value="outline"/>
+        <choice value="primary"/>
+        <choice value="secondary"/>
+        <choice value="text"/>
+      </choices>
+      <default>"outline"</default>
+      <summary>Quick Settings border color</summary>
+      <description>Which palette color the border uses.</description>
+    </key>
+    <key name="border-appmenu-width" type="i">
+      <range min="0" max="4"/>
+      <default>1</default>
+      <summary>App menu border width</summary>
+      <description>Border width in pixels, 0 for none.</description>
+    </key>
+    <key name="border-appmenu-radius" type="i">
+      <range min="0" max="48"/>
+      <default>32</default>
+      <summary>App menu corner radius</summary>
+      <description>Corner radius in pixels.</description>
+    </key>
+    <key name="border-appmenu-color" type="s">
+      <choices>
+        <choice value="outline"/>
+        <choice value="primary"/>
+        <choice value="secondary"/>
+        <choice value="text"/>
+      </choices>
+      <default>"outline"</default>
+      <summary>App menu border color</summary>
+      <description>Which palette color the border uses.</description>
+    </key>
+    <key name="border-dock-width" type="i">
+      <range min="0" max="4"/>
+      <default>1</default>
+      <summary>Dock border width</summary>
+      <description>Border width in pixels, 0 for none.</description>
+    </key>
+    <key name="border-dock-radius" type="i">
+      <range min="0" max="48"/>
+      <default>28</default>
+      <summary>Dock corner radius</summary>
+      <description>Corner radius in pixels.</description>
+    </key>
+    <key name="border-dock-color" type="s">
+      <choices>
+        <choice value="outline"/>
+        <choice value="primary"/>
+        <choice value="secondary"/>
+        <choice value="text"/>
+      </choices>
+      <default>"outline"</default>
+      <summary>Dock border color</summary>
+      <description>Which palette color the border uses.</description>
+    </key>
+    <key name="border-settings-width" type="i">
+      <range min="0" max="4"/>
+      <default>0</default>
+      <summary>Settings app border width</summary>
+      <description>Border width in pixels, 0 for none.</description>
+    </key>
+    <key name="border-settings-radius" type="i">
+      <range min="0" max="48"/>
+      <default>28</default>
+      <summary>Settings app corner radius</summary>
+      <description>Corner radius in pixels.</description>
+    </key>
+    <key name="border-settings-color" type="s">
+      <choices>
+        <choice value="outline"/>
+        <choice value="primary"/>
+        <choice value="secondary"/>
+        <choice value="text"/>
+      </choices>
+      <default>"outline"</default>
+      <summary>Settings app border color</summary>
+      <description>Which palette color the border uses.</description>
+    </key>
+    <key name="settings-sidebar-style" type="s">
+      <choices>
+        <choice value="cards"/>
+        <choice value="pills"/>
+      </choices>
+      <default>"cards"</default>
+      <summary>Settings sidebar button style</summary>
+      <description>cards: grouped cards with colored icon badges and a description line. pills: compact rounded rows.</description>
+    </key>
+    <key name="settings-sidebar-mode" type="i">
+      <default>2</default>
+      <range min="0" max="2"/>
+      <summary>Settings sidebar size</summary>
+      <description>Last sidebar size of the Settings app: 0 icons only, 1 medium, 2 full.</description>
+    </key>
+    <key name="anim-scale" type="d">
+      <range min="0.0" max="2.0"/>
+      <default>1.0</default>
+      <summary>Animation speed</summary>
+      <description>Speed of shell animations: 0 turns animations off, 1 is normal, 2 is twice as fast.</description>
+    </key>
+    <key name="appmenu-width" type="i">
+      <range min="360" max="900"/>
+      <default>480</default>
+      <summary>App menu width</summary>
+      <description>Width in pixels of the app menu. The app cards share the width evenly.</description>
+    </key>
+    <key name="context-font-family" type="s">
+      <default>""</default>
+      <summary>Context menu font</summary>
+      <description>Font family of the right-click menus (dock icons and app menu). Empty uses the text font of the rest of the interface.</description>
+    </key>
+    <key name="appmenu-height" type="i">
+      <range min="120" max="640"/>
+      <default>240</default>
+      <summary>App menu list height</summary>
+      <description>Height in pixels of the scrolling app grid inside the app menu.</description>
+    </key>
+    <key name="favorite-category-enabled" type="b">
+      <default>false</default>
+      <summary>Load only the favorite category</summary>
+      <description>When on, the app menu opens on the favorite category and reads only its apps; the other categories are read the first time they are selected. This keeps the first open of the app menu light.</description>
+    </key>
+    <key name="favorite-category" type="s">
+      <default>"produktivitas"</default>
+      <summary>Favorite category</summary>
+      <description>Id of the category the app menu opens on when the favorite category mode is on.</description>
+    </key>
+    <key name="custom-categories" type="s">
+      <default>"[]"</default>
+      <summary>Custom app menu categories</summary>
+      <description>JSON list of user-defined categories: [{"id": "...", "label": "...", "apps": ["app.desktop"]}].</description>
+    </key>
+    <key name="category-order" type="as">
+      <default>[]</default>
+      <summary>Order of the app menu categories</summary>
+      <description>Category ids (built-in and custom) in the order their pills appear. Missing ids follow in their default order.</description>
+    </key>
+    <key name="hidden-categories" type="as">
+      <default>[]</default>
+      <summary>Hidden app menu categories</summary>
+      <description>Ids of the categories that are not shown as pills in the app menu.</description>
+    </key>
+    <key name="osd-enabled" type="b">
+      <default>true</default>
+      <summary>Material 3 volume and brightness indicator</summary>
+      <description>Replaces the shell's on-screen display for volume, brightness and microphone with a Material 3 pill.</description>
+    </key>
+  </schema>
+</schemalist>
