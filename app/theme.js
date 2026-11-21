@@ -292,27 +292,25 @@ button.m3-chip.active:hover { background-color: ${t.secondaryContainer}; }
 .m3-switch:disabled { opacity: 0.5; }
 .m3-switch:focus-visible { outline: 2px solid ${t.primary}; outline-offset: 2px; }
 
-dropdown > button, dropdown > button.toggle {
+menubutton.m3-dd > button {
   background-color: ${t.highest}; background-image: none; color: ${t.onSurface};
-  border: none; box-shadow: none; border-radius: 99px; padding: 3px 10px; min-height: 0; min-width: 0; font-weight: 600; font-size: 12px;
+  border: none; box-shadow: none; border-radius: 99px; padding: 0 14px; min-height: 32px; min-width: 0;
+  font-weight: 500; font-size: 14px;
 }
-dropdown > button:hover { background-color: ${t.hover}; }
-dropdown popover.background > contents, popover.background.menu > contents {
-  background-color: ${t.highest}; color: ${t.onSurface}; border-radius: 14px;
-  border: none; padding: 2px; box-shadow: 0 2px 10px rgba(0,0,0,0.28);
+menubutton.m3-dd > button:hover, menubutton.m3-dd.open > button { background-color: ${t.secondaryContainer}; color: ${t.onSecondaryContainer}; }
+.m3-dd-value { font-variant-numeric: tabular-nums; }
+popover.m3-dd > contents {
+  background-color: alpha(${t.highest}, 0.92); color: ${t.onSurface}; border-radius: 20px;
+  border: 1px solid alpha(${t.onSurface}, 0.12); padding: 6px; box-shadow: 0 14px 32px rgba(0,0,0,0.4);
 }
-dropdown popover contents { padding: 2px; }
-dropdown popover scrolledwindow, dropdown popover box { margin: 0; padding: 0; }
-dropdown popover listview { background: transparent; color: ${t.onSurface}; padding: 0; margin: 0; }
-dropdown popover listview > row {
-  border-radius: 10px; padding: 0 8px; margin: 0; min-height: 26px; font-size: 12px; font-weight: 500;
+popover.m3-dd scrolledwindow, popover.m3-dd .m3-dd-list { background: transparent; margin: 0; padding: 0; }
+button.m3-dd-item {
+  background: none; background-image: none; border: none; box-shadow: none; color: ${t.onSurface};
+  border-radius: 13px; padding: 9px 14px; min-height: 0; font-size: 14px; font-weight: 500;
 }
-dropdown popover listview > row > box { margin: 0; padding: 0; min-height: 0; border-spacing: 6px; }
-dropdown popover listview > row label { margin: 0; padding: 0; }
-dropdown popover listview > row image { -gtk-icon-size: 12px; margin: 0; }
-dropdown popover listview > row:hover { background-color: ${t.hover}; }
-dropdown popover listview > row:selected { background-color: ${t.secondaryContainer}; color: ${t.onSecondaryContainer}; }
-dropdown popover entry, dropdown popover searchentry { background-color: ${t.container}; border-radius: 99px; color: ${t.onSurface}; }
+button.m3-dd-item:hover { background-color: alpha(${t.onSurface}, 0.08); }
+button.m3-dd-item.active { background-color: ${t.primaryContainer}; color: ${t.onPrimaryContainer}; font-weight: 700; }
+popover.m3-dd searchentry, popover.m3-dd entry { background-color: ${t.container}; border-radius: 99px; color: ${t.onSurface}; min-height: 32px; }
 
 entry.m3-entry, spinbutton.m3-entry, passwordentry.m3-entry text {
   background-color: ${t.highest}; background-image: none; color: ${t.onSurface};

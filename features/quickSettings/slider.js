@@ -390,13 +390,191 @@ class PillSlider {
     }
 }
 
+const HS_TRACK = 36;
+const HS_HEIGHT = 44;
+const HS_GAP = 4;
+const HS_THUMB = 4;
+const HS_BUTTON = 44;
+
+/**
+ * Expressive "handle" slider: a thick track split by a vertical handle with
+ * a small gap on both sides, and round buttons after it instead of -/+.
+ */
+class HandleSlider {
+    /**
+     * @param {object} params
+     * @param {Array<{iconFor: function(number): string, onClick: ?function(): void}>} [params.trailing]
+     */
+    constructor({min, max, iconFor, backend, trailing = null}) {
+        this._min = min;
+        this._max = max;
+        this._backend = backend;
+        this._value = Math.max(min, Math.min(max, backend.value));
+        this._shown = this._value;
+        this._dragging = false;
+        this._grab = null;
+
+        this._wrap = new St.BoxLayout({style_class: 'm3-slider-wrap', style: `spacing: ${px(8)}px;`});
+        this._tweener = tweenerFor(this._wrap);
+
+        this._slider = new St.Widget({
+            x_expand: true,
+            height: px(HS_HEIGHT),
+            reactive: true,
+            can_focus: true,
+            layout_manager: new Clutter.FixedLayout(),
+        });
+        this._fill = new St.Widget({style_class: 'm3-hs-fill'});
+        this._rest = new St.Widget({style_class: 'm3-hs-rest'});
+        this._thumb = new St.Widget({style_class: 'm3-hs-thumb'});
+        for (const actor of [this._fill, this._rest, this._thumb])
+            this._slider.add_child(actor);
+        this._wrap.add_child(this._slider);
+
+        this._buttons = [];
+        for (const item of trailing ?? [{iconFor, onClick: null}]) {
+            const button = new St.Button({
+                style_class: 'm3-hs-btn',
+                width: px(HS_BUTTON),
+                height: px(HS_BUTTON),
+                can_focus: !!item.onClick,
+                reactive: !!item.onClick,
+            });
+            const icon = symbolIcon(item.iconFor(this._value), {size: 20, filled: true});
+            button.set_child(centerBin(icon, 'm3-step-inner'));
+            button.connect('clicked', () => item.onClick?.());
+            this._buttons.push({icon, item});
+            this._wrap.add_child(button);
+        }
+
+        this._slider.connect('notify::width', () => this._render());
+        this._slider.connect('key-press-event', (_actor, event) => this._onKey(event));
+        this._connectGestures();
+        this._unsubscribe = backend.subscribe(() => this._onBackend());
+        this._wrap.connect('destroy', () => {
+            this._unsubscribe();
+            this._grab?.dismiss();
+            this._grab = null;
+        });
+        this._render();
+    }
+
+    get actor() {
+        return this._wrap;
+    }
+
+    sync() {
+        this._onBackend();
+    }
+
+    _connectGestures() {
+        const pan = new Clutter.PanGesture();
+        pan.set_begin_threshold(0);
+        pan.connect('recognize', () => {
+            if (!this._dragging) {
+                this._dragging = true;
+                this._grab = global.stage.grab(this._slider);
+            }
+            this._moveTo(pan.get_centroid().x);
+            return Clutter.EVENT_STOP;
+        });
+        pan.connect('pan-update', () => this._moveTo(pan.get_centroid().x));
+        pan.connect('end', () => {
+            this._dragging = false;
+            this._grab?.dismiss();
+            this._grab = null;
+        });
+        this._slider.add_action(pan);
+
+        const discrete = new Clutter.ScrollController({
+            flags: Clutter.ScrollControllerFlags.DISCRETE | Clutter.ScrollControllerFlags.SCROLL_VERTICAL,
+        });
+        discrete.connect('scroll', (_c, _sprite, _source, _dx, dy) =>
+            this._commit(this._value - dy * SCROLL_STEP * (this._max - this._min)));
+        this._slider.add_action(discrete);
+    }
+
+    _onKey(event) {
+        switch (event.get_key_symbol()) {
+        case Clutter.KEY_Left:
+        case Clutter.KEY_Down:
+            this._commit(this._value - STEP);
+            return Clutter.EVENT_STOP;
+        case Clutter.KEY_Right:
+        case Clutter.KEY_Up:
+            this._commit(this._value + STEP);
+            return Clutter.EVENT_STOP;
+        default:
+            return Clutter.EVENT_PROPAGATE;
+        }
+    }
+
+    _moveTo(x) {
+        const width = Math.max(1, this._slider.width);
+        const fraction = Math.max(0, Math.min(1, x / width));
+        this._commit(this._min + fraction * (this._max - this._min));
+    }
+
+    _commit(raw) {
+        const exact = Math.max(this._min, Math.min(this._max, raw));
+        const value = Math.round(exact);
+        if (value !== this._value) {
+            this._value = value;
+            this._backend.setValue(value);
+        }
+        this._shown = exact;
+        this._render();
+    }
+
+    _onBackend() {
+        if (this._dragging)
+            return;
+        const value = Math.max(this._min, Math.min(this._max, Math.round(this._backend.value)));
+        this._value = value;
+        this._shown = value;
+        this._render();
+    }
+
+    _render() {
+        const width = this._slider.width > 0 ? this._slider.width : px(228);
+        const track = px(HS_TRACK);
+        const top = Math.round((px(HS_HEIGHT) - track) / 2);
+        const thumbW = px(HS_THUMB);
+        const gap = px(HS_GAP);
+        const fraction = (this._shown - this._min) / (this._max - this._min);
+        const thumbX = Math.round(fraction * (width - thumbW));
+        const big = Math.round(track / 2);
+        const small = px(4);
+
+        const fillW = Math.max(0, thumbX - gap);
+        const restX = thumbX + thumbW + gap;
+        const restW = Math.max(0, width - restX);
+
+        this._fill.visible = fillW > 0;
+        this._fill.set_position(0, top);
+        this._fill.set_size(fillW, track);
+        this._fill.set_style(`border-radius: ${Math.min(big, fillW / 2)}px ${small}px ${small}px ${Math.min(big, fillW / 2)}px;`);
+        this._rest.visible = restW > 0;
+        this._rest.set_position(restX, top);
+        this._rest.set_size(restW, track);
+        this._rest.set_style(`border-radius: ${small}px ${Math.min(big, restW / 2)}px ${Math.min(big, restW / 2)}px ${small}px;`);
+        this._thumb.set_position(thumbX, 0);
+        this._thumb.set_size(thumbW, px(HS_HEIGHT));
+        this._thumb.set_style(`border-radius: ${px(2)}px;`);
+
+        const shown = Math.round(this._shown);
+        for (const {icon, item} of this._buttons)
+            icon.set_text(item.iconFor(shown));
+    }
+}
+
 /**
  * Grouped `surface` card containing the brightness and volume sliders.
  *
  * @param {Array<object>} sliders
  * @returns {{actor: St.BoxLayout, sliders: Array<PillSlider>}}
  */
-export function buildSliderGroup(sliders) {
+export function buildSliderGroup(sliders, {style = 'classic'} = {}) {
     const card = new St.BoxLayout({
         style_class: 'm3-slider-card',
         orientation: Clutter.Orientation.VERTICAL,
@@ -404,7 +582,7 @@ export function buildSliderGroup(sliders) {
     });
 
     const instances = sliders.map(config => {
-        const slider = new PillSlider(config);
+        const slider = style === 'handle' ? new HandleSlider(config) : new PillSlider(config);
         card.add_child(slider.actor);
         return slider;
     });

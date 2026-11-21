@@ -28,10 +28,12 @@ A 1:1 static replica of the lavender Android 17 Quick Settings panel:
 - 360 px panel, 32 px radius, Material tonal surface + outline, light/dark
 - User header (avatar, name, subtitle, settings, close)
 - Grouped brightness/volume capsule sliders: −/+ step buttons, primary fill,
-  thumb bar, percentage badge
+  thumb bar, percentage badge. Optional *Handle* style: thick track split by a
+  vertical handle, with round buttons after it
 - 2 × 3 expressive quick toggles (Wi-Fi, Bluetooth, Dark Style, Do Not Disturb,
   Night Light, Power Mode), active state with 18 px radius
-- Media card with cover, title, subtitle and transport controls
+- Media card with cover, title, subtitle and transport controls. Optional
+  *Cover* style: album art fills the card, with a seek bar and shuffle
 
 Light/dark follows `org.gnome.desktop.interface color-scheme` and is applied
 live; no shell restart is needed for the mode switch.
@@ -113,17 +115,22 @@ features/dock/
 
 Aplikasi GTK 4 asli (`app/`, dijalankan `gjs -m app/main.js`), jadi tiling, snap, resize,
 drag, dan scrollbar ditangani compositor. Tampilan mengikuti HTML (sidebar pil, kartu,
-switch M3, slider ekspresif). 20 halaman: Wi-Fi & Jaringan, Bluetooth, Tampilan,
+switch M3, slider ekspresif). 21 halaman: Wi-Fi & Jaringan, Bluetooth, Tampilan,
 Notifikasi, Pencarian, Multitasking, Aplikasi, Privasi, Berbagi, Layar, Suara, Daya,
-Mouse & Touchpad, Keyboard, Pengaturan Lainnya, Tanggal & Waktu, Wilayah & Bahasa,
-Aksesibilitas, Penyimpanan, Tentang. Nilai dibaca/ditulis lewat GSettings (sama dengan
-perintah `gsettings`), plus nmcli, bluetoothctl, wpctl, timedatectl.
+Mouse & Touchpad, Keyboard, Pintasan Keyboard, Pengaturan Lainnya, Tanggal & Waktu,
+Wilayah & Bahasa, Aksesibilitas, Penyimpanan, Tentang. Halaman Font & Tema dibuka dari
+Tampilan. Nilai dibaca/ditulis lewat GSettings (sama dengan perintah `gsettings`),
+plus nmcli, bluetoothctl, wpctl, timedatectl, D-Bus Accounts, lpstat/colormgr/boltctl.
 
 - Extension membuat `~/.local/share/applications/org.gnome.Settings.desktop` (override),
   menyembunyikan entri panel GNOME Settings, dan menonaktifkan search provider-nya.
   Semua dihapus saat "Replace GNOME Settings" (`show-settings`) dimatikan.
-- Panel yang tidak ditiru (printer, akun online, pengguna, dll.) dibuka lewat halaman
-  "Pengaturan Lainnya" memakai `gnome-control-center`.
+- Halaman "Pengaturan Lainnya" membaca pengguna, printer, akun online, profil warna
+  dan perangkat Thunderbolt langsung dari D-Bus / `lpstat` / `colormgr` / `boltctl`,
+  lengkap dengan aksi ganti nama, printer default, dan otorisasi Thunderbolt.
+  Panel yang belum ditiru tetap bisa dibuka lewat `gnome-control-center`.
+- Drop-down memakai pil Material 3 dengan menu translusen dan chevron yang beranimasi;
+  navigasi sidebar memakai ripple dan halaman dapat membuka halaman lain.
 - Kecepatan animasi (`anim-scale`) tetap diatur extension (`St.Settings.slow_down_factor`).
 
 ## Themes and options
@@ -156,6 +163,10 @@ Both add-ons can be disabled individually in the extension preferences:
 - **Tile style** — *Classic* (click toggles, right-click opens the options) or
   *Split* (the icon chip toggles, the text area opens the options; only tiles
   with options are divided) (`qs-tile-style`).
+- **Slider style** — *Classic* (capsule with −/+ buttons) or *Handle* (thick
+  split track with round buttons) (`qs-slider-style`).
+- **Media player style** — *Classic* compact card or *Cover* (album art fills
+  the card, with seek bar and shuffle) (`qs-media-style`).
 
 ## Install
 

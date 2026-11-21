@@ -306,6 +306,87 @@
   color: #FFFFFF;
 }
 
+/* Handle slider ---------------------------------------------------------- */
+.m3-hs-fill, .m3-hs-thumb {
+  background-color: #6750A4;
+}
+
+.m3-hs-rest {
+  background-color: #E6E0E9;
+}
+
+.m3-hs-btn {
+  background-color: #E6E0E9;
+  border-radius: 999px;
+  color: #1D1B20;
+}
+
+.m3-hs-btn .m3-symbol {
+  color: #1D1B20;
+}
+
+/* Cover media card ------------------------------------------------------- */
+.m3-cm {
+  background-color: #4A4458;
+  border-radius: 24px;
+}
+
+.m3-cm-shade {
+  border-radius: 24px;
+  background-gradient-direction: vertical;
+  background-gradient-start: rgba(0, 0, 0, 0.10);
+  background-gradient-end: rgba(0, 0, 0, 0.78);
+}
+
+.m3-cm-badge {
+  background-color: rgba(0, 0, 0, 0.35);
+  border-radius: 999px;
+}
+
+.m3-cm-icon, .m3-cm-btn-icon {
+  color: #FFFFFF;
+}
+
+.m3-cm-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.m3-cm-subtitle {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.m3-cm-play {
+  background-color: #E8DEF8;
+  border-radius: 22px;
+}
+
+.m3-cm-play-icon {
+  color: #1D192B;
+}
+
+.m3-cm-btn {
+  border-radius: 999px;
+}
+
+.m3-cm-btn:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+}
+
+.m3-cm-btn:checked {
+  background-color: rgba(255, 255, 255, 0.28);
+}
+
+.m3-cm-rest {
+  background-color: rgba(255, 255, 255, 0.30);
+}
+
+.m3-cm-fill, .m3-cm-thumb {
+  background-color: #FFFFFF;
+}
+
 /* ==========================================================================
    Dark (lavender, Android 17 Iris)
    ========================================================================== */
@@ -504,6 +585,26 @@
 }
 
 .m3-qs.m3-dark .m3-media-play .m3-symbol {
+  color: #381E72;
+}
+
+.m3-qs.m3-dark .m3-hs-fill, .m3-qs.m3-dark .m3-hs-thumb {
+  background-color: #D0BCFF;
+}
+
+.m3-qs.m3-dark .m3-hs-rest, .m3-qs.m3-dark .m3-hs-btn {
+  background-color: #36343B;
+}
+
+.m3-qs.m3-dark .m3-hs-btn, .m3-qs.m3-dark .m3-hs-btn .m3-symbol {
+  color: #E6E0E9;
+}
+
+.m3-qs.m3-dark .m3-cm-play {
+  background-color: #D0BCFF;
+}
+
+.m3-qs.m3-dark .m3-cm-play-icon {
   color: #381E72;
 }
 

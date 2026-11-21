@@ -1,6 +1,7 @@
+import Gio from 'gi://Gio';
 
 import {_} from '../i18n.js';
-import {hasCommand, readFile, run} from '../sys.js';
+import {hasCommand, readFile, run, watchDbus} from '../sys.js';
 import {fire, heading, listCard, rowsFrom, sectionLabel, selectRow, vbox, infoRows} from '../ui.js';
 
 const P = 'org.gnome.settings-daemon.plugins.power';
@@ -33,7 +34,9 @@ export function build() {
             get: () => 'balanced',
             set: id => run(['powerprofilesctl', 'set', id]),
         });
-        fire(run(['powerprofilesctl', 'get']).then(r => line.picker.select(r.stdout.trim())));
+        const readMode = () => fire(run(['powerprofilesctl', 'get']).then(r => line.picker.select(r.stdout.trim())));
+        readMode();
+        watchDbus(Gio.BusType.SYSTEM, 'org.freedesktop.UPower.PowerProfiles', readMode);
         page.append(listCard([line]));
     }
 

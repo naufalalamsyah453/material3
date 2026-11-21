@@ -132,6 +132,21 @@ export default class Material3Preferences extends ExtensionPreferences {
             settings.set_string('qs-tile-style', TILE_STYLES[tileRow.selected] ?? 'classic'));
         qsGroup.add(tileRow);
 
+        const choiceRow = (key, title, subtitle, values, labels) => {
+            const model = new Gtk.StringList();
+            labels.forEach(l => model.append(l));
+            const row = new Adw.ComboRow({
+                title, subtitle, model,
+                selected: Math.max(0, values.indexOf(settings.get_string(key))),
+            });
+            row.connect('notify::selected', () => settings.set_string(key, values[row.selected] ?? values[0]));
+            qsGroup.add(row);
+        };
+        choiceRow('qs-slider-style', _('Slider style'), _('Brightness and volume sliders'),
+            ['classic', 'handle'], [_('Classic: capsule with - and + buttons'), _('Handle: split track with round buttons')]);
+        choiceRow('qs-media-style', _('Media player style'), _('The card that shows the playing track'),
+            ['classic', 'cover'], [_('Classic: compact card'), _('Cover: album art with seek bar')]);
+
         const dockGroup = new Adw.PreferencesGroup({
             title: _('Dock and app menu'),
             description: _('The floating dock at the bottom of the screen and the app menu it opens.'),

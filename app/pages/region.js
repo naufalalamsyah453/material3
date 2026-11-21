@@ -1,8 +1,9 @@
+import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 
 import {_} from '../i18n.js';
-import {gs, hasCommand, run} from '../sys.js';
-import {fire, heading, infoRows, listCard, pillButton, row, selectRow, sectionLabel, vbox} from '../ui.js';
+import {dbusCall, dbusProxy, gs, run} from '../sys.js';
+import {fire, heading, infoRows, listCard, selectRow, sectionLabel, toast, vbox} from '../ui.js';
 
 const L = 'org.gnome.system.locale';
 
@@ -33,12 +34,34 @@ export function build() {
                 gs.get(L, 'region', ''));
         }));
     };
-    if (hasCommand('gnome-control-center')) {
-        page.append(listCard([row({
-            title: _('Display language'), sub: _('Changing the system language needs administrator rights'),
-            icon: 'language',
-            trailing: pillButton(_('Open'), () => run(['gnome-control-center', 'system']), {variant: 'tonal'}),
-        })]));
-    }
+    const accountUser = async () => {
+        const accounts = await dbusProxy(Gio.BusType.SYSTEM, 'org.freedesktop.Accounts',
+            '/org/freedesktop/Accounts', 'org.freedesktop.Accounts');
+        const found = accounts && await dbusCall(accounts, 'FindUserByName', new GLib.Variant('(s)', [GLib.get_user_name()]));
+        const path = found?.deepUnpack()[0];
+        return path ? dbusProxy(Gio.BusType.SYSTEM, 'org.freedesktop.Accounts', path, 'org.freedesktop.Accounts.User') : null;
+    };
+    const language = selectRow({
+        title: _('Display language'), sub: _('Applies after you log in again'), icon: 'language', search: true, options: [],
+        get: () => (GLib.getenv('LANG') ?? '').replace(/\.utf-?8$/i, '.UTF-8'),
+        set: id => fire(accountUser().then(async user => {
+            const ok = user && await dbusCall(user, 'SetLanguage', new GLib.Variant('(s)', [id]));
+            toast(ok ? _('Log out and in to apply the language') : _('Could not change the language'));
+        })),
+    });
+    page.append(sectionLabel(_('Language')));
+    page.append(listCard([language]));
+    const previousRefresh = page.refresh;
+    page.refresh = () => {
+        previousRefresh?.();
+        if (page._langLoaded)
+            return;
+        page._langLoaded = true;
+        fire(run(['locale', '-a']).then(r => {
+            const list = [...new Set(r.stdout.split('\n').filter(l => l.includes('.') && /utf-?8/i.test(l))
+                .map(l => l.replace(/utf8$/i, 'UTF-8')))].sort();
+            language.picker.setOptions(list.map(id => ({id, label: id})), (GLib.getenv('LANG') ?? '').replace(/\.utf-?8$/i, '.UTF-8'));
+        }));
+    };
     return page;
 }

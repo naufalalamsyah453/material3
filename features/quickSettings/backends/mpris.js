@@ -1,3 +1,6 @@
+import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
+
 import {MprisSource} from 'resource:///org/gnome/shell/ui/mpris.js';
 import {_} from '../../../i18n.js';
 
@@ -39,6 +42,51 @@ export class MediaBackend extends Backend {
             subtitle: [artists, app].filter(Boolean).join(' • '),
             coverUrl: player.trackCoverUrl ?? '',
         };
+    }
+
+    /** Position, length (seconds) and shuffle of the active player, read straight from MPRIS. */
+    async progress() {
+        const player = this._player;
+        const name = player?._busName ?? player?.busName ?? player?.source?.busName;
+        if (!name)
+            return null;
+        try {
+            const get = prop => new Promise((resolve, reject) => {
+                Gio.DBus.session.call(name, '/org/mpris/MediaPlayer2', 'org.freedesktop.DBus.Properties', 'Get',
+                    new GLib.Variant('(ss)', ['org.mpris.MediaPlayer2.Player', prop]), null,
+                    Gio.DBusCallFlags.NONE, 1000, null, (conn, res) => {
+                        try {
+                            resolve(conn.call_finish(res).deepUnpack()[0].deepUnpack());
+                        } catch (e) {
+                            reject(e);
+                        }
+                    });
+            });
+            const [position, metadata, shuffle] = await Promise.all([
+                get('Position'), get('Metadata'), get('Shuffle').catch(() => false)]);
+            const length = metadata?.['mpris:length']?.deepUnpack?.() ?? 0;
+            return {position: Number(position) / 1e6, length: Number(length) / 1e6, shuffle: !!shuffle, name};
+        } catch {
+            return null;
+        }
+    }
+
+    /** Seek by `delta` seconds, or toggle shuffle on the active player. */
+    seekBy(delta) {
+        const name = this._player?._busName ?? this._player?.busName ?? this._player?.source?.busName;
+        if (!name)
+            return;
+        Gio.DBus.session.call(name, '/org/mpris/MediaPlayer2', 'org.mpris.MediaPlayer2.Player', 'Seek',
+            new GLib.Variant('(x)', [Math.round(delta * 1e6)]), null, Gio.DBusCallFlags.NONE, 1000, null, null);
+    }
+
+    setShuffle(on) {
+        const name = this._player?._busName ?? this._player?.busName ?? this._player?.source?.busName;
+        if (!name)
+            return;
+        Gio.DBus.session.call(name, '/org/mpris/MediaPlayer2', 'org.freedesktop.DBus.Properties', 'Set',
+            new GLib.Variant('(ssv)', ['org.mpris.MediaPlayer2.Player', 'Shuffle', new GLib.Variant('b', on)]),
+            null, Gio.DBusCallFlags.NONE, 1000, null, null);
     }
 
     playPause() {

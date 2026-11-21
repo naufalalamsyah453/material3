@@ -13,7 +13,7 @@ import {extSettings, later} from './sys.js';
 import {palette} from './theme.js';
 import {PAGES, PANEL_ALIASES, groups} from './pages/index.js';
 import {
-    addRipple, createToast, hbox, icon, label, note, setMainWindow, spinnerRow, vbox,
+    addRipple, createToast, hbox, icon, label, note, setMainWindow, setNavigator, spinnerRow, vbox,
 } from './ui.js';
 
 // The default GSK renderer can stall for seconds compiling shaders on first use.
@@ -34,6 +34,7 @@ const SettingsWindow = GObject.registerClass(class M3SettingsWindow extends Gtk.
         this.add_css_class('m3');
         this.set_size_request(560, 420);
         setMainWindow(this);
+        setNavigator(id => this.select(id));
 
         this._pages = new Map();
         this._current = null;
@@ -397,8 +398,9 @@ const SettingsWindow = GObject.registerClass(class M3SettingsWindow extends Gtk.
     select(id) {
         if (!PAGES[id])
             id = 'appearance';
+        const navKey = PAGES[id].parent ?? id;
         for (const [key, button] of this._nav) {
-            if (key === id)
+            if (key === navKey)
                 button.add_css_class('active');
             else
                 button.remove_css_class('active');

@@ -209,6 +209,11 @@ export function setMainWindow(window) {
 
 export const getMainWindow = () => mainWindow;
 
+let navigator = null;
+/** Lets a page open another page of the app. */
+export const setNavigator = fn => { navigator = fn; };
+export const navigate = id => navigator?.(id);
+
 /** The overlay that shows the toast pill. */
 export function createToast() {
     toastLabel = label('', 'm3-toast');
@@ -679,41 +684,145 @@ export function customSwitch({title, sub = '', icon: iconName = null, get, set})
 const same = (a, b) => (typeof a === 'number' && typeof b === 'number' ? Math.abs(a - b) < 1e-6 : a === b);
 
 /**
- * Drop-down over `options` ([{id, label}]).
+ * Pill drop-down (Android 17 style): compact pill trigger with a small
+ * triangle that flips while open, and a rounded translucent menu.
  *
- * @returns {{widget: Gtk.DropDown, select: function(*): void, setOptions: function(Array): void}}
+ * @returns {{widget: Gtk.MenuButton, select: function(*): void, setOptions: function(Array): void}}
  */
 export function dropdown(options, current, onSelect, {search = false} = {}) {
     let list = options;
-    const widget = new Gtk.DropDown({valign: Gtk.Align.CENTER, model: Gtk.StringList.new(list.map(o => o.label))});
-    if (search) {
-        widget.enable_search = true;
-        widget.expression = Gtk.PropertyExpression.new(Gtk.StringObject.$gtype, null, 'string');
-    }
-    let syncing = false;
-    const select = id => {
-        const index = list.findIndex(o => same(o.id, id));
-        syncing = true;
-        widget.selected = index >= 0 ? index : Gtk.INVALID_LIST_POSITION;
-        syncing = false;
-    };
-    widget.connect('notify::selected', () => {
-        if (syncing)
-            return;
-        const picked = list[widget.selected];
-        if (picked)
-            onSelect(picked.id);
+    let value = current;
+
+    const text = label('', 'm3-dd-value');
+    const chevron = new Gtk.DrawingArea({content_width: 10, content_height: 6, valign: Gtk.Align.CENTER});
+    let angle = 0;
+    let animation = null;
+    chevron.set_draw_func((_area, cr, w, h) => {
+        const c = palette.t?.onSurface ?? '#ffffff';
+        cr.translate(w / 2, h / 2);
+        cr.rotate(angle);
+        cr.translate(-w / 2, -h / 2);
+        cr.moveTo(0, 0.5);
+        cr.lineTo(w / 2, h - 0.5);
+        cr.lineTo(w, 0.5);
+        cr.closePath();
+        cr.setSourceRGBA(...unit(c), 0.9);
+        cr.fill();
     });
-    select(current);
+    const flip = open => {
+        // Overshooting ease (cubic-bezier .34,1.56,.64,1 in the HTML reference).
+        const from = angle;
+        const to = open ? Math.PI : 0;
+        const start = GLib.get_monotonic_time();
+        animation?.remove?.();
+        const id = chevron.add_tick_callback(() => {
+            const k = Math.min(1, (GLib.get_monotonic_time() - start) / 340000);
+            const s = k - 1;
+            const eased = 1 + 2.70158 * s * s * s + 1.70158 * s * s;
+            angle = from + (to - from) * eased;
+            chevron.queue_draw();
+            if (k >= 1) {
+                angle = to;
+                animation = null;
+                return GLib.SOURCE_REMOVE;
+            }
+            return GLib.SOURCE_CONTINUE;
+        });
+        animation = {remove: () => chevron.remove_tick_callback(id)};
+    };
+
+    const content = hbox(8);
+    content.append(text);
+    content.append(chevron);
+
+    const widget = new Gtk.MenuButton({valign: Gtk.Align.CENTER, child: content, direction: Gtk.ArrowType.DOWN});
+    widget.add_css_class('m3-dd');
+    const popover = new Gtk.Popover({has_arrow: false, autohide: true});
+    popover.add_css_class('m3-dd');
+    popover.add_css_class('m3');
+    widget.popover = popover;
+    popover.connect('notify::visible', () => {
+        const open = popover.visible;
+        flip(open);
+        if (open)
+            widget.add_css_class('open');
+        else
+            widget.remove_css_class('open');
+    });
+
+    const column = vbox(2, 'm3-dd-list');
+    const scroller = new Gtk.ScrolledWindow({
+        hscrollbar_policy: Gtk.PolicyType.NEVER, propagate_natural_height: true, max_content_height: 320,
+        propagate_natural_width: true, child: column,
+    });
+    const body = vbox(6);
+    body.set_size_request(144, -1);
+    let filter = null;
+    if (search) {
+        filter = new Gtk.SearchEntry({placeholder_text: _('Search')});
+        filter.add_css_class('m3-entry');
+        body.append(filter);
+    }
+    body.append(scroller);
+    popover.set_child(body);
+
+    const buttons = [];
+    const labelOf = id => list.find(o => same(o.id, id))?.label ?? '';
+    const refreshActive = () => {
+        text.label = labelOf(value);
+        for (const [button, id] of buttons) {
+            if (same(id, value))
+                button.add_css_class('active');
+            else
+                button.remove_css_class('active');
+        }
+    };
+    const rebuild = () => {
+        clearBox(column);
+        buttons.length = 0;
+        for (const option of list) {
+            const button = new Gtk.Button({child: label(option.label, '', {xalign: 0})});
+            button.add_css_class('m3-dd-item');
+            button.connect('clicked', () => {
+                value = option.id;
+                refreshActive();
+                popover.popdown();
+                onSelect(option.id);
+            });
+            column.append(button);
+            buttons.push([button, option.id, option.label.toLowerCase()]);
+        }
+        refreshActive();
+    };
+    filter?.connect('search-changed', () => {
+        const q = filter.text.toLowerCase();
+        for (const [button, , name] of buttons)
+            button.visible = !q || name.includes(q);
+    });
+    popover.connect('show', () => {
+        if (filter) {
+            filter.text = '';
+            filter.grab_focus();
+        }
+        const active = buttons.find(([, id]) => same(id, value))?.[0];
+        if (active)
+            GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
+                active.grab_focus();
+                return GLib.SOURCE_REMOVE;
+            });
+    });
+    rebuild();
+
     return {
         widget,
-        select,
+        select(id) {
+            value = id;
+            refreshActive();
+        },
         setOptions(next, keep) {
             list = next;
-            syncing = true;
-            widget.model = Gtk.StringList.new(list.map(o => o.label));
-            syncing = false;
-            select(keep);
+            value = keep;
+            rebuild();
         },
     };
 }

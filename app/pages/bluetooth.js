@@ -1,5 +1,7 @@
+import Gio from 'gi://Gio';
+
 import {_} from '../i18n.js';
-import {hasCommand, run} from '../sys.js';
+import {hasCommand, run, watchDbus} from '../sys.js';
 import {
     clearBox, customSwitch, fire, heading, listCard, note, pillButton, row, sectionLabel, spinnerRow, toast, vbox,
 } from '../ui.js';
@@ -46,14 +48,19 @@ export function build() {
         page.refresh();
     }));
 
+    const readPower = async () => {
+        const show = await run(['bluetoothctl', 'show']);
+        power.setActive(/Powered:\s+yes/.test(show.stdout));
+    };
+
     const fill = async () => {
-        const [show, paired, all, connected] = await Promise.all([
-            run(['bluetoothctl', 'show']),
+        const powered = readPower();
+        const [paired, all, connected] = await Promise.all([
             run(['bluetoothctl', 'devices', 'Paired']),
             run(['bluetoothctl', 'devices']),
             run(['bluetoothctl', 'devices', 'Connected']),
         ]);
-        power.setActive(/Powered:\s+yes/.test(show.stdout));
+        await powered;
         const pairedList = parseDevices(paired.stdout);
         const live = new Set(parseDevices(connected.stdout).map(d => d.mac));
         const pairedMacs = new Set(pairedList.map(d => d.mac));
@@ -84,13 +91,28 @@ export function build() {
     };
     mineList.append(spinnerRow(_('Loading...')));
     let busy = false;
+    let again = false;
     page.refresh = () => {
-        if (busy)
+        if (busy) {
+            again = true;
             return;
+        }
         busy = true;
         fire(fill().finally(() => {
             busy = false;
+            if (again) {
+                again = false;
+                page.refresh();
+            }
         }));
     };
+    // Follow changes made elsewhere (Quick Settings, other apps).
+    fire(readPower());
+    watchDbus(Gio.BusType.SYSTEM, 'org.bluez', () => {
+        if (page.get_mapped())
+            page.refresh();
+        else
+            fire(readPower());
+    });
     return page;
 }

@@ -75,10 +75,20 @@ export const PAGES = {
         sub: () => _('Typing, layouts'), tone: 'gray',
         keywords: 'keyboard papan ketik shortcuts pintasan layout input source compose key repeat',
     },
+    appearanceFonts: {
+        file: 'fonts', icon: 'text_fields', title: () => _('Fonts and themes'),
+        sub: () => _('Fonts, icons, cursor'), tone: 'pink', parent: 'appearance', hidden: true,
+        keywords: 'font fonts huruf icon ikon cursor kursor theme tema',
+    },
+    shortcuts: {
+        file: 'shortcuts', icon: 'keyboard_command_key', title: () => _('Keyboard shortcuts'),
+        sub: () => _('Windows, navigation, launchers'), tone: 'gray',
+        keywords: 'shortcuts pintasan keyboard papan ketik keybindings hotkeys screenshot tangkapan layar',
+    },
     other: {
         file: 'other', icon: 'more_vert', title: () => _('More Settings'),
-        sub: () => _('Accounts, printers, more'), tone: 'gray',
-        keywords: 'printers pencetak users pengguna online accounts akun color warna wacom tablet gnome-control-center',
+        sub: () => _('Users, printers, accounts'), tone: 'gray',
+        keywords: 'printers pencetak users pengguna online accounts akun color warna thunderbolt',
     },
     datetime: {
         file: 'datetime', icon: 'schedule', title: () => _('Date & Time'),
@@ -111,7 +121,7 @@ export const PAGES = {
 export const groups = () => [
     {title: _('Connections'), pages: ['network', 'bluetooth']},
     {title: _('Personal'), pages: ['appearance', 'notifications', 'search', 'multitasking', 'apps', 'privacy', 'sharing']},
-    {title: _('Hardware'), pages: ['display', 'sound', 'power', 'mouse', 'keyboard', 'other']},
+    {title: _('Hardware'), pages: ['display', 'sound', 'power', 'mouse', 'keyboard', 'shortcuts', 'other']},
     {title: _('System'), pages: ['datetime', 'region', 'accessibility', 'storage', 'about']},
 ];
 
@@ -130,7 +140,7 @@ export const PANEL_ALIASES = {
     sound: 'sound',
     power: 'power',
     mouse: 'mouse', touchpad: 'mouse',
-    keyboard: 'keyboard', shortcuts: 'keyboard',
+    keyboard: 'keyboard', shortcuts: 'shortcuts', 'keyboard-shortcuts': 'shortcuts',
     printers: 'other', 'online-accounts': 'other', users: 'other', color: 'other', wacom: 'other',
     datetime: 'datetime', 'date-time': 'datetime', system: 'datetime',
     region: 'region', 'language': 'region',

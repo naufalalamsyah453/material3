@@ -1,5 +1,7 @@
+import Gio from 'gi://Gio';
+
 import {_} from '../i18n.js';
-import {gs, hasCommand, run, splitTerse} from '../sys.js';
+import {gs, hasCommand, run, splitTerse, watchDbus} from '../sys.js';
 import {
     askText, card, clearBox, customSwitch, fire, gsSelect, gsEntry, heading, iconButton, label, listCard, note,
     pillButton, row, sectionLabel, spinnerRow, toast, vbox,
@@ -85,15 +87,22 @@ export function build() {
         page.refresh();
     };
 
+    const readRadio = async () => {
+        const radio = await run(['nmcli', '-t', '-f', 'WIFI,WWAN', 'radio']);
+        const on = radio.stdout.trim().startsWith('enabled');
+        wifi.setActive(on);
+        airplane.setActive(!on);
+        return on;
+    };
+
     const fill = async () => {
-        const [radio, wifis, conns] = await Promise.all([
-            run(['nmcli', '-t', '-f', 'WIFI,WWAN', 'radio']),
+        // The switches follow the radio first; the slower scan fills in after.
+        const radioOn = readRadio();
+        const [wifis, conns] = await Promise.all([
             run(['nmcli', '-t', '-f', 'IN-USE,SSID,SIGNAL,SECURITY', 'device', 'wifi', 'list']),
             run(['nmcli', '-t', '-f', 'NAME,TYPE,DEVICE,ACTIVE', 'connection', 'show']),
         ]);
-        const wifiOn = radio.stdout.trim().startsWith('enabled');
-        wifi.setActive(wifiOn);
-        airplane.setActive(!wifiOn);
+        const wifiOn = await radioOn;
 
         clearBox(wifiList);
         const seen = new Set();
@@ -144,13 +153,28 @@ export function build() {
 
     wifiList.append(spinnerRow(_('Scanning...')));
     let busy = false;
+    let again = false;
     page.refresh = () => {
-        if (busy)
+        if (busy) {
+            again = true;
             return;
+        }
         busy = true;
         fire(fill().finally(() => {
             busy = false;
+            if (again) {
+                again = false;
+                page.refresh();
+            }
         }));
     };
+    // Follow changes made elsewhere (Quick Settings, nmcli, other apps).
+    fire(readRadio());
+    watchDbus(Gio.BusType.SYSTEM, 'org.freedesktop.NetworkManager', () => {
+        if (page.get_mapped())
+            page.refresh();
+        else
+            fire(readRadio());
+    });
     return page;
 }

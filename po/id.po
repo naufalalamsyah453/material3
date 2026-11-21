@@ -1432,3 +1432,198 @@ msgstr "bluetoothctl tidak ditemukan di sistem ini."
 
 msgid "gnome-control-center is not installed, so these panels are unavailable."
 msgstr "gnome-control-center tidak terpasang, jadi panel ini tidak tersedia."
+
+msgid "Accounts, printers and devices"
+msgstr "Akun, printer, dan perangkat"
+
+msgid "App grid"
+msgstr "Kisi aplikasi"
+
+msgid "Applies after you log in again"
+msgstr "Berlaku setelah login ulang"
+
+msgid "Authorize"
+msgstr "Otorisasi"
+
+msgid "Calculator"
+msgstr "Kalkulator"
+
+msgid "Change shortcuts for windows, apps and media"
+msgstr "Ubah pintasan untuk jendela, aplikasi, dan media"
+
+msgid "Click a shortcut to change it"
+msgstr "Klik pintasan untuk mengubahnya"
+
+msgid "Close window"
+msgstr "Tutup jendela"
+
+msgid "Could not authorize"
+msgstr "Gagal otorisasi"
+
+msgid "Could not change the default"
+msgstr "Gagal mengubah default"
+
+msgid "Could not change the language"
+msgstr "Gagal mengubah bahasa"
+
+msgid "Default printer"
+msgstr "Printer default"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Full screen"
+msgstr "Layar penuh"
+
+msgid "Help"
+msgstr "Bantuan"
+
+msgid "Home folder"
+msgstr "Folder home"
+
+msgid "Keyboard shortcuts"
+msgstr "Pintasan keyboard"
+
+msgid "Launchers"
+msgstr "Peluncur"
+
+msgid "Lock screen"
+msgstr "Kunci layar"
+
+msgid "Log out"
+msgstr "Keluar"
+
+msgid "Log out and in to apply the language"
+msgstr "Keluar lalu masuk lagi untuk menerapkan bahasa"
+
+msgid "Make default"
+msgstr "Jadikan default"
+
+msgid "Maximize window"
+msgstr "Maksimalkan jendela"
+
+msgid "Media"
+msgstr "Media"
+
+msgid "Minimize window"
+msgstr "Minimalkan jendela"
+
+msgid "Move window left"
+msgstr "Pindah jendela ke kiri"
+
+msgid "Move window right"
+msgstr "Pindah jendela ke kanan"
+
+msgid "Navigation"
+msgstr "Navigasi"
+
+msgid "Next track"
+msgstr "Lagu berikutnya"
+
+msgid "No online accounts. Add accounts in your desktop account service."
+msgstr "Belum ada akun online. Tambahkan lewat layanan akun desktop."
+
+msgid "No printers configured"
+msgstr "Belum ada printer"
+
+msgid "Overview"
+msgstr "Ringkasan"
+
+msgid "Play / pause"
+msgstr "Putar / jeda"
+
+msgid "Press the new shortcut. Backspace clears it, Esc cancels."
+msgstr "Tekan pintasan baru. Backspace menghapus, Esc membatalkan."
+
+msgid "Previous track"
+msgstr "Lagu sebelumnya"
+
+msgid "Reset"
+msgstr "Setel ulang"
+
+msgid "Reset all shortcuts"
+msgstr "Setel ulang semua pintasan"
+
+msgid "Screenshot"
+msgstr "Tangkapan layar"
+
+msgid "Show desktop"
+msgstr "Tampilkan desktop"
+
+msgid "Switch apps"
+msgstr "Ganti aplikasi"
+
+msgid "Switch windows"
+msgstr "Ganti jendela"
+
+msgid "Terminal"
+msgstr "Terminal"
+
+msgid "Users, printers, accounts"
+msgstr "Pengguna, printer, akun"
+
+msgid "Volume down"
+msgstr "Volume turun"
+
+msgid "Volume up"
+msgstr "Volume naik"
+
+msgid "Web browser"
+msgstr "Peramban web"
+
+msgid "Windows"
+msgstr "Jendela"
+
+msgid "Windows, navigation, launchers"
+msgstr "Jendela, navigasi, peluncur"
+
+msgid "Workspace left"
+msgstr "Ruang kerja kiri"
+
+msgid "Workspace right"
+msgstr "Ruang kerja kanan"
+
+msgid "You"
+msgstr "Anda"
+
+msgid "Back"
+msgstr "Kembali"
+
+msgid "Cursor"
+msgstr "Kursor"
+
+msgid "Fonts"
+msgstr "Font"
+
+msgid "Fonts, icons, cursor"
+msgstr "Font, ikon, kursor"
+
+msgid "Icons"
+msgstr "Ikon"
+
+msgid "Interface fonts, icon and cursor themes"
+msgstr "Font antarmuka, tema ikon dan kursor"
+
+msgid "Slider style"
+msgstr "Gaya slider"
+
+msgid "Brightness and volume sliders"
+msgstr "Slider kecerahan dan volume"
+
+msgid "Classic: capsule with - and + buttons"
+msgstr "Klasik: kapsul dengan tombol - dan +"
+
+msgid "Handle: split track with round buttons"
+msgstr "Handle: track terbelah dengan tombol bulat"
+
+msgid "Media player style"
+msgstr "Gaya pemutar media"
+
+msgid "The card that shows the playing track"
+msgstr "Kartu yang menampilkan lagu yang diputar"
+
+msgid "Classic: compact card"
+msgstr "Klasik: kartu ringkas"
+
+msgid "Cover: album art with seek bar"
+msgstr "Cover: sampul album dengan seek bar"

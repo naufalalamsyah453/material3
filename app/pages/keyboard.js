@@ -1,7 +1,7 @@
 import {_} from '../i18n.js';
-import {gs, hasCommand, run} from '../sys.js';
+import {gs} from '../sys.js';
 import {
-    card, gsSlider, heading, infoRows, listCard, pillButton, row, rowsFrom, sectionLabel, vbox,
+    card, gsSlider, heading, infoRows, listCard, navigate, pillButton, row, rowsFrom, sectionLabel, vbox,
 } from '../ui.js';
 
 const K = 'org.gnome.desktop.peripherals.keyboard';
@@ -36,9 +36,8 @@ export function build() {
     ])));
 
     page.append(listCard([row({
-        title: _('Keyboard shortcuts and layouts'), sub: _('Opens the GNOME keyboard panel'), icon: 'keyboard_alt',
-        trailing: hasCommand('gnome-control-center')
-            ? pillButton(_('Open'), () => run(['gnome-control-center', 'keyboard']), {variant: 'tonal'}) : null,
+        title: _('Keyboard shortcuts'), sub: _('Change shortcuts for windows, apps and media'), icon: 'keyboard_command_key',
+        trailing: pillButton(_('Open'), () => navigate('shortcuts'), {variant: 'tonal'}),
     })]));
     return page;
 }

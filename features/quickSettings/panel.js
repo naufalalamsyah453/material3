@@ -142,7 +142,8 @@ export class QuickSettingsPanel {
                 this._applyTheme();
             else if (key === 'ui-scale' || key === 'font-scale' || key === 'font-family' ||
                 key === 'dock-scale' || key === 'appmenu-scale' ||
-                key === 'context-font-family' || key === 'qs-tile-style')
+                key === 'context-font-family' || key === 'qs-tile-style' ||
+                key === 'qs-slider-style' || key === 'qs-media-style')
                 this._scheduleRetune();
             else if (key === 'theme-shell' || key === 'theme-apps' ||
                 key.startsWith('border-qs-') || key.startsWith('border-appmenu-') || key.startsWith('border-dock-'))
@@ -276,6 +277,7 @@ export class QuickSettingsPanel {
 
         const b = this._backends;
 
+        const extStyle = key => (this._extSettings.settings_schema.has_key(key) ? this._extSettings.get_string(key) : 'classic');
         const sliderGroup = buildSliderGroup([
             {
                 min: BRIGHTNESS_MIN,
@@ -288,8 +290,12 @@ export class QuickSettingsPanel {
                 max: 100,
                 backend: b.volume,
                 iconFor: v => v === 0 ? 'volume_off' : v < 50 ? 'volume_down' : 'volume_up',
+                trailing: [
+                    {iconFor: v => (v === 0 || b.volume.muted ? 'volume_off' : 'volume_up'), onClick: () => b.volume.toggleMute()},
+                    {iconFor: () => 'more_vert', onClick: () => openSettings('sound')},
+                ],
             },
-        ]);
+        ], {style: extStyle('qs-slider-style')});
         this._sliders = sliderGroup.sliders;
         content.add_child(sliderGroup.actor);
 
@@ -307,7 +313,7 @@ export class QuickSettingsPanel {
         this._tiles = tileGroup.tiles;
 
         content.add_child(tileGroup.actor);
-        content.add_child(buildMediaCard(b.media).actor);
+        content.add_child(buildMediaCard(b.media, {style: extStyle('qs-media-style')}).actor);
 
         // The pane covers the whole Quick Settings surface (header to media).
         this._detail = new DetailPane({

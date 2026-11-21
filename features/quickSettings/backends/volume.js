@@ -32,6 +32,14 @@ export class VolumeBackend extends Backend {
         return Math.max(0, Math.min(100, Math.round(this._stream.volume / norm * 100)));
     }
 
+    get muted() {
+        return !!this._stream?.is_muted;
+    }
+
+    toggleMute() {
+        this._stream?.change_is_muted(!this._stream.is_muted);
+    }
+
     setValue(value) {
         const stream = this._stream;
         if (!stream)

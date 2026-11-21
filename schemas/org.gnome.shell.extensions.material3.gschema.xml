@@ -107,6 +107,24 @@
       <summary>Quick Settings tile style</summary>
       <description>classic: one tile, click toggles and right-click opens options. split: the icon toggles, the text area opens the options.</description>
     </key>
+    <key name="qs-slider-style" type="s">
+      <choices>
+        <choice value="classic"/>
+        <choice value="handle"/>
+      </choices>
+      <default>"classic"</default>
+      <summary>Quick Settings slider style</summary>
+      <description>classic: capsule with minus and plus buttons. handle: thick track split by a handle, with round buttons after it.</description>
+    </key>
+    <key name="qs-media-style" type="s">
+      <choices>
+        <choice value="classic"/>
+        <choice value="cover"/>
+      </choices>
+      <default>"classic"</default>
+      <summary>Quick Settings media player style</summary>
+      <description>classic: compact card. cover: album art fills the card with a seek bar.</description>
+    </key>
     <key name="show-appmenu" type="b">
       <default>true</default>
       <summary>Material 3 app menu</summary>

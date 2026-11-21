@@ -297,3 +297,20 @@ export function extSettings() {
     }
     return extCache;
 }
+
+/**
+ * Call `callback` (debounced) whenever `sender` emits a D-Bus signal, so a
+ * page can follow changes made elsewhere (Quick Settings, other apps).
+ *
+ * @param {Gio.BusType} bus
+ * @param {string} sender well-known bus name
+ * @param {function(): void} callback
+ * @param {?string} [iface] restrict to one interface
+ * @returns {function(): void} stop watching
+ */
+export function watchDbus(bus, sender, callback, iface = null) {
+    const connection = bus === Gio.BusType.SYSTEM ? Gio.DBus.system : Gio.DBus.session;
+    const fire = debounce(callback, 300);
+    const id = connection.signal_subscribe(sender, iface, null, null, null, Gio.DBusSignalFlags.NONE, fire);
+    return () => connection.signal_unsubscribe(id);
+}

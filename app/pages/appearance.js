@@ -9,8 +9,8 @@ import {EXTENSION_DIR, extSettings, gs, hasCommand, later} from '../sys.js';
 import {THEME_NAMES} from '../../features/quickSettings/themes.js';
 import {palette, unit} from '../theme.js';
 import {
-    badge, card, customSwitch, getMainWindow, gsFont, gsSelect, gsSlider, heading, hbox, label,
-    listCard, pillButton, row, rowsFrom, sectionLabel, sliderBlock, toast, vbox,
+    badge, card, customSwitch, getMainWindow, gsSlider, heading, hbox, label,
+    listCard, navigate, pillButton, row, sectionLabel, sliderBlock, toast, vbox,
 } from '../ui.js';
 
 const IFACE = 'org.gnome.desktop.interface';
@@ -280,31 +280,6 @@ function wallpaperCard() {
     return holder;
 }
 
-/** Icon and cursor themes installed on this system (listed lazily). */
-function themeNames(kind) {
-    const dirs = ['/usr/share/icons', GLib.build_filenamev([GLib.get_user_data_dir(), 'icons']),
-        GLib.build_filenamev([GLib.get_home_dir(), '.icons'])];
-    const names = new Set();
-    for (const dir of dirs) {
-        try {
-            const enumerator = Gio.File.new_for_path(dir).enumerate_children(
-                'standard::name', Gio.FileQueryInfoFlags.NONE, null);
-            let info;
-            while ((info = enumerator.next_file(null))) {
-                const base = GLib.build_filenamev([dir, info.get_name()]);
-                const isCursor = GLib.file_test(GLib.build_filenamev([base, 'cursors']), GLib.FileTest.IS_DIR);
-                const hasIndex = GLib.file_test(GLib.build_filenamev([base, 'index.theme']), GLib.FileTest.EXISTS);
-                if (hasIndex && (kind === 'cursor' ? isCursor : !isCursor))
-                    names.add(info.get_name());
-            }
-            enumerator.close(null);
-        } catch {
-            // Directory missing.
-        }
-    }
-    return [...names].sort((a, b) => a.localeCompare(b));
-}
-
 /** Build `fn` into `box` on a later idle turn, so the page can paint between sections. */
 function defer(box, fn, delay = 0) {
     GLib.timeout_add(GLib.PRIORITY_LOW, delay, () => {
@@ -328,8 +303,6 @@ export function build() {
     [colors, wallpaper, tuning, fonts].forEach(box => page.append(box));
 
     let wall = null;
-    let iconTheme = null;
-    let cursorTheme = null;
 
     paletteCard().forEach(widget => colors.append(widget));
 
@@ -369,23 +342,14 @@ export function build() {
             box.append(card(...blocks));
     }, 120);
 
+    // Fonts and themes live on their own page, built only when it is opened.
     defer(fonts, box => {
         box.append(sectionLabel(_('Fonts and themes')));
-        iconTheme = gsSelect({schema: IFACE, key: 'icon-theme', title: _('Icon theme'), icon: 'interests',
-            options: []});
-        cursorTheme = gsSelect({schema: IFACE, key: 'cursor-theme', title: _('Cursor theme'), icon: 'near_me',
-            options: []});
-        box.append(listCard([
-            ...rowsFrom([
-                {t: 'select', schema: IFACE, key: 'cursor-size', title: _('Cursor size'), icon: 'mouse',
-                    options: [24, 32, 48, 64, 96].map(v => [v, `${v}`])},
-            ]),
-            iconTheme,
-            cursorTheme,
-            gsFont({schema: IFACE, key: 'font-name', title: _('Interface font'), icon: 'text_fields'}),
-            gsFont({schema: IFACE, key: 'document-font-name', title: _('Document font'), icon: 'description'}),
-            gsFont({schema: IFACE, key: 'monospace-font-name', title: _('Monospace font'), icon: 'code'}),
-        ]));
+        box.append(listCard([row({
+            title: _('Fonts and themes'), sub: _('Interface fonts, icon and cursor themes'), icon: 'text_fields',
+            onClick: () => navigate('appearanceFonts'),
+            trailing: pillButton(_('Open'), () => navigate('appearanceFonts'), {variant: 'tonal'}),
+        })]));
         if (hasCommand('gnome-extensions')) {
             box.append(listCard([row({
                 title: _('Dock and app menu'),
@@ -398,20 +362,13 @@ export function build() {
         }
     }, 180);
 
-    // Wallpaper thumbnails and theme lists wait until the rest is on screen.
+    // Wallpaper thumbnails wait until the rest is on screen.
     page.refresh = () => {
         if (page._filled)
             return;
         page._filled = true;
         GLib.timeout_add(GLib.PRIORITY_LOW, 700, () => {
             wall?.fill?.();
-            for (const [line, kind] of [[iconTheme, 'icon'], [cursorTheme, 'cursor']]) {
-                if (!line)
-                    continue;
-                const names = themeNames(kind);
-                const current = gs.get(IFACE, kind === 'icon' ? 'icon-theme' : 'cursor-theme');
-                line.picker.setOptions(names.map(n => ({id: n, label: n})), current);
-            }
             return GLib.SOURCE_REMOVE;
         });
     };

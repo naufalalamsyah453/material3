@@ -1430,3 +1430,198 @@ msgstr ""
 
 msgid "gnome-control-center is not installed, so these panels are unavailable."
 msgstr ""
+
+msgid "Accounts, printers and devices"
+msgstr ""
+
+msgid "App grid"
+msgstr ""
+
+msgid "Applies after you log in again"
+msgstr ""
+
+msgid "Authorize"
+msgstr ""
+
+msgid "Calculator"
+msgstr ""
+
+msgid "Change shortcuts for windows, apps and media"
+msgstr ""
+
+msgid "Click a shortcut to change it"
+msgstr ""
+
+msgid "Close window"
+msgstr ""
+
+msgid "Could not authorize"
+msgstr ""
+
+msgid "Could not change the default"
+msgstr ""
+
+msgid "Could not change the language"
+msgstr ""
+
+msgid "Default printer"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Full screen"
+msgstr ""
+
+msgid "Help"
+msgstr ""
+
+msgid "Home folder"
+msgstr ""
+
+msgid "Keyboard shortcuts"
+msgstr ""
+
+msgid "Launchers"
+msgstr ""
+
+msgid "Lock screen"
+msgstr ""
+
+msgid "Log out"
+msgstr ""
+
+msgid "Log out and in to apply the language"
+msgstr ""
+
+msgid "Make default"
+msgstr ""
+
+msgid "Maximize window"
+msgstr ""
+
+msgid "Media"
+msgstr ""
+
+msgid "Minimize window"
+msgstr ""
+
+msgid "Move window left"
+msgstr ""
+
+msgid "Move window right"
+msgstr ""
+
+msgid "Navigation"
+msgstr ""
+
+msgid "Next track"
+msgstr ""
+
+msgid "No online accounts. Add accounts in your desktop account service."
+msgstr ""
+
+msgid "No printers configured"
+msgstr ""
+
+msgid "Overview"
+msgstr ""
+
+msgid "Play / pause"
+msgstr ""
+
+msgid "Press the new shortcut. Backspace clears it, Esc cancels."
+msgstr ""
+
+msgid "Previous track"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid "Reset all shortcuts"
+msgstr ""
+
+msgid "Screenshot"
+msgstr ""
+
+msgid "Show desktop"
+msgstr ""
+
+msgid "Switch apps"
+msgstr ""
+
+msgid "Switch windows"
+msgstr ""
+
+msgid "Terminal"
+msgstr ""
+
+msgid "Users, printers, accounts"
+msgstr ""
+
+msgid "Volume down"
+msgstr ""
+
+msgid "Volume up"
+msgstr ""
+
+msgid "Web browser"
+msgstr ""
+
+msgid "Windows"
+msgstr ""
+
+msgid "Windows, navigation, launchers"
+msgstr ""
+
+msgid "Workspace left"
+msgstr ""
+
+msgid "Workspace right"
+msgstr ""
+
+msgid "You"
+msgstr ""
+
+msgid "Back"
+msgstr ""
+
+msgid "Cursor"
+msgstr ""
+
+msgid "Fonts"
+msgstr ""
+
+msgid "Fonts, icons, cursor"
+msgstr ""
+
+msgid "Icons"
+msgstr ""
+
+msgid "Interface fonts, icon and cursor themes"
+msgstr ""
+
+msgid "Slider style"
+msgstr ""
+
+msgid "Brightness and volume sliders"
+msgstr ""
+
+msgid "Classic: capsule with - and + buttons"
+msgstr ""
+
+msgid "Handle: split track with round buttons"
+msgstr ""
+
+msgid "Media player style"
+msgstr ""
+
+msgid "The card that shows the playing track"
+msgstr ""
+
+msgid "Classic: compact card"
+msgstr ""
+
+msgid "Cover: album art with seek bar"
+msgstr ""
