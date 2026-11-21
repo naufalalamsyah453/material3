@@ -1625,3 +1625,21 @@ msgstr ""
 
 msgid "Cover: album art with seek bar"
 msgstr ""
+
+msgid "Context menu size"
+msgstr ""
+
+msgid "Size of the right-click menus; 1.00 is the default"
+msgstr ""
+
+msgid "Context menu text size"
+msgstr ""
+
+msgid "Size of the text in the right-click menus; 1.00 is the default"
+msgstr ""
+
+msgid "Context menu icons"
+msgstr ""
+
+msgid "Show an icon before each entry of the right-click menus"
+msgstr ""

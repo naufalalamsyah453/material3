@@ -414,6 +414,18 @@ export default class Material3Preferences extends ExtensionPreferences {
         ctxRow.add_suffix(ctxReset);
         ctxRow.add_suffix(ctxButton);
         sizeGroup.add(ctxRow);
+        addSpin(sizeGroup, 'context-scale', _('Context menu size'),
+            _('Size of the right-click menus; 1.00 is the default'),
+            {lower: 0.7, upper: 1.6, step: 0.05, digits: 2});
+        addSpin(sizeGroup, 'context-font-scale', _('Context menu text size'),
+            _('Size of the text in the right-click menus; 1.00 is the default'),
+            {lower: 0.7, upper: 1.6, step: 0.05, digits: 2});
+        const ctxIcons = new Adw.SwitchRow({
+            title: _('Context menu icons'),
+            subtitle: _('Show an icon before each entry of the right-click menus'),
+        });
+        settings.bind('context-show-icons', ctxIcons, 'active', Gio.SettingsBindFlags.DEFAULT);
+        sizeGroup.add(ctxIcons);
 
         window.add(page);
         window.add(buildCategoriesPage(window, settings));

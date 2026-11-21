@@ -264,6 +264,23 @@
       <summary>Context menu font</summary>
       <description>Font family of the right-click menus (dock icons and app menu). Empty uses the text font of the rest of the interface.</description>
     </key>
+    <key name="context-scale" type="d">
+      <range min="0.7" max="1.6"/>
+      <default>1.0</default>
+      <summary>Context menu size</summary>
+      <description>Scale factor for the size of the right-click menus, on top of the app menu size.</description>
+    </key>
+    <key name="context-font-scale" type="d">
+      <range min="0.7" max="1.6"/>
+      <default>1.0</default>
+      <summary>Context menu text size</summary>
+      <description>Scale factor for the text in the right-click menus.</description>
+    </key>
+    <key name="context-show-icons" type="b">
+      <default>true</default>
+      <summary>Context menu icons</summary>
+      <description>Show an icon before each entry of the right-click menus.</description>
+    </key>
     <key name="appmenu-height" type="i">
       <range min="120" max="640"/>
       <default>240</default>

@@ -1627,3 +1627,21 @@ msgstr "Klasik: kartu ringkas"
 
 msgid "Cover: album art with seek bar"
 msgstr "Cover: sampul album dengan seek bar"
+
+msgid "Context menu size"
+msgstr "Ukuran context menu"
+
+msgid "Size of the right-click menus; 1.00 is the default"
+msgstr "Ukuran menu klik kanan; 1.00 adalah bawaan"
+
+msgid "Context menu text size"
+msgstr "Ukuran teks context menu"
+
+msgid "Size of the text in the right-click menus; 1.00 is the default"
+msgstr "Ukuran teks di menu klik kanan; 1.00 adalah bawaan"
+
+msgid "Context menu icons"
+msgstr "Ikon context menu"
+
+msgid "Show an icon before each entry of the right-click menus"
+msgstr "Tampilkan ikon sebelum tiap entri menu klik kanan"

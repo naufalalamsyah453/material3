@@ -9,6 +9,10 @@ export const ui = {
     font: '',
     // Font of the right-click menus; empty follows `font`.
     ctxFont: '',
+    // Right-click menus: extra size, extra text size, entry icons.
+    ctx: 1,
+    ctxFontScale: 1,
+    ctxIcons: true,
     // Extra scale of the dock and of the app menu, on top of `scale`.
     dock: 1,
     menu: 1,
@@ -34,7 +38,7 @@ export function px(value) {
  */
 export function scoped(surface, callback) {
     const previous = ui.factor;
-    ui.factor = ui[surface] ?? 1;
+    ui.factor = surface === 'ctx' ? ui.menu * ui.ctx : ui[surface] ?? 1;
     try {
         return callback();
     } finally {
@@ -59,6 +63,11 @@ export function loadUi(settings) {
     ui.dock = clamp(settings.get_double('dock-scale'), {min: 0.7, max: 1.6});
     ui.menu = clamp(settings.get_double('appmenu-scale'), {min: 0.7, max: 1.5});
     ui.font = settings.get_string('font-family').replace(/["';{}\\]/g, '').trim();
+    const has = key => settings.settings_schema.has_key(key);
+    ui.ctx = has('context-scale') ? clamp(settings.get_double('context-scale'), {min: 0.7, max: 1.6}) : 1;
+    ui.ctxFontScale = has('context-font-scale')
+        ? clamp(settings.get_double('context-font-scale'), {min: 0.7, max: 1.6}) : 1;
+    ui.ctxIcons = has('context-show-icons') ? settings.get_boolean('context-show-icons') : true;
     // A schema compiled before this key existed must not break the rest.
     ui.ctxFont = settings.settings_schema.has_key('context-font-family')
         ? settings.get_string('context-font-family').replace(/["';{}\\]/g, '').trim()
@@ -67,5 +76,6 @@ export function loadUi(settings) {
 
 /** True when the stylesheet needs the scale/font override layer. */
 export function uiIsCustom() {
-    return ui.scale !== 1 || ui.fontScale !== 1 || ui.font !== '' || ui.ctxFont !== '' || ui.dock !== 1 || ui.menu !== 1;
+    return ui.scale !== 1 || ui.fontScale !== 1 || ui.font !== '' || ui.ctxFont !== '' || ui.dock !== 1 || ui.menu !== 1 ||
+        ui.ctx !== 1 || ui.ctxFontScale !== 1;
 }

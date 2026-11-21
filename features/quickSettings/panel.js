@@ -143,7 +143,8 @@ export class QuickSettingsPanel {
             else if (key === 'ui-scale' || key === 'font-scale' || key === 'font-family' ||
                 key === 'dock-scale' || key === 'appmenu-scale' ||
                 key === 'context-font-family' || key === 'qs-tile-style' ||
-                key === 'qs-slider-style' || key === 'qs-media-style')
+                key === 'qs-slider-style' || key === 'qs-media-style' ||
+                key === 'context-scale' || key === 'context-font-scale' || key === 'context-show-icons')
                 this._scheduleRetune();
             else if (key === 'theme-shell' || key === 'theme-apps' ||
                 key.startsWith('border-qs-') || key.startsWith('border-appmenu-') || key.startsWith('border-dock-'))

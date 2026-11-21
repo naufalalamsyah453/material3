@@ -262,11 +262,18 @@ export function themedCss(css, theme, tune = {scale: 1, fontScale: 1, font: ''})
             let factor = 1;
             if (/\.m3-dock|\.m3-tint/.test(selector))
                 factor = tune.dock ?? 1;
-            else if (/\.m3-appmenu|\.m3-app-|\.m3-ctx/.test(selector))
+            else if (/\.m3-ctx/.test(selector))
+                factor = (tune.menu ?? 1) * (tune.ctx ?? 1);
+            else if (/\.m3-appmenu|\.m3-app-/.test(selector))
                 factor = tune.menu ?? 1;
             // The right-click menus may have a font of their own.
             const font = /\.m3-ctx/.test(selector) && tune.ctxFont ? tune.ctxFont : tune.font;
-            return `${selector}{${tuned(recolored, {...tune, font, scale: tune.scale * factor})}}`;
+            return `${selector}{${tuned(recolored, {
+                ...tune,
+                font,
+                scale: tune.scale * factor,
+                fontScale: tune.fontScale * (/\.m3-ctx/.test(selector) ? tune.ctxFontScale ?? 1 : 1),
+            })}}`;
         });
 }
 

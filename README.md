@@ -101,8 +101,10 @@ features/dock/
 
 - **Menu konteks** (klik kanan ikon dock atau kartu aplikasi) menutup sendiri saat
   klik di luarnya. Klik itu hanya menutup menu dan tidak diteruskan ke yang ada di
-  bawahnya. Font-nya punya pengaturan sendiri: Pengaturan -> "Context menu font"
-  (`context-font-family`; kosong = sama dengan font utama).
+  bawahnya. Tampilannya punya pengaturan sendiri: font (`context-font-family`;
+  kosong = sama dengan font utama), ukuran menu (`context-scale`) dan ukuran teks
+  (`context-font-scale`) 0.7–1.6, serta tampil/tidaknya ikon tiap entri
+  (`context-show-icons`).
 - **App menu**: lebar (`appmenu-width`, 360-900 px; kartu aplikasi membagi lebarnya
   sama rata) dan tinggi grid (`appmenu-height`) punya pengaturan terpisah di
   "Dock and app menu".

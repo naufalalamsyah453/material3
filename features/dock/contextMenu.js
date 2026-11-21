@@ -7,7 +7,7 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import {_} from '../../i18n.js';
 import {activateApp} from '../settings/launcher.js';
 
-import {px, scoped} from '../quickSettings/ui.js';
+import {px, scoped, ui} from '../quickSettings/ui.js';
 import {pressFeedback, symbolIcon, textLabel} from '../quickSettings/widgets.js';
 
 /** The actor an input event was aimed at. */
@@ -266,7 +266,7 @@ export class ContextMenu {
     open(items, {x, y, placement = 'above'}) {
         this.close(false);
 
-        scoped('menu', () => {
+        scoped('ctx', () => {
             this._list.destroy_all_children();
             for (const item of items) {
                 this._list.add_child(item.separator
@@ -376,7 +376,8 @@ export class ContextMenu {
             x_expand: true,
             x_align: Clutter.ActorAlign.FILL,
         });
-        content.add_child(symbolIcon(icon ?? 'chevron_right', {size: 18}));
+        if (ui.ctxIcons)
+            content.add_child(symbolIcon(icon ?? 'chevron_right', {size: 18}));
         content.add_child(textLabel(label, 'm3-ctx-text', {x_expand: true}));
         if (selected)
             content.add_child(symbolIcon('check', {size: 18, styleClass: 'm3-ctx-check'}));

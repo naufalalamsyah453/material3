@@ -23,6 +23,7 @@ const HIDE_DELAY = 450; // ms the pointer may be away before an auto-hidden dock
 const REBUILD_KEYS = [
     'ui-scale', 'font-scale', 'font-family', 'dock-scale', 'appmenu-scale',
     'dock-mode', 'dock-margin', 'appmenu-height', 'appmenu-width', 'context-font-family',
+    'context-scale', 'context-font-scale', 'context-show-icons',
 ];
 const MENU_GAP = 8; // reference: drawer bottom 84px over a 64px dock at 12px
 
