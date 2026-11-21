@@ -568,6 +568,83 @@ export const M3Switch = GObject.registerClass({
     }
 });
 
+/**
+ * Android-style ripple: a wave grows from the press point, clipped to the
+ * button's shape, and fades once the press is over. The button must have no
+ * padding of its own (put it on `content`) so the wave covers the whole button.
+ */
+export function addRipple(button, content, {color = () => palette.t?.onSurface, alpha = 0.14} = {}) {
+    const overlay = new Gtk.Overlay();
+    overlay.set_child(content);
+    const area = new Gtk.DrawingArea({can_target: false, hexpand: true, vexpand: true});
+    overlay.add_overlay(area);
+    overlay.set_clip_overlay(area, true);
+    button.set_child(overlay);
+    button.overflow = Gtk.Overflow.HIDDEN;
+
+    const waves = [];
+    let tick = 0;
+    const GROW = 420;
+    const FADE = 320;
+
+    const frame = () => {
+        const now = GLib.get_monotonic_time() / 1000;
+        for (let i = waves.length - 1; i >= 0; i--) {
+            const w = waves[i];
+            const fadeStart = Math.max(w.released ?? Infinity, w.start + 180);
+            if (w.released !== null && now - fadeStart >= FADE)
+                waves.splice(i, 1);
+        }
+        area.queue_draw();
+        if (waves.length === 0) {
+            tick = 0;
+            return GLib.SOURCE_REMOVE;
+        }
+        return GLib.SOURCE_CONTINUE;
+    };
+
+    area.set_draw_func((_a, cr, width, height) => {
+        const hex = color();
+        if (hex) {
+            const now = GLib.get_monotonic_time() / 1000;
+            for (const w of waves) {
+                const grow = Math.min(1, (now - w.start) / GROW);
+                const radius = w.max * (1 - Math.pow(1 - grow, 3));
+                const fadeStart = Math.max(w.released ?? Infinity, w.start + 180);
+                const fade = w.released === null ? 1 : Math.max(0, 1 - (now - fadeStart) / FADE);
+                cr.arc(w.x, w.y, Math.max(0.1, radius), 0, 2 * Math.PI);
+                cr.setSourceRGBA(...unit(hex), alpha * fade);
+                cr.fill();
+            }
+        }
+        void width;
+        void height;
+        cr.$dispose();
+    });
+
+    const release = () => {
+        const now = GLib.get_monotonic_time() / 1000;
+        waves.forEach(w => {
+            w.released ??= now;
+        });
+    };
+    const click = new Gtk.GestureClick({propagation_phase: Gtk.PropagationPhase.CAPTURE});
+    click.connect('pressed', (_g, _n, x, y) => {
+        const width = button.get_width();
+        const height = button.get_height();
+        waves.push({
+            x, y, start: GLib.get_monotonic_time() / 1000, released: null,
+            max: Math.hypot(Math.max(x, width - x), Math.max(y, height - y)),
+        });
+        if (!tick)
+            tick = button.add_tick_callback(frame);
+    });
+    click.connect('released', release);
+    click.connect('cancel', release);
+    button.add_controller(click);
+    return button;
+}
+
 /** Row with a switch bound to a boolean GSettings key (null if the key is missing). */
 export function gsSwitch({schema, key, title, sub = '', icon: iconName = null, invert = false}) {
     if (!gs.has(schema, key))

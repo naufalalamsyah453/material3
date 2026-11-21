@@ -93,6 +93,25 @@
       <summary>App menu size</summary>
       <description>Scale factor for the size of the app menu (and the context menus).</description>
     </key>
+    <key name="show-quicksettings" type="b">
+      <default>true</default>
+      <summary>Material 3 Quick Settings</summary>
+      <description>Replace the shell's Quick Settings panel. Off restores GNOME's own.</description>
+    </key>
+    <key name="qs-tile-style" type="s">
+      <choices>
+        <choice value="classic"/>
+        <choice value="split"/>
+      </choices>
+      <default>"classic"</default>
+      <summary>Quick Settings tile style</summary>
+      <description>classic: one tile, click toggles and right-click opens options. split: the icon toggles, the text area opens the options.</description>
+    </key>
+    <key name="show-appmenu" type="b">
+      <default>true</default>
+      <summary>Material 3 app menu</summary>
+      <description>Open the Material 3 app menu from the dock and the Super key. Off uses GNOME's Overview.</description>
+    </key>
     <key name="show-settings" type="b">
       <default>true</default>
       <summary>Replace GNOME Settings</summary>

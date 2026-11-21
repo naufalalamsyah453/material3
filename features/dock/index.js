@@ -46,8 +46,10 @@ export class DockFeature {
         this._iface = new Gio.Settings({schema_id: COLOR_SCHEME_SCHEMA});
 
         this._on(this._extSettings, 'changed', (_s, key) => {
-            if (key === 'show-dock')
+            if (key === 'show-dock' || key === 'show-appmenu') {
                 this._apply();
+                this._syncDockVisibility();
+            }
             else if (key === 'theme')
                 this._syncThemeName();
             else if (REBUILD_KEYS.includes(key))
@@ -136,7 +138,7 @@ export class DockFeature {
 
     /** Build or remove the dock to match the `show-dock` setting. */
     _apply() {
-        const wanted = this._extSettings.get_boolean('show-dock');
+        const wanted = this._dockWanted() || this._menuWanted();
         if (wanted && !this._built) {
             try {
                 this._build();
@@ -146,6 +148,28 @@ export class DockFeature {
         }
         else if (!wanted && this._built)
             this._teardown();
+    }
+
+    _dockWanted() {
+        return this._extSettings.get_boolean('show-dock');
+    }
+
+    _menuWanted() {
+        return !this._extSettings.settings_schema.has_key('show-appmenu') ||
+            this._extSettings.get_boolean('show-appmenu');
+    }
+
+    /** Dock bar (and its strut/edge) follow `show-dock`; the app menu can live without them. */
+    _syncDockVisibility() {
+        if (!this._built || !this._dock)
+            return;
+        this._reposition();
+        const on = this._dockWanted();
+        this._dock.actor.visible = on && !Main.overview.visible;
+        for (const actor of [this._strut, this._edge]) {
+            if (actor)
+                actor.visible = on;
+        }
     }
 
     _build() {
@@ -214,8 +238,10 @@ export class DockFeature {
         Main.overview.toggle = () => {
             if (Main.overview.visible)
                 Main.overview.hide();
-            else
+            else if (this._menuWanted())
                 this._toggleMenu();
+            else
+                Object.getPrototypeOf(Main.overview).toggle.call(Main.overview);
         };
         this._syncMode();
         this._reposition();
@@ -248,8 +274,7 @@ export class DockFeature {
             this._dock.actor.hide();
         });
         watch(Main.overview, 'hidden', () => {
-            this._dock.actor.show();
-            this._reposition();
+            this._syncDockVisibility();
         });
 
         // Size changes (apps come and go, scale changes) move the center.
@@ -257,6 +282,7 @@ export class DockFeature {
 
         if (Main.overview.visible)
             this._dock.actor.hide();
+        this._syncDockVisibility();
     }
 
     _teardown() {
@@ -520,6 +546,10 @@ export class DockFeature {
     }
 
     _toggleMenu() {
+        if (!this._menuWanted()) {
+            Object.getPrototypeOf(Main.overview).toggle.call(Main.overview);
+            return;
+        }
         try {
             if (this._menu.isOpen) {
                 this._menu.close();

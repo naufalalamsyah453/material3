@@ -13,8 +13,9 @@ export default class Material3Extension extends Extension {
         const settings = this.getSettings();
         this._settings = settings;
 
-        this._quickSettings = new QuickSettingsPanel(settings, this.dir);
-        this._quickSettings.enable();
+        this._quickSettings = null;
+        this._qsId = settings.connect('changed::show-quicksettings', () => this._syncQuickSettings());
+        this._syncQuickSettings();
 
         this._dock = new DockFeature(settings);
         this._dock.enable();
@@ -29,6 +30,9 @@ export default class Material3Extension extends Extension {
 
     disable() {
         setTranslator(null);
+        if (this._qsId)
+            this._settings.disconnect(this._qsId);
+        this._qsId = 0;
         if (this._osdId)
             this._settings.disconnect(this._osdId);
         this._osdId = 0;
@@ -42,6 +46,23 @@ export default class Material3Extension extends Extension {
         this._quickSettings?.disable();
         this._quickSettings = null;
         this._settings = null;
+    }
+
+    /** Material 3 Quick Settings, replacing the shell's own panel; off restores GNOME's. */
+    _syncQuickSettings() {
+        const schema = this._settings.settings_schema;
+        const wanted = !schema.has_key('show-quicksettings') || this._settings.get_boolean('show-quicksettings');
+        try {
+            if (wanted && !this._quickSettings) {
+                this._quickSettings = new QuickSettingsPanel(this._settings, this.dir);
+                this._quickSettings.enable();
+            } else if (!wanted && this._quickSettings) {
+                this._quickSettings.disable();
+                this._quickSettings = null;
+            }
+        } catch (e) {
+            console.error(`material3: Quick Settings failed: ${e.message}\n${e.stack}`);
+        }
     }
 
     /** Material 3 volume / brightness indicator, replacing the shell's own. */

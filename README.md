@@ -145,6 +145,18 @@ preferences. The header name can follow the account full name (default),
 login name, computer host name, or a custom text; it updates live. The avatar
 initial follows the name.
 
+## Add-on switches
+
+Both add-ons can be disabled individually in the extension preferences:
+
+- **Use Material 3 Quick Settings** — off restores GNOME's own Quick Settings
+  panel (`show-quicksettings`).
+- **Use Material 3 app menu** — off makes the dock button and the Super key open
+  GNOME's Overview instead of the Material app menu (`show-appmenu`).
+- **Tile style** — *Classic* (click toggles, right-click opens the options) or
+  *Split* (the icon chip toggles, the text area opens the options; only tiles
+  with options are divided) (`qs-tile-style`).
+
 ## Install
 
 ```sh

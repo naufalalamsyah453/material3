@@ -167,6 +167,20 @@
   color: #49454F;
 }
 
+/* Split tiles (Android style): round icon chip that toggles + text area that opens options. */
+.m3-tile-chip {
+  background-color: rgba(0, 0, 0, 0.07);
+  border-radius: 28px;
+}
+
+.m3-tile-chip:hover {
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
+.m3-tile-text {
+  background-color: transparent;
+}
+
 /* Active layer: faded in over the tile; radius is driven from JS. */
 .m3-tile-fill {
   background-color: #6750A4;
@@ -381,6 +395,14 @@
 
 .m3-qs.m3-dark .m3-tile .m3-tile-subtitle {
   color: #CAC4D0;
+}
+
+.m3-qs.m3-dark .m3-tile-chip {
+  background-color: rgba(255, 255, 255, 0.10);
+}
+
+.m3-qs.m3-dark .m3-tile-chip:hover {
+  background-color: rgba(255, 255, 255, 0.16);
 }
 
 .m3-qs.m3-dark .m3-tile-fill {

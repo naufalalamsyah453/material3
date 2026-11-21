@@ -142,7 +142,7 @@ export class QuickSettingsPanel {
                 this._applyTheme();
             else if (key === 'ui-scale' || key === 'font-scale' || key === 'font-family' ||
                 key === 'dock-scale' || key === 'appmenu-scale' ||
-                key === 'context-font-family')
+                key === 'context-font-family' || key === 'qs-tile-style')
                 this._scheduleRetune();
             else if (key === 'theme-shell' || key === 'theme-apps' ||
                 key.startsWith('border-qs-') || key.startsWith('border-appmenu-') || key.startsWith('border-dock-'))
@@ -300,7 +300,10 @@ export class QuickSettingsPanel {
             {icon: 'do_not_disturb_on', title: _('Do Not Disturb'), backend: b.dnd},
             {icon: 'nightlight', title: _('Night Light'), backend: b.night},
             {icon: 'battery_saver', title: _('Power Mode'), backend: b.power, onSecondary: this._secondary(b.power)},
-        ]);
+        ], {
+            split: this._extSettings.settings_schema.has_key('qs-tile-style') &&
+                this._extSettings.get_string('qs-tile-style') === 'split',
+        });
         this._tiles = tileGroup.tiles;
 
         content.add_child(tileGroup.actor);

@@ -13,7 +13,7 @@ import {extSettings, later} from './sys.js';
 import {palette} from './theme.js';
 import {PAGES, PANEL_ALIASES, groups} from './pages/index.js';
 import {
-    createToast, hbox, icon, label, note, setMainWindow, spinnerRow, vbox,
+    addRipple, createToast, hbox, icon, label, note, setMainWindow, spinnerRow, vbox,
 } from './ui.js';
 
 // The default GSK renderer can stall for seconds compiling shaders on first use.
@@ -168,6 +168,7 @@ const SettingsWindow = GObject.registerClass(class M3SettingsWindow extends Gtk.
                 const button = new Gtk.Button();
                 button.add_css_class('m3-nav');
                 const line = hbox(12);
+                line.add_css_class('m3-navline');
                 const badge = new Gtk.CenterBox({valign: Gtk.Align.CENTER, halign: Gtk.Align.CENTER});
                 badge.add_css_class('m3-navbadge');
                 badge.add_css_class(`tone-${page.tone ?? 'gray'}`);
@@ -182,7 +183,7 @@ const SettingsWindow = GObject.registerClass(class M3SettingsWindow extends Gtk.
                 this._navLabels.push(text);
                 button.set_tooltip_text(page.title());
                 button._line = line;
-                button.set_child(line);
+                addRipple(button, line);
                 button.connect('clicked', () => this.select(id));
                 this._nav.set(id, button);
                 items.push(button);

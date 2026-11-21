@@ -254,6 +254,9 @@ msgstr "Pilih gambar..."
 msgid "Choose the name shown next to the avatar."
 msgstr "Pilih nama yang ditampilkan di samping avatar."
 
+msgid "Classic: click toggles, right-click opens options"
+msgstr "Klasik: klik mengalihkan, klik kanan membuka opsi"
+
 msgid "Cleanup"
 msgstr "Pembersihan"
 
@@ -602,6 +605,9 @@ msgstr "Abaikan tekanan tombol berulang yang cepat"
 msgid "Immediately"
 msgstr "Segera"
 
+msgid "In the split style only tiles that have options are divided"
+msgstr "Pada gaya terbagi, hanya tile yang punya opsi yang dibagi"
+
 msgid "Include apps from the current workspace only"
 msgstr "Hanya sertakan aplikasi dari ruang kerja saat ini"
 
@@ -814,6 +820,12 @@ msgstr "Mati"
 
 msgid "Off (Light)"
 msgstr "Mati (Terang)"
+
+msgid "Off opens GNOME's Overview from the dock and the Super key"
+msgstr "Nonaktif: dock dan tombol Super membuka Overview GNOME"
+
+msgid "Off restores GNOME's own panel"
+msgstr "Nonaktif: panel bawaan GNOME dipakai kembali"
 
 msgid "On"
 msgstr "Hidup"
@@ -1181,6 +1193,9 @@ msgstr "Slow keys"
 msgid "Sound"
 msgstr "Suara"
 
+msgid "Split: icon toggles, text opens options"
+msgstr "Terbagi: ikon mengalihkan, teks membuka opsi"
+
 msgid "Standard performance and battery"
 msgstr "Performa dan baterai standar"
 
@@ -1256,6 +1271,9 @@ msgstr "Dock melayang di bawah layar dan menu aplikasi yang dibukanya."
 msgid "The indicator shown when you change the volume or brightness."
 msgstr "Indikator yang muncul saat mengubah volume atau kecerahan."
 
+msgid "The panel opened from the top bar."
+msgstr "Panel yang dibuka dari bilah atas."
+
 msgid "Theme"
 msgstr "Tema"
 
@@ -1273,6 +1291,9 @@ msgstr "Thunderbolt"
 
 msgid "Thunderbolt devices"
 msgstr "Perangkat Thunderbolt"
+
+msgid "Tile style"
+msgstr "Gaya tile"
 
 msgid "Time format"
 msgstr "Format waktu"
@@ -1324,6 +1345,12 @@ msgstr "Lepas dari Dock"
 
 msgid "Untitled"
 msgstr "Tanpa judul"
+
+msgid "Use Material 3 Quick Settings"
+msgstr "Pakai Pengaturan Cepat Material 3"
+
+msgid "Use Material 3 app menu"
+msgstr "Pakai menu aplikasi Material 3"
 
 msgid "Use the dark color scheme across the system"
 msgstr "Pakai skema warna gelap di seluruh sistem"

@@ -252,6 +252,9 @@ msgstr ""
 msgid "Choose the name shown next to the avatar."
 msgstr ""
 
+msgid "Classic: click toggles, right-click opens options"
+msgstr ""
+
 msgid "Cleanup"
 msgstr ""
 
@@ -600,6 +603,9 @@ msgstr ""
 msgid "Immediately"
 msgstr ""
 
+msgid "In the split style only tiles that have options are divided"
+msgstr ""
+
 msgid "Include apps from the current workspace only"
 msgstr ""
 
@@ -811,6 +817,12 @@ msgid "Off"
 msgstr ""
 
 msgid "Off (Light)"
+msgstr ""
+
+msgid "Off opens GNOME's Overview from the dock and the Super key"
+msgstr ""
+
+msgid "Off restores GNOME's own panel"
 msgstr ""
 
 msgid "On"
@@ -1179,6 +1191,9 @@ msgstr ""
 msgid "Sound"
 msgstr ""
 
+msgid "Split: icon toggles, text opens options"
+msgstr ""
+
 msgid "Standard performance and battery"
 msgstr ""
 
@@ -1254,6 +1269,9 @@ msgstr ""
 msgid "The indicator shown when you change the volume or brightness."
 msgstr ""
 
+msgid "The panel opened from the top bar."
+msgstr ""
+
 msgid "Theme"
 msgstr ""
 
@@ -1270,6 +1288,9 @@ msgid "Thunderbolt"
 msgstr ""
 
 msgid "Thunderbolt devices"
+msgstr ""
+
+msgid "Tile style"
 msgstr ""
 
 msgid "Time format"
@@ -1321,6 +1342,12 @@ msgid "Unpin from Dock"
 msgstr ""
 
 msgid "Untitled"
+msgstr ""
+
+msgid "Use Material 3 Quick Settings"
+msgstr ""
+
+msgid "Use Material 3 app menu"
 msgstr ""
 
 msgid "Use the dark color scheme across the system"

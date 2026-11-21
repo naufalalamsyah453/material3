@@ -107,6 +107,31 @@ export default class Material3Preferences extends ExtensionPreferences {
 
         page.add(themeGroup);
 
+        const qsGroup = new Adw.PreferencesGroup({
+            title: _('Quick Settings'),
+            description: _('The panel opened from the top bar.'),
+        });
+        page.add(qsGroup);
+        const qsSwitch = new Adw.SwitchRow({
+            title: _('Use Material 3 Quick Settings'),
+            subtitle: _('Off restores GNOME\'s own panel'),
+        });
+        settings.bind('show-quicksettings', qsSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
+        qsGroup.add(qsSwitch);
+        const TILE_STYLES = ['classic', 'split'];
+        const tileModel = new Gtk.StringList();
+        tileModel.append(_('Classic: click toggles, right-click opens options'));
+        tileModel.append(_('Split: icon toggles, text opens options'));
+        const tileRow = new Adw.ComboRow({
+            title: _('Tile style'),
+            subtitle: _('In the split style only tiles that have options are divided'),
+            model: tileModel,
+            selected: Math.max(0, TILE_STYLES.indexOf(settings.get_string('qs-tile-style'))),
+        });
+        tileRow.connect('notify::selected', () =>
+            settings.set_string('qs-tile-style', TILE_STYLES[tileRow.selected] ?? 'classic'));
+        qsGroup.add(tileRow);
+
         const dockGroup = new Adw.PreferencesGroup({
             title: _('Dock and app menu'),
             description: _('The floating dock at the bottom of the screen and the app menu it opens.'),
@@ -123,6 +148,13 @@ export default class Material3Preferences extends ExtensionPreferences {
                 dockSwitch.active = settings.get_boolean('show-dock');
         });
         dockGroup.add(dockSwitch);
+
+        const menuSwitch = new Adw.SwitchRow({
+            title: _('Use Material 3 app menu'),
+            subtitle: _('Off opens GNOME\'s Overview from the dock and the Super key'),
+        });
+        settings.bind('show-appmenu', menuSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
+        dockGroup.add(menuSwitch);
 
         const recentSwitch = new Adw.SwitchRow({
             title: _('Show recent window'),
