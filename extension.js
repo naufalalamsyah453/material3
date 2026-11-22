@@ -1,6 +1,7 @@
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 import {setTranslator} from './i18n.js';
+import {DesktopFeature} from './features/desktop/index.js';
 import {DateMenuFeature} from './features/dateMenu/index.js';
 import {DockFeature} from './features/dock/index.js';
 import {OsdFeature} from './features/osd/index.js';
@@ -29,6 +30,10 @@ export default class Material3Extension extends Extension {
         this._dateMenuId = settings.connect('changed::show-datemenu', () => this._syncDateMenu());
         this._syncDateMenu();
 
+        this._desktop = null;
+        this._desktopId = settings.connect('changed::show-desktop-icons', () => this._syncDesktop());
+        this._syncDesktop();
+
         this._switcher = null;
         this._switcherId = settings.connect('changed::show-switcher', () => this._syncSwitcher());
         this._syncSwitcher();
@@ -53,6 +58,11 @@ export default class Material3Extension extends Extension {
         this._dateMenuId = 0;
         this._dateMenu?.disable();
         this._dateMenu = null;
+        if (this._desktopId)
+            this._settings.disconnect(this._desktopId);
+        this._desktopId = 0;
+        this._desktop?.disable();
+        this._desktop = null;
         if (this._switcherId)
             this._settings.disconnect(this._switcherId);
         this._switcherId = 0;
@@ -105,6 +115,29 @@ export default class Material3Extension extends Extension {
                 // Nothing left to undo.
             }
             this._dateMenu = null;
+        }
+    }
+
+    /** Desktop icons drawn by the extension (no other extension needed). */
+    _syncDesktop() {
+        const schema = this._settings.settings_schema;
+        const wanted = !schema.has_key('show-desktop-icons') || this._settings.get_boolean('show-desktop-icons');
+        try {
+            if (wanted && !this._desktop) {
+                this._desktop = new DesktopFeature(this._settings);
+                this._desktop.enable();
+            } else if (!wanted && this._desktop) {
+                this._desktop.disable();
+                this._desktop = null;
+            }
+        } catch (e) {
+            console.error(`material3: desktop icons failed: ${e.message}\n${e.stack}`);
+            try {
+                this._desktop?.disable();
+            } catch {
+                // Nothing left to undo.
+            }
+            this._desktop = null;
         }
     }
 

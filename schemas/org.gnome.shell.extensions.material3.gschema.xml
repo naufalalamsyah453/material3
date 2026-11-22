@@ -363,6 +363,37 @@
       <summary>Hidden app menu categories</summary>
       <description>Ids of the categories that are not shown as pills in the app menu.</description>
     </key>
+    <key name="disable-shadows" type="b">
+      <default>false</default>
+      <summary>Disable shadows</summary>
+      <description>Draw no drop shadows on the extension's panels, menus, dock and other surfaces.</description>
+    </key>
+    <key name="show-desktop-icons" type="b">
+      <default>true</default>
+      <summary>Desktop icons</summary>
+      <description>Show the files of the Desktop folder as icons on the desktop.</description>
+    </key>
+    <key name="desktop-icon-size" type="i">
+      <range min="32" max="128"/>
+      <default>64</default>
+      <summary>Desktop icon size</summary>
+      <description>Size of the desktop icons in pixels.</description>
+    </key>
+    <key name="desktop-show-home" type="b">
+      <default>false</default>
+      <summary>Home icon on the desktop</summary>
+      <description>Show a shortcut to the home folder on the desktop.</description>
+    </key>
+    <key name="desktop-show-trash" type="b">
+      <default>false</default>
+      <summary>Trash icon on the desktop</summary>
+      <description>Show a shortcut to the trash on the desktop.</description>
+    </key>
+    <key name="desktop-positions" type="s">
+      <default>'{}'</default>
+      <summary>Desktop icon positions</summary>
+      <description>Grid cell of each desktop icon, as JSON (managed by the extension).</description>
+    </key>
     <key name="show-datemenu" type="b">
       <default>true</default>
       <summary>Material 3 date menu</summary>

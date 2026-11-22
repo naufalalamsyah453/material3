@@ -54,6 +54,12 @@ msgstr ""
 msgid "7 days"
 msgstr ""
 
+msgid "A shortcut to the trash"
+msgstr ""
+
+msgid "A shortcut to your home folder"
+msgstr ""
+
 msgid "AM/PM"
 msgstr ""
 
@@ -97,6 +103,9 @@ msgid "Airplane mode"
 msgstr ""
 
 msgid "Allow apps to add results to the overview search"
+msgstr ""
+
+msgid "Allow executing as a program"
 msgstr ""
 
 msgid "Allow scales such as 125% and 150%"
@@ -255,6 +264,12 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
+msgid "Change Background"
+msgstr ""
+
+msgid "Change icon"
+msgstr ""
+
 msgid "Change shortcuts for windows, apps and media"
 msgstr ""
 
@@ -265,6 +280,9 @@ msgid "Choose a background"
 msgstr ""
 
 msgid "Choose a short name; it is shown on the category pill."
+msgstr ""
+
+msgid "Choose an icon"
 msgstr ""
 
 msgid "Choose apps"
@@ -298,6 +316,9 @@ msgid "Click a shortcut to change it"
 msgstr ""
 
 msgid "Click method"
+msgstr ""
+
+msgid "Click the icon to change it"
 msgstr ""
 
 msgid "Clock"
@@ -375,6 +396,9 @@ msgstr ""
 msgid "Context menus"
 msgstr ""
 
+msgid "Copy"
+msgstr ""
+
 msgid "Corner radius"
 msgstr ""
 
@@ -418,6 +442,9 @@ msgid "Custom"
 msgstr ""
 
 msgid "Custom name"
+msgstr ""
+
+msgid "Cut"
 msgstr ""
 
 msgid "Dark Style"
@@ -471,6 +498,12 @@ msgstr ""
 msgid "Delete files older than"
 msgstr ""
 
+msgid "Desktop icon size"
+msgstr ""
+
+msgid "Desktop icons"
+msgstr ""
+
 msgid "Device and software"
 msgstr ""
 
@@ -501,6 +534,9 @@ msgstr ""
 msgid "Disable microphone"
 msgstr ""
 
+msgid "Disable shadows"
+msgstr ""
+
 msgid "Disable while typing"
 msgstr ""
 
@@ -514,6 +550,9 @@ msgid "Disconnect"
 msgstr ""
 
 msgid "Disk usage"
+msgstr ""
+
+msgid "Display Settings"
 msgstr ""
 
 msgid "Display language"
@@ -574,6 +613,9 @@ msgid "Email"
 msgstr ""
 
 msgid "Empty"
+msgstr ""
+
+msgid "Empty Trash"
 msgstr ""
 
 msgid "Empty trash"
@@ -669,7 +711,13 @@ msgstr ""
 msgid "History"
 msgstr ""
 
+msgid "Home"
+msgstr ""
+
 msgid "Home folder"
+msgstr ""
+
+msgid "Home on the desktop"
 msgstr ""
 
 msgid "Hot corner"
@@ -685,6 +733,9 @@ msgid "Hover click"
 msgstr ""
 
 msgid "Icon theme"
+msgstr ""
+
+msgid "Icon: image path or icon name (default)"
 msgstr ""
 
 msgid "Icons"
@@ -742,6 +793,9 @@ msgid "Landscape (flipped)"
 msgstr ""
 
 msgid "Language"
+msgstr ""
+
+msgid "Last modified"
 msgstr ""
 
 msgid "Launchers"
@@ -861,6 +915,9 @@ msgstr ""
 msgid "Move later"
 msgstr ""
 
+msgid "Move to Trash"
+msgstr ""
+
 msgid "Move window left"
 msgstr ""
 
@@ -906,6 +963,12 @@ msgstr ""
 msgid "Never prompt or start programs on media insertion"
 msgstr ""
 
+msgid "New Document"
+msgstr ""
+
+msgid "New Folder"
+msgstr ""
+
 msgid "New Window"
 msgstr ""
 
@@ -925,6 +988,9 @@ msgid "No VPN configured"
 msgstr ""
 
 msgid "No apps found"
+msgstr ""
+
+msgid "No drop shadows on any surface of the extension"
 msgstr ""
 
 msgid "No nearby devices"
@@ -1014,6 +1080,9 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
+msgid "Open Desktop Folder"
+msgstr ""
+
 msgid "Open GNOME display settings"
 msgstr ""
 
@@ -1066,6 +1135,9 @@ msgid "Palette: %s"
 msgstr ""
 
 msgid "Password"
+msgstr ""
+
+msgid "Paste"
 msgstr ""
 
 msgid "Performance"
@@ -1155,6 +1227,9 @@ msgstr ""
 msgid "Processor"
 msgstr ""
 
+msgid "Properties"
+msgstr ""
+
 msgid "Proxy"
 msgstr ""
 
@@ -1186,6 +1261,9 @@ msgid "Rename"
 msgstr ""
 
 msgid "Rename category"
+msgstr ""
+
+msgid "Rename…"
 msgstr ""
 
 msgid "Reorder the pills with the arrows, hide the ones you do not need, or add your own. Apps in a custom category also stay in their built-in one."
@@ -1311,6 +1389,9 @@ msgstr ""
 msgid "Seeing, hearing, typing"
 msgstr ""
 
+msgid "Select All"
+msgstr ""
+
 msgid "Select Weather Location..."
 msgstr ""
 
@@ -1353,6 +1434,9 @@ msgstr ""
 msgid "Show dock"
 msgstr ""
 
+msgid "Show in Files"
+msgstr ""
+
 msgid "Show in the app menu"
 msgstr ""
 
@@ -1368,6 +1452,9 @@ msgstr ""
 msgid "Show seconds"
 msgstr ""
 
+msgid "Show the files of your Desktop folder on the desktop, no other extension needed"
+msgstr ""
+
 msgid "Show week numbers"
 msgstr ""
 
@@ -1380,10 +1467,16 @@ msgstr ""
 msgid "Simulated secondary click"
 msgstr ""
 
+msgid "Size"
+msgstr ""
+
 msgid "Size and font"
 msgstr ""
 
 msgid "Size of the clock menu panel; 1.00 is the default"
+msgstr ""
+
+msgid "Size of the desktop icons in pixels"
 msgstr ""
 
 msgid "Size of the preview shown when hovering a dock icon; 1.00 is the default"
@@ -1545,7 +1638,13 @@ msgstr ""
 msgid "Touchpad"
 msgstr ""
 
+msgid "Trash"
+msgstr ""
+
 msgid "Trash emptied"
+msgstr ""
+
+msgid "Trash on the desktop"
 msgstr ""
 
 msgid "Turn off for Do Not Disturb"
@@ -1555,6 +1654,9 @@ msgid "Turns off Wi-Fi and Bluetooth"
 msgstr ""
 
 msgid "Two-finger scrolling"
+msgstr ""
+
+msgid "Type"
 msgstr ""
 
 msgid "Typing"

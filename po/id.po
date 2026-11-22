@@ -56,6 +56,12 @@ msgstr "5 menit"
 msgid "7 days"
 msgstr "7 hari"
 
+msgid "A shortcut to the trash"
+msgstr "Pintasan ke sampah"
+
+msgid "A shortcut to your home folder"
+msgstr "Pintasan ke folder beranda"
+
 msgid "AM/PM"
 msgstr "AM/PM"
 
@@ -100,6 +106,9 @@ msgstr "Mode pesawat"
 
 msgid "Allow apps to add results to the overview search"
 msgstr "Izinkan aplikasi menambah hasil ke pencarian ringkasan"
+
+msgid "Allow executing as a program"
+msgstr "Izinkan dijalankan sebagai program"
 
 msgid "Allow scales such as 125% and 150%"
 msgstr "Izinkan skala seperti 125% dan 150%"
@@ -257,6 +266,12 @@ msgstr "Kartu dengan ikon berwarna"
 msgid "Categories"
 msgstr "Kategori"
 
+msgid "Change Background"
+msgstr "Ganti Latar"
+
+msgid "Change icon"
+msgstr "Ganti ikon"
+
 msgid "Change shortcuts for windows, apps and media"
 msgstr "Ubah pintasan untuk jendela, aplikasi, dan media"
 
@@ -268,6 +283,9 @@ msgstr "Pilih latar belakang"
 
 msgid "Choose a short name; it is shown on the category pill."
 msgstr "Pilih nama singkat; ditampilkan pada pil kategori."
+
+msgid "Choose an icon"
+msgstr "Pilih ikon"
 
 msgid "Choose apps"
 msgstr "Pilih aplikasi"
@@ -301,6 +319,9 @@ msgstr "Klik pintasan untuk mengubahnya"
 
 msgid "Click method"
 msgstr "Metode klik"
+
+msgid "Click the icon to change it"
+msgstr "Klik ikon untuk menggantinya"
 
 msgid "Clock"
 msgstr "Jam"
@@ -377,6 +398,9 @@ msgstr "Ukuran teks context menu"
 msgid "Context menus"
 msgstr "Context menu"
 
+msgid "Copy"
+msgstr "Salin"
+
 msgid "Corner radius"
 msgstr "Radius sudut"
 
@@ -421,6 +445,9 @@ msgstr "Kustom"
 
 msgid "Custom name"
 msgstr "Nama kustom"
+
+msgid "Cut"
+msgstr "Potong"
 
 msgid "Dark Style"
 msgstr "Gaya Gelap"
@@ -473,6 +500,12 @@ msgstr "Hapus kategori"
 msgid "Delete files older than"
 msgstr "Hapus berkas yang lebih lama dari"
 
+msgid "Desktop icon size"
+msgstr "Ukuran ikon desktop"
+
+msgid "Desktop icons"
+msgstr "Ikon desktop"
+
 msgid "Device and software"
 msgstr "Perangkat dan perangkat lunak"
 
@@ -503,6 +536,9 @@ msgstr "Matikan kamera"
 msgid "Disable microphone"
 msgstr "Matikan mikrofon"
 
+msgid "Disable shadows"
+msgstr "Matikan bayangan"
+
 msgid "Disable while typing"
 msgstr "Nonaktifkan saat mengetik"
 
@@ -517,6 +553,9 @@ msgstr "Putuskan"
 
 msgid "Disk usage"
 msgstr "Penggunaan disk"
+
+msgid "Display Settings"
+msgstr "Pengaturan Layar"
 
 msgid "Display language"
 msgstr "Bahasa tampilan"
@@ -577,6 +616,9 @@ msgstr "Email"
 
 msgid "Empty"
 msgstr "Kosongkan"
+
+msgid "Empty Trash"
+msgstr "Kosongkan Sampah"
 
 msgid "Empty trash"
 msgstr "Kosongkan tempat sampah"
@@ -671,8 +713,14 @@ msgstr "Kontras tinggi"
 msgid "History"
 msgstr "Riwayat"
 
+msgid "Home"
+msgstr "Beranda"
+
 msgid "Home folder"
 msgstr "Folder home"
+
+msgid "Home on the desktop"
+msgstr "Beranda di desktop"
 
 msgid "Hot corner"
 msgstr "Sudut aktif"
@@ -688,6 +736,9 @@ msgstr "Klik dengan menahan"
 
 msgid "Icon theme"
 msgstr "Tema ikon"
+
+msgid "Icon: image path or icon name (default)"
+msgstr "Ikon: path gambar atau nama ikon (bawaan)"
 
 msgid "Icons"
 msgstr "Ikon"
@@ -745,6 +796,9 @@ msgstr "Lanskap (terbalik)"
 
 msgid "Language"
 msgstr "Bahasa"
+
+msgid "Last modified"
+msgstr "Terakhir diubah"
 
 msgid "Launchers"
 msgstr "Peluncur"
@@ -863,6 +917,9 @@ msgstr "Pindah ke depan"
 msgid "Move later"
 msgstr "Pindah ke belakang"
 
+msgid "Move to Trash"
+msgstr "Pindahkan ke Sampah"
+
 msgid "Move window left"
 msgstr "Pindah jendela ke kiri"
 
@@ -908,6 +965,12 @@ msgstr "Tidak pernah"
 msgid "Never prompt or start programs on media insertion"
 msgstr "Jangan tanya atau jalankan program saat media dimasukkan"
 
+msgid "New Document"
+msgstr "Dokumen Baru"
+
+msgid "New Folder"
+msgstr "Folder Baru"
+
 msgid "New Window"
 msgstr "Jendela Baru"
 
@@ -928,6 +991,9 @@ msgstr "Belum ada VPN"
 
 msgid "No apps found"
 msgstr "Aplikasi tidak ditemukan"
+
+msgid "No drop shadows on any surface of the extension"
+msgstr "Tanpa bayangan di semua permukaan extension"
 
 msgid "No nearby devices"
 msgstr "Tidak ada perangkat terdekat"
@@ -1016,6 +1082,9 @@ msgstr "Akun Online"
 msgid "Open"
 msgstr "Buka"
 
+msgid "Open Desktop Folder"
+msgstr "Buka Folder Desktop"
+
 msgid "Open GNOME display settings"
 msgstr "Buka pengaturan layar GNOME"
 
@@ -1069,6 +1138,9 @@ msgstr "Palet: %s"
 
 msgid "Password"
 msgstr "Kata sandi"
+
+msgid "Paste"
+msgstr "Tempel"
 
 msgid "Performance"
 msgstr "Performa"
@@ -1157,6 +1229,9 @@ msgstr "Privasi & Keamanan"
 msgid "Processor"
 msgstr "Prosesor"
 
+msgid "Properties"
+msgstr "Properti"
+
 msgid "Proxy"
 msgstr "Proxy"
 
@@ -1185,10 +1260,13 @@ msgid "Removable media"
 msgstr "Media lepasan"
 
 msgid "Rename"
-msgstr "Ganti nama"
+msgstr "Ganti Nama"
 
 msgid "Rename category"
 msgstr "Ganti nama kategori"
+
+msgid "Rename…"
+msgstr "Ganti Nama…"
 
 msgid "Reorder the pills with the arrows, hide the ones you do not need, or add your own. Apps in a custom category also stay in their built-in one."
 msgstr "Atur urutan pil dengan panah, sembunyikan yang tidak perlu, atau tambah sendiri. Aplikasi di kategori kustom tetap ada di kategori bawaannya."
@@ -1206,7 +1284,7 @@ msgid "Replaces the shell's own on-screen display"
 msgstr "Menggantikan indikator layar bawaan shell"
 
 msgid "Reset"
-msgstr "Setel ulang"
+msgstr "Atur ulang"
 
 msgid "Reset all shortcuts"
 msgstr "Setel ulang semua pintasan"
@@ -1313,6 +1391,9 @@ msgstr "Bantuan penglihatan, pendengaran, dan pengetikan"
 msgid "Seeing, hearing, typing"
 msgstr "Penglihatan, pendengaran, pengetikan"
 
+msgid "Select All"
+msgstr "Pilih Semua"
+
 msgid "Select Weather Location..."
 msgstr "Pilih lokasi cuaca..."
 
@@ -1355,6 +1436,9 @@ msgstr "Tampilkan desktop"
 msgid "Show dock"
 msgstr "Tampilkan dock"
 
+msgid "Show in Files"
+msgstr "Tampilkan di Berkas"
+
 msgid "Show in the app menu"
 msgstr "Tampilkan di menu aplikasi"
 
@@ -1370,6 +1454,9 @@ msgstr "Tampilkan jendela terakhir"
 msgid "Show seconds"
 msgstr "Tampilkan detik"
 
+msgid "Show the files of your Desktop folder on the desktop, no other extension needed"
+msgstr "Tampilkan isi folder Desktop di desktop, tanpa ekstensi lain"
+
 msgid "Show week numbers"
 msgstr "Tampilkan nomor minggu"
 
@@ -1382,11 +1469,17 @@ msgstr "Matikan"
 msgid "Simulated secondary click"
 msgstr "Klik sekunder simulasi"
 
+msgid "Size"
+msgstr "Ukuran"
+
 msgid "Size and font"
 msgstr "Ukuran dan font"
 
 msgid "Size of the clock menu panel; 1.00 is the default"
 msgstr "Ukuran panel menu jam; 1.00 adalah bawaan"
+
+msgid "Size of the desktop icons in pixels"
+msgstr "Ukuran ikon desktop dalam piksel"
 
 msgid "Size of the preview shown when hovering a dock icon; 1.00 is the default"
 msgstr "Ukuran preview saat kursor di ikon dock; 1.00 adalah bawaan"
@@ -1547,8 +1640,14 @@ msgstr "Bilah atas, menu, dan notifikasi memakai warna tema (mode gelap)"
 msgid "Touchpad"
 msgstr "Touchpad"
 
+msgid "Trash"
+msgstr "Sampah"
+
 msgid "Trash emptied"
 msgstr "Sampah dikosongkan"
+
+msgid "Trash on the desktop"
+msgstr "Sampah di desktop"
 
 msgid "Turn off for Do Not Disturb"
 msgstr "Matikan untuk mode Jangan Ganggu"
@@ -1558,6 +1657,9 @@ msgstr "Mematikan Wi-Fi dan Bluetooth"
 
 msgid "Two-finger scrolling"
 msgstr "Gulir dua jari"
+
+msgid "Type"
+msgstr "Jenis"
 
 msgid "Typing"
 msgstr "Pengetikan"

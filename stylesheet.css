@@ -2954,3 +2954,30 @@
 .m3-qs.m3-dark .m3-sw-card.m3-sw-selected .m3-sw-badge {
   background-color: transparent;
 }
+
+/* Desktop icons */
+.m3-di {
+  border-radius: 14px;
+  padding: 6px 4px;
+  border: 1px solid transparent;
+}
+
+.m3-di.m3-di-selected {
+  background-color: rgba(208, 188, 255, 0.30);
+  border-color: rgba(208, 188, 255, 0.60);
+}
+
+.m3-di-label {
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+  padding-top: 4px;
+}
+
+.m3-di-rubber {
+  background-color: rgba(208, 188, 255, 0.18);
+  border: 1px solid rgba(208, 188, 255, 0.70);
+  border-radius: 4px;
+}

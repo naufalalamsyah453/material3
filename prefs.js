@@ -159,6 +159,22 @@ export default class Material3Preferences extends ExtensionPreferences {
         });
         settings.bind('show-switcher', switcherSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
         qsGroup.add(switcherSwitch);
+        const shadowSwitch = new Adw.SwitchRow({
+            title: _('Disable shadows'),
+            subtitle: _('No drop shadows on any surface of the extension'),
+        });
+        settings.bind('disable-shadows', shadowSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
+        qsGroup.add(shadowSwitch);
+        const desktopRows = [
+            ['show-desktop-icons', _('Desktop icons'), _('Show the files of your Desktop folder on the desktop, no other extension needed')],
+            ['desktop-show-home', _('Home on the desktop'), _('A shortcut to your home folder')],
+            ['desktop-show-trash', _('Trash on the desktop'), _('A shortcut to the trash')],
+        ];
+        for (const [key, title, subtitle] of desktopRows) {
+            const row = new Adw.SwitchRow({title, subtitle});
+            settings.bind(key, row, 'active', Gio.SettingsBindFlags.DEFAULT);
+            qsGroup.add(row);
+        }
 
         const dockGroup = new Adw.PreferencesGroup({
             title: _('Dock and app menu'),
@@ -332,6 +348,9 @@ export default class Material3Preferences extends ExtensionPreferences {
         addSpin(dockGroup, 'preview-scale', _('Window preview size'),
             _('Size of the preview shown when hovering a dock icon; 1.00 is the default'),
             {lower: 0.6, upper: 2.0, step: 0.05, digits: 2});
+        addSpin(qsGroup, 'desktop-icon-size', _('Desktop icon size'),
+            _('Size of the desktop icons in pixels'),
+            {lower: 32, upper: 128, step: 4, digits: 0, integer: true});
         const dockChoice = (key, title, subtitle, values, labels) => {
             const model = new Gtk.StringList();
             labels.forEach(l => model.append(l));

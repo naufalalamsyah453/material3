@@ -146,7 +146,7 @@ export class QuickSettingsPanel {
                 key === 'qs-slider-style' || key === 'qs-media-style' ||
                 key === 'context-scale' || key === 'context-font-scale' || key === 'context-show-icons')
                 this._scheduleRetune();
-            else if (key === 'theme-shell' || key === 'theme-apps' ||
+            else if (key === 'theme-shell' || key === 'theme-apps' || key === 'disable-shadows' ||
                 key.startsWith('border-qs-') || key.startsWith('border-appmenu-') || key.startsWith('border-dock-') ||
                 key.startsWith('border-ctx-'))
                 this._applyTheme();
@@ -533,8 +533,14 @@ export class QuickSettingsPanel {
         if (THEME_ORDER.includes(key)) {
             try {
                 const [, bytes] = this._dir.get_child('stylesheet.css').load_contents(null);
-                const css = themedCss(new TextDecoder().decode(bytes), key, ui) +
+                let css = themedCss(new TextDecoder().decode(bytes), key, ui) +
                     bordersCss(this._extSettings, key);
+                // One switch for every surface of the extension: panels, menus,
+                // dock, switcher, date menu. Text shadows stay, they keep
+                // labels on the wallpaper readable.
+                if (this._extSettings.settings_schema.has_key('disable-shadows') &&
+                    this._extSettings.get_boolean('disable-shadows'))
+                    css = css.replace(/box-shadow\s*:[^;}]*/g, 'box-shadow: none');
 
                 const dir = GLib.build_filenamev([GLib.get_user_cache_dir(), CACHE_DIR]);
                 GLib.mkdir_with_parents(dir, 0o755);

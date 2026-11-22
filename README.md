@@ -117,6 +117,17 @@ features/dock/
   centang, ikon tombol mengikuti profil). Tombol tersembunyi jika
   power-profiles-daemon tidak tersedia.
 
+## Desktop icons
+
+`show-desktop-icons` draws the files of the Desktop folder right on the
+wallpaper, with no other extension needed. The icons sit on a grid between the
+wallpaper and the windows: a click selects, a double click opens, dragging moves
+(positions are kept in `desktop-positions`), dragging on the wallpaper draws a
+selection rectangle, and the right button opens the extension's own menu (open,
+cut / copy / paste, rename, properties, new folder or document, change
+background). Home and Trash shortcuts can be added (`desktop-show-home`,
+`desktop-show-trash`), and the icon size is `desktop-icon-size` (32–128 px).
+
 ## Date menu
 
 The clock menu in the top bar is replaced with the Material 3 date menu
@@ -165,6 +176,9 @@ plus nmcli, bluetoothctl, wpctl, timedatectl, D-Bus Accounts, lpstat/colormgr/bo
   grid: networks in range (click to connect/disconnect), paired Bluetooth
   devices (click to connect/disconnect), or the available power modes.
   Back button, Escape, or closing the menu dismisses it.
+- `disable-shadows` removes the drop shadows from every surface (panels,
+  menus, dock, switcher, date menu) while keeping text shadows so labels stay
+  readable on the wallpaper.
 
 ## Settings
 
@@ -185,6 +199,8 @@ Each add-on can be disabled individually in the extension preferences:
   (`show-datemenu`).
 - **Use Material 3 Alt+Tab switcher** — off restores GNOME's own window
   switcher (`show-switcher`).
+- **Desktop icons** — draws the Desktop folder on the wallpaper without another
+  extension (`show-desktop-icons`).
 - **Tile style** — *Classic* (click toggles, right-click opens the options) or
   *Split* (the icon chip toggles, the text area opens the options; only tiles
   with options are divided) (`qs-tile-style`).
@@ -241,6 +257,7 @@ features/quickSettings/
 features/dateMenu/index.js       clock menu: notifications, calendar, reminders,
                                  world clocks, weather
 features/switcher/index.js       Alt+Tab window picker with live previews
+features/desktop/index.js        desktop icons, selection, drag and file menu
 stylesheet.css                   Material tokens + component CSS
 tools/run-nested.sh              isolated headless screenshot harness
 tools/shot.py                    screenshot helper (private session bus)
