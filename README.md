@@ -73,17 +73,20 @@ Dock melayang di bawah layar dan app menu (App Drawer) yang dibukanya, 1:1 denga
 `android_17_material_you_desktop_os.html`:
 
 - **Dock**: pill 64 px, radius 28. Tombol menu aplikasi, ikon aplikasi favorit +
-  aplikasi yang sedang berjalan, dan pil pengganti palet (menampilkan nama palet).
-  Indikator di bawah ikon: tidak ada (tertutup), titik 6 px (diminimalkan), garis
-  16 px (terbuka). Klik: buka jika tertutup/diminimalkan, minimalkan jika sedang
-  fokus; klik tengah membuka jendela baru. Animasi minimize terbang ke ikon dock,
-  lalu ikon memantul (`dockAbsorbBounce`).
+  aplikasi yang sedang berjalan, dan tombol penutup pilihan (`dock-end-button`:
+  tidak ada, ganti tema, atau pintasan pengaturan). Indikator di bawah ikon: tidak
+  ada (tertutup), titik 6 px (diminimalkan), garis 16 px (terbuka). Klik: buka jika
+  tertutup/diminimalkan, minimalkan jika sedang fokus; klik tengah membuka jendela
+  baru. Animasi minimize terbang ke ikon dock, lalu ikon memantul
+  (`dockAbsorbBounce`). Hover ikon menampilkan pratinjau jendela, ukurannya diatur
+  `preview-scale`.
 - **App menu**: popover 480 px di atas dock (radius 32) dengan header "Semua
   Aplikasi" + tombol Tema dan mode terang/gelap, kolom pencarian (Enter membuka hasil
   pertama), pil kategori (Semua / Produktivitas / Sistem / Utilitas dari kategori
   desktop entry), grid 4 kolom dengan animasi muncul bertahap, dan kartu
-  "Lanjutkan Terakhir" (jendela yang terakhir dipakai). Klik di luar atau `Esc`
-  menutupnya.
+  "Lanjutkan Terakhir" (jendela yang terakhir dipakai). Urutan aplikasi mengikuti
+  `appmenu-sort` (nama A-Z, nama Z-A, atau paling sering dipakai). Klik di luar
+  atau `Esc` menutupnya.
 - Mengikuti palet (aksen GNOME), mode terang/gelap, skala UI dan font yang sama
   dengan Quick Settings. Dock disembunyikan di Overview dan layar penuh. Overview saat login dilewati, dan dash bawaan Overview disembunyikan.
 - Nonaktifkan di pengaturan extension -> "Dock and app menu" -> "Show dock"
@@ -104,7 +107,8 @@ features/dock/
   bawahnya. Tampilannya punya pengaturan sendiri: font (`context-font-family`;
   kosong = sama dengan font utama), ukuran menu (`context-scale`) dan ukuran teks
   (`context-font-scale`) 0.7–1.6, serta tampil/tidaknya ikon tiap entri
-  (`context-show-icons`).
+  (`context-show-icons`). Border menu punya grupnya sendiri
+  (`border-ctx-width`, `border-ctx-radius`, `border-ctx-color`).
 - **App menu**: lebar (`appmenu-width`, 360-900 px; kartu aplikasi membagi lebarnya
   sama rata) dan tinggi grid (`appmenu-height`) punya pengaturan terpisah di
   "Dock and app menu".
@@ -112,6 +116,21 @@ features/dock/
   membuka pop-up Performance / Balanced / Power Saver (profil aktif diberi tanda
   centang, ikon tombol mengikuti profil). Tombol tersembunyi jika
   power-profiles-daemon tidak tersedia.
+
+## Date menu
+
+The clock menu in the top bar is replaced with the Material 3 date menu
+(`show-datemenu`): notifications on the left, and a calendar, reminders, world
+clocks and weather on the right. Reminders are stored in GSettings
+(`datemenu-notes`) keyed by date. Panel and text size scale independently
+(`datemenu-scale`, `datemenu-font-scale`, 0.7–1.5).
+
+## Alt+Tab switcher
+
+`show-switcher` replaces the shell's window switcher with a Material 3 picker:
+one card per window with the app icon, title, close button and a live preview
+sized from the window's own aspect ratio, plus the workspace hint. Off restores
+GNOME's own switcher.
 
 ## Pengaturan (pengganti GNOME Settings)
 
@@ -156,12 +175,16 @@ initial follows the name.
 
 ## Add-on switches
 
-Both add-ons can be disabled individually in the extension preferences:
+Each add-on can be disabled individually in the extension preferences:
 
 - **Use Material 3 Quick Settings** — off restores GNOME's own Quick Settings
   panel (`show-quicksettings`).
 - **Use Material 3 app menu** — off makes the dock button and the Super key open
   GNOME's Overview instead of the Material app menu (`show-appmenu`).
+- **Use Material 3 date menu** — off restores the stock clock menu
+  (`show-datemenu`).
+- **Use Material 3 Alt+Tab switcher** — off restores GNOME's own window
+  switcher (`show-switcher`).
 - **Tile style** — *Classic* (click toggles, right-click opens the options) or
   *Split* (the icon chip toggles, the text area opens the options; only tiles
   with options are divided) (`qs-tile-style`).
@@ -215,6 +238,9 @@ features/quickSettings/
   palette.js                     tile text colors tweened in JS
   backends/                      brightness, volume, network, bluetooth,
                                  settings, power, mpris
+features/dateMenu/index.js       clock menu: notifications, calendar, reminders,
+                                 world clocks, weather
+features/switcher/index.js       Alt+Tab window picker with live previews
 stylesheet.css                   Material tokens + component CSS
 tools/run-nested.sh              isolated headless screenshot harness
 tools/shot.py                    screenshot helper (private session bus)

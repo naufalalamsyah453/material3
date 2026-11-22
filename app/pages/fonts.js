@@ -2,6 +2,7 @@ import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 
 import {_} from '../i18n.js';
+import {cacheGet, cacheSet} from '../cache.js';
 import {gs} from '../sys.js';
 import {gsFont, gsSelect, heading, iconButton, listCard, navigate, rowsFrom, sectionLabel, hbox, vbox} from '../ui.js';
 
@@ -9,6 +10,9 @@ const IFACE = 'org.gnome.desktop.interface';
 
 /** Icon and cursor themes installed on this system (listed lazily). */
 function themeNames(kind) {
+    const known = cacheGet(`themes-${kind}`, 24 * 3600 * 1000);
+    if (known)
+        return known;
     const dirs = ['/usr/share/icons', GLib.build_filenamev([GLib.get_user_data_dir(), 'icons']),
         GLib.build_filenamev([GLib.get_home_dir(), '.icons'])];
     const names = new Set();
@@ -29,7 +33,9 @@ function themeNames(kind) {
             // Directory missing.
         }
     }
-    return [...names].sort((a, b) => a.localeCompare(b));
+    const sorted = [...names].sort((a, b) => a.localeCompare(b));
+    cacheSet(`themes-${kind}`, sorted);
+    return sorted;
 }
 
 export function build() {

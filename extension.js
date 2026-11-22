@@ -1,10 +1,12 @@
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 import {setTranslator} from './i18n.js';
+import {DateMenuFeature} from './features/dateMenu/index.js';
 import {DockFeature} from './features/dock/index.js';
 import {OsdFeature} from './features/osd/index.js';
 import {QuickSettingsPanel} from './features/quickSettings/panel.js';
 import {SettingsFeature} from './features/settings/index.js';
+import {SwitcherFeature} from './features/switcher/index.js';
 
 export default class Material3Extension extends Extension {
     enable() {
@@ -23,6 +25,14 @@ export default class Material3Extension extends Extension {
         this._settingsApp = new SettingsFeature(settings, this.path);
         this._settingsApp.enable();
 
+        this._dateMenu = null;
+        this._dateMenuId = settings.connect('changed::show-datemenu', () => this._syncDateMenu());
+        this._syncDateMenu();
+
+        this._switcher = null;
+        this._switcherId = settings.connect('changed::show-switcher', () => this._syncSwitcher());
+        this._syncSwitcher();
+
         this._osd = null;
         this._osdId = settings.connect('changed::osd-enabled', () => this._syncOsd());
         this._syncOsd();
@@ -38,6 +48,16 @@ export default class Material3Extension extends Extension {
         this._osdId = 0;
         this._osd?.disable();
         this._osd = null;
+        if (this._dateMenuId)
+            this._settings.disconnect(this._dateMenuId);
+        this._dateMenuId = 0;
+        this._dateMenu?.disable();
+        this._dateMenu = null;
+        if (this._switcherId)
+            this._settings.disconnect(this._switcherId);
+        this._switcherId = 0;
+        this._switcher?.disable();
+        this._switcher = null;
 
         this._settingsApp?.disable();
         this._settingsApp = null;
@@ -62,6 +82,47 @@ export default class Material3Extension extends Extension {
             }
         } catch (e) {
             console.error(`material3: Quick Settings failed: ${e.message}\n${e.stack}`);
+        }
+    }
+
+    /** Material 3 date menu (notifications, calendar, clocks, weather). */
+    _syncDateMenu() {
+        const schema = this._settings.settings_schema;
+        const wanted = !schema.has_key('show-datemenu') || this._settings.get_boolean('show-datemenu');
+        try {
+            if (wanted && !this._dateMenu) {
+                this._dateMenu = new DateMenuFeature(this._settings);
+                this._dateMenu.enable();
+            } else if (!wanted && this._dateMenu) {
+                this._dateMenu.disable();
+                this._dateMenu = null;
+            }
+        } catch (e) {
+            console.error(`material3: date menu failed: ${e.message}\n${e.stack}`);
+            try {
+                this._dateMenu?.disable();
+            } catch {
+                // Nothing left to undo.
+            }
+            this._dateMenu = null;
+        }
+    }
+
+    /** Material 3 Alt+Tab switcher, replacing the shell's own. */
+    _syncSwitcher() {
+        const schema = this._settings.settings_schema;
+        const wanted = !schema.has_key('show-switcher') || this._settings.get_boolean('show-switcher');
+        try {
+            if (wanted && !this._switcher) {
+                this._switcher = new SwitcherFeature(this._settings);
+                this._switcher.enable();
+            } else if (!wanted && this._switcher) {
+                this._switcher.disable();
+                this._switcher = null;
+            }
+        } catch (e) {
+            console.error(`material3: switcher failed: ${e.message}\n${e.stack}`);
+            this._switcher = null;
         }
     }
 

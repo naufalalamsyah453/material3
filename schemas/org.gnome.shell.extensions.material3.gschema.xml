@@ -87,6 +87,22 @@
       <summary>Dock height above the screen edge</summary>
       <description>Gap in pixels between the bottom of the dock and the bottom edge of the screen.</description>
     </key>
+    <key name="dock-end-button" type="s">
+      <default>'none'</default>
+      <summary>Last button of the dock</summary>
+      <description>Button at the end of the dock: none, theme (palette switch) or settings (open the extension settings).</description>
+    </key>
+    <key name="appmenu-sort" type="s">
+      <default>'name'</default>
+      <summary>App menu sort order</summary>
+      <description>Order of the apps in the app menu: name, name-desc or usage.</description>
+    </key>
+    <key name="preview-scale" type="d">
+      <range min="0.6" max="2.0"/>
+      <default>1.0</default>
+      <summary>Dock window preview size</summary>
+      <description>Scale factor for the window previews shown when hovering a dock icon.</description>
+    </key>
     <key name="appmenu-scale" type="d">
       <range min="0.7" max="1.5"/>
       <default>1.0</default>
@@ -209,6 +225,29 @@
       <summary>Dock border color</summary>
       <description>Which palette color the border uses.</description>
     </key>
+    <key name="border-ctx-width" type="i">
+      <range min="0" max="4"/>
+      <default>1</default>
+      <summary>Context menu border width</summary>
+      <description>Border width in pixels, 0 for none.</description>
+    </key>
+    <key name="border-ctx-radius" type="i">
+      <range min="0" max="48"/>
+      <default>20</default>
+      <summary>Context menu corner radius</summary>
+      <description>Corner radius in pixels.</description>
+    </key>
+    <key name="border-ctx-color" type="s">
+      <choices>
+        <choice value="outline"/>
+        <choice value="primary"/>
+        <choice value="secondary"/>
+        <choice value="text"/>
+      </choices>
+      <default>"outline"</default>
+      <summary>Context menu border color</summary>
+      <description>Which palette color the border uses.</description>
+    </key>
     <key name="border-settings-width" type="i">
       <range min="0" max="4"/>
       <default>0</default>
@@ -264,6 +303,18 @@
       <summary>Context menu font</summary>
       <description>Font family of the right-click menus (dock icons and app menu). Empty uses the text font of the rest of the interface.</description>
     </key>
+    <key name="datemenu-scale" type="d">
+      <range min="0.7" max="1.5"/>
+      <default>1.0</default>
+      <summary>Date menu size</summary>
+      <description>Scale factor for the size of the date menu panel.</description>
+    </key>
+    <key name="datemenu-font-scale" type="d">
+      <range min="0.7" max="1.5"/>
+      <default>1.0</default>
+      <summary>Date menu text size</summary>
+      <description>Scale factor for the text in the date menu.</description>
+    </key>
     <key name="context-scale" type="d">
       <range min="0.7" max="1.6"/>
       <default>1.0</default>
@@ -311,6 +362,21 @@
       <default>[]</default>
       <summary>Hidden app menu categories</summary>
       <description>Ids of the categories that are not shown as pills in the app menu.</description>
+    </key>
+    <key name="show-datemenu" type="b">
+      <default>true</default>
+      <summary>Material 3 date menu</summary>
+      <description>Replaces the content of the clock menu in the top bar with notifications, calendar, reminders, world clocks and weather in the Material 3 layout.</description>
+    </key>
+    <key name="datemenu-notes" type="s">
+      <default>"{}"</default>
+      <summary>Date menu reminders</summary>
+      <description>Reminders added in the date menu, as JSON keyed by date.</description>
+    </key>
+    <key name="show-switcher" type="b">
+      <default>true</default>
+      <summary>Material 3 Alt+Tab window switcher</summary>
+      <description>Replaces the shell's Alt+Tab switcher with a Material 3 window picker.</description>
     </key>
     <key name="osd-enabled" type="b">
       <default>true</default>

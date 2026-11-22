@@ -5,6 +5,7 @@ import GLib from 'gi://GLib';
 import Gtk from 'gi://Gtk?version=4.0';
 
 import {_} from '../i18n.js';
+import {cacheGet, cacheSet, thumbGet, thumbPut} from '../cache.js';
 import {EXTENSION_DIR, extSettings, gs, hasCommand, later} from '../sys.js';
 import {THEME_NAMES} from '../../features/quickSettings/themes.js';
 import {palette, unit} from '../theme.js';
@@ -45,6 +46,7 @@ function pump() {
         GdkPixbuf.Pixbuf.new_from_stream_at_scale_async(stream, w, h, true, null, (_s, res2) => {
             try {
                 const pixbuf = GdkPixbuf.Pixbuf.new_from_stream_finish(res2);
+                thumbPut(uri, w, h, pixbuf);
                 picture.set_paintable(Gdk.Texture.new_for_pixbuf(pixbuf));
             } catch {
                 // Unsupported format: the tile stays plain.
@@ -59,6 +61,11 @@ function thumbnail(uri, w, h) {
     const picture = new Gtk.Picture({content_fit: Gtk.ContentFit.COVER, can_shrink: true});
     picture.add_css_class('m3-thumb');
     picture.set_size_request(w, h);
+    const cached = thumbGet(uri, w, h);
+    if (cached) {
+        picture.set_paintable(cached);
+        return picture;
+    }
     queue.push({uri, picture, w, h});
     pump();
     return picture;
@@ -150,6 +157,12 @@ function paletteCard() {
 
 /** Wallpapers found on disk, listed without blocking (one directory per idle turn). */
 function findWallpapers(done) {
+    // The list of files is kept for a day; the scan only runs when it is older.
+    const known = cacheGet('wallpapers', 24 * 3600 * 1000);
+    if (known) {
+        done(known);
+        return;
+    }
     const found = [];
     const dirs = [...WALLPAPER_DIRS];
     const pictures = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES);
@@ -177,6 +190,7 @@ function findWallpapers(done) {
     const step = () => {
         const dir = dirs.shift();
         if (!dir) {
+            cacheSet('wallpapers', found);
             done(found);
             return;
         }

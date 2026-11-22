@@ -255,7 +255,8 @@ class CoverMediaCard {
 
     _buildSeek() {
         this._seek = new St.Widget({
-            x_expand: true, height: px(34), reactive: true, layout_manager: new Clutter.FixedLayout(),
+            x_expand: true, height: px(34), min_width: 0, natural_width: px(60), reactive: true,
+            layout_manager: new Clutter.FixedLayout(),
         });
         this._seekRest = new St.Widget({style_class: 'm3-cm-rest'});
         this._seekFill = new St.Widget({style_class: 'm3-cm-fill'});
@@ -264,39 +265,55 @@ class CoverMediaCard {
             this._seek.add_child(a);
         this._seek.connect('notify::width', () => this._paintSeek());
 
-        let dragging = false;
+        let grab = null;
         const fractionAt = event => {
             const [x] = this._seek.transform_stage_point(...event.get_coords());
             return Math.max(0, Math.min(1, x / Math.max(1, this._seek.width)));
         };
-        this._seek.connect('button-press-event', (_a, event) => {
-            dragging = true;
-            this._seekFraction = fractionAt(event);
-            this._paintSeek();
-            return Clutter.EVENT_STOP;
-        });
-        this._seek.connect('motion-event', (_a, event) => {
-            if (dragging) {
-                this._seekFraction = fractionAt(event);
-                this._paintSeek();
-            }
-            return Clutter.EVENT_STOP;
-        });
         const finish = () => {
-            if (!dragging)
+            if (!grab)
                 return Clutter.EVENT_PROPAGATE;
-            dragging = false;
+            grab.dismiss();
+            grab = null;
+            const fraction = this._seekFraction;
             const p = this._progress;
-            if (p && p.length > 0 && this._seekFraction !== null) {
-                this._backend.seekBy(this._seekFraction * p.length - p.position);
-                p.position = this._seekFraction * p.length;
+            if (p && p.length > 0 && fraction !== null) {
+                // Seek from the position the player has right now, not the last poll.
+                this._backend.progress().then(fresh => {
+                    const now = fresh ?? p;
+                    this._backend.seekBy(fraction * p.length - now.position);
+                }).catch(() => {});
+                p.position = fraction * p.length;
             }
             this._seekFraction = null;
             this._paintSeek();
             return Clutter.EVENT_STOP;
         };
+        this._seek.connect('button-press-event', (_a, event) => {
+            if (event.get_button() !== Clutter.BUTTON_PRIMARY)
+                return Clutter.EVENT_PROPAGATE;
+            // The pointer is grabbed for the drag, so it keeps working outside the bar.
+            try {
+                grab = global.stage.grab(this._seek);
+            } catch {
+                grab = null;
+            }
+            this._seekFraction = fractionAt(event);
+            this._paintSeek();
+            return Clutter.EVENT_STOP;
+        });
+        this._seek.connect('motion-event', (_a, event) => {
+            if (this._seekFraction === null)
+                return Clutter.EVENT_PROPAGATE;
+            this._seekFraction = fractionAt(event);
+            this._paintSeek();
+            return Clutter.EVENT_STOP;
+        });
         this._seek.connect('button-release-event', finish);
-        this._seek.connect('leave-event', finish);
+        this._seek.connect('destroy', () => {
+            grab?.dismiss();
+            grab = null;
+        });
         return this._seek;
     }
 

@@ -24,6 +24,7 @@ export class WindowPreview {
      * @param {object} host
      * @param {function(): boolean} host.blocked another popup is open
      * @param {function(boolean): void} host.openChanged
+     * @param {function(): number} host.previewScale size factor of the thumbnails
      */
     constructor(host) {
         this._host = host;
@@ -152,9 +153,11 @@ export class WindowPreview {
     _rebuild() {
         this._panel.destroy_all_children();
 
+        const perRow = this._windows.length > 2 ? 2 : PER_ROW;
         let row = null;
         this._windows.forEach((window, index) => {
-            if (index % PER_ROW === 0) {
+            // Three or more windows make a grid of two columns.
+            if (index % perRow === 0) {
                 row = new St.BoxLayout({style: `spacing: ${px(8)}px;`});
                 this._panel.add_child(row);
             }
@@ -163,8 +166,9 @@ export class WindowPreview {
     }
 
     _card(window) {
-        const maxW = px(THUMB_W);
-        const maxH = px(THUMB_H);
+        const k = this._host.previewScale?.() ?? 1;
+        const maxW = Math.round(px(THUMB_W) * k);
+        const maxH = Math.round(px(THUMB_H) * k);
         const actor = window.get_compositor_private();
         let tw = maxW;
         let th = maxH;
@@ -196,7 +200,7 @@ export class WindowPreview {
             y_align: Clutter.ActorAlign.CENTER}));
         const title = textLabel(window.get_title() || this._item.app.get_name(), 'm3-prev-title',
             {x_expand: true});
-        title.set_style(`max-width: ${px(THUMB_W - 54)}px;`);
+        title.set_style(`max-width: ${Math.round(px(THUMB_W - 54) * k)}px;`);
         title.clutter_text.set_single_line_mode(true);
         title.clutter_text.set_ellipsize(Pango.EllipsizeMode.END);
         head.add_child(title);

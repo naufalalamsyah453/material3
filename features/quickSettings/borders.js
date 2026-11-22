@@ -13,7 +13,7 @@ export function borderOf(ext, surface, theme) {
     const width = has(`border-${surface}-width`) ? ext.get_int(`border-${surface}-width`) : 1;
     const kind = has(`border-${surface}-color`) ? ext.get_string(`border-${surface}-color`) : 'outline';
     const pick = COLOR[kind] ?? COLOR.outline;
-    const defaults = {qs: 32, appmenu: 32, dock: 28, settings: 28};
+    const defaults = {qs: 32, appmenu: 32, dock: 28, ctx: 20, settings: 28};
     const radius = has(`border-${surface}-radius`) ? ext.get_int(`border-${surface}-radius`) : defaults[surface];
     return {
         width,
@@ -25,14 +25,15 @@ export function borderOf(ext, surface, theme) {
 
 /**
  * A stylesheet layer with the border of the shell surfaces (Quick Settings,
- * app menu, dock). It goes after the themed stylesheet so it wins.
+ * app menu, dock, context menus). It goes after the themed stylesheet so it wins.
  */
 export function bordersCss(ext, theme) {
     const surfaces = [
         ['qs', ['.m3-qs.quick-settings'], ['.m3-qs.m3-dark.quick-settings']],
         ['appmenu', ['.m3-appmenu'], ['.m3-qs.m3-dark .m3-appmenu']],
-        ['dock', ['.m3-dock-bar', '.m3-ctx', '.m3-prev'],
-            ['.m3-qs.m3-dark .m3-dock-bar', '.m3-qs.m3-dark .m3-ctx', '.m3-qs.m3-dark .m3-prev']],
+        ['dock', ['.m3-dock-bar', '.m3-prev'],
+            ['.m3-qs.m3-dark .m3-dock-bar', '.m3-qs.m3-dark .m3-prev']],
+        ['ctx', ['.m3-ctx'], ['.m3-qs.m3-dark .m3-ctx']],
     ];
     let css = '\n/* material3: borders */\n';
     for (const [id, light, dark] of surfaces) {

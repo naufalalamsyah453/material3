@@ -147,7 +147,8 @@ export class QuickSettingsPanel {
                 key === 'context-scale' || key === 'context-font-scale' || key === 'context-show-icons')
                 this._scheduleRetune();
             else if (key === 'theme-shell' || key === 'theme-apps' ||
-                key.startsWith('border-qs-') || key.startsWith('border-appmenu-') || key.startsWith('border-dock-'))
+                key.startsWith('border-qs-') || key.startsWith('border-appmenu-') || key.startsWith('border-dock-') ||
+                key.startsWith('border-ctx-'))
                 this._applyTheme();
             else if (!this._flashId)
                 this._syncName();
@@ -293,7 +294,6 @@ export class QuickSettingsPanel {
                 iconFor: v => v === 0 ? 'volume_off' : v < 50 ? 'volume_down' : 'volume_up',
                 trailing: [
                     {iconFor: v => (v === 0 || b.volume.muted ? 'volume_off' : 'volume_up'), onClick: () => b.volume.toggleMute()},
-                    {iconFor: () => 'more_vert', onClick: () => openSettings('sound')},
                 ],
             },
         ], {style: extStyle('qs-slider-style')});

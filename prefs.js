@@ -147,6 +147,19 @@ export default class Material3Preferences extends ExtensionPreferences {
         choiceRow('qs-media-style', _('Media player style'), _('The card that shows the playing track'),
             ['classic', 'cover'], [_('Classic: compact card'), _('Cover: album art with seek bar')]);
 
+        const dateMenuSwitch = new Adw.SwitchRow({
+            title: _('Material 3 date menu'),
+            subtitle: _('Notifications, calendar, reminders, world clocks and weather in the clock menu'),
+        });
+        settings.bind('show-datemenu', dateMenuSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
+        qsGroup.add(dateMenuSwitch);
+        const switcherSwitch = new Adw.SwitchRow({
+            title: _('Material 3 Alt+Tab switcher'),
+            subtitle: _('Off restores GNOME\'s own window switcher'),
+        });
+        settings.bind('show-switcher', switcherSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
+        qsGroup.add(switcherSwitch);
+
         const dockGroup = new Adw.PreferencesGroup({
             title: _('Dock and app menu'),
             description: _('The floating dock at the bottom of the screen and the app menu it opens.'),
@@ -223,7 +236,7 @@ export default class Material3Preferences extends ExtensionPreferences {
             return model;
         };
         for (const [id, name] of [
-            ['qs', _('Quick Settings')], ['appmenu', _('App menu')], ['dock', _('Dock')],
+            ['qs', _('Quick Settings')], ['appmenu', _('App menu')], ['dock', _('Dock')], ['ctx', _('Context menus')],
             ['settings', _('Settings app')],
         ]) {
             const expander = new Adw.ExpanderRow({title: name});
@@ -316,6 +329,24 @@ export default class Material3Preferences extends ExtensionPreferences {
             {lower: 0, upper: 96, step: 2, digits: 0, integer: true});
         addSpin(dockGroup, 'appmenu-scale', _('App menu size'), _('1.00 is the default size'),
             {lower: 0.7, upper: 1.5, step: 0.05, digits: 2});
+        addSpin(dockGroup, 'preview-scale', _('Window preview size'),
+            _('Size of the preview shown when hovering a dock icon; 1.00 is the default'),
+            {lower: 0.6, upper: 2.0, step: 0.05, digits: 2});
+        const dockChoice = (key, title, subtitle, values, labels) => {
+            const model = new Gtk.StringList();
+            labels.forEach(l => model.append(l));
+            const row = new Adw.ComboRow({
+                title, subtitle, model,
+                selected: Math.max(0, values.indexOf(settings.get_string(key))),
+            });
+            row.connect('notify::selected', () => settings.set_string(key, values[row.selected] ?? values[0]));
+            dockGroup.add(row);
+        };
+        dockChoice('dock-end-button', _('Dock end button'),
+            _('The button at the end of the dock'),
+            ['none', 'theme', 'settings'], [_('None'), _('Theme switch'), _('Settings shortcut')]);
+        dockChoice('appmenu-sort', _('App sort order'), _('Order of the apps in the app menu'),
+            ['name', 'name-desc', 'usage'], [_('Name (A-Z)'), _('Name (Z-A)'), _('Most used')]);
         addSpin(dockGroup, 'appmenu-width', _('App menu width'),
             _('Width of the app menu in pixels; the app cards share it evenly'),
             {lower: 360, upper: 900, step: 10, digits: 0, integer: true});
@@ -426,6 +457,13 @@ export default class Material3Preferences extends ExtensionPreferences {
         });
         settings.bind('context-show-icons', ctxIcons, 'active', Gio.SettingsBindFlags.DEFAULT);
         sizeGroup.add(ctxIcons);
+        addSpin(sizeGroup, 'datemenu-scale', _('Date menu size'),
+            _('Size of the clock menu panel; 1.00 is the default'),
+            {lower: 0.7, upper: 1.5, step: 0.05, digits: 2});
+        addSpin(sizeGroup, 'datemenu-font-scale', _('Date menu text size'),
+            _('Size of the text in the clock menu; 1.00 is the default'),
+            {lower: 0.7, upper: 1.5, step: 0.05, digits: 2});
+
 
         window.add(page);
         window.add(buildCategoriesPage(window, settings));

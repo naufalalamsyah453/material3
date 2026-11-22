@@ -225,24 +225,43 @@ export class Dock {
         });
         this._bar.add_child(this._box);
 
-        this._bar.add_child(this._divider());
-
-        const pill = new St.Button({
-            style_class: 'm3-dock-theme',
-            accessible_name: _('Switch Material You Palette'),
-            height: px(44),
-            can_focus: true,
-            reactive: true,
-            y_align: Clutter.ActorAlign.CENTER,
-        });
-        const pillContent = new St.BoxLayout({style: `spacing: ${px(8)}px;`});
-        pillContent.add_child(symbolIcon('color_lens', {size: 19, filled: true}));
-        this._themeLabel = textLabel(host.themeName(), 'm3-dock-theme-name');
-        pillContent.add_child(this._themeLabel);
-        pill.set_child(pillContent);
-        pressFeedback(pill);
-        pill.connect('clicked', () => host.cycleTheme());
-        this._bar.add_child(pill);
+        // The last button: the palette switch, a settings shortcut, or nothing.
+        const end = host.endButton?.() ?? 'theme';
+        this._themeLabel = null;
+        if (end === 'theme') {
+            this._bar.add_child(this._divider());
+            const pill = new St.Button({
+                style_class: 'm3-dock-theme',
+                accessible_name: _('Switch Material You Palette'),
+                height: px(44),
+                can_focus: true,
+                reactive: true,
+                y_align: Clutter.ActorAlign.CENTER,
+            });
+            const pillContent = new St.BoxLayout({style: `spacing: ${px(8)}px;`});
+            pillContent.add_child(symbolIcon('color_lens', {size: 19, filled: true}));
+            this._themeLabel = textLabel(host.themeName(), 'm3-dock-theme-name');
+            pillContent.add_child(this._themeLabel);
+            pill.set_child(pillContent);
+            pressFeedback(pill);
+            pill.connect('clicked', () => host.cycleTheme());
+            this._bar.add_child(pill);
+        } else if (end === 'settings') {
+            this._bar.add_child(this._divider());
+            const button = new St.Button({
+                style_class: 'm3-dock-apps',
+                accessible_name: _('Settings'),
+                width: px(44),
+                height: px(44),
+                can_focus: true,
+                reactive: true,
+                y_align: Clutter.ActorAlign.CENTER,
+            });
+            button.set_child(centerBin(symbolIcon('settings', {size: 22}), 'm3-dock-apps-inner'));
+            pressFeedback(button);
+            button.connect('clicked', () => host.openSettings?.());
+            this._bar.add_child(button);
+        }
 
         this.sync();
     }
@@ -276,7 +295,7 @@ export class Dock {
     }
 
     setThemeName(name) {
-        this._themeLabel.set_text(name);
+        this._themeLabel?.set_text(name);
     }
 
     /** Highlight the menu button while the app menu is open. */

@@ -23,7 +23,7 @@ const HIDE_DELAY = 450; // ms the pointer may be away before an auto-hidden dock
 const REBUILD_KEYS = [
     'ui-scale', 'font-scale', 'font-family', 'dock-scale', 'appmenu-scale',
     'dock-mode', 'dock-margin', 'appmenu-height', 'appmenu-width', 'context-font-family',
-    'context-scale', 'context-font-scale', 'context-show-icons',
+    'context-scale', 'context-font-scale', 'context-show-icons', 'dock-end-button',
 ];
 const MENU_GAP = 8; // reference: drawer bottom 84px over a 64px dock at 12px
 
@@ -166,10 +166,21 @@ export class DockFeature {
             return;
         this._reposition();
         const on = this._dockWanted();
-        this._dock.actor.visible = on && !Main.overview.visible;
+        // The dock shares the menu's layer: in a fullscreen app it stays away
+        // until the app menu opens, then both show.
+        this._dock.actor.visible = on && !Main.overview.visible && (!this._fullscreen() || !!this._menuOpen);
         for (const actor of [this._strut, this._edge]) {
             if (actor)
                 actor.visible = on;
+        }
+    }
+
+    /** True while a fullscreen window covers the dock's monitor. */
+    _fullscreen() {
+        try {
+            return !!global.display.get_monitor_in_fullscreen(Main.layoutManager.primaryIndex);
+        } catch {
+            return false;
         }
     }
 
@@ -179,10 +190,27 @@ export class DockFeature {
         const host = {
             cycleTheme: () => cycleThemeKey(this._iface, this._extSettings),
             themeName: () => this._themeName(),
+            endButton: () => this._extSettings.settings_schema.has_key('dock-end-button')
+                ? this._extSettings.get_string('dock-end-button') : 'theme',
+            openSettings: () => {
+                try {
+                    GLib.spawn_command_line_async('gnome-extensions prefs material3@local');
+                } catch (e) {
+                    console.error(`material3: cannot open the settings: ${e.message}`);
+                }
+            },
+            sortMode: () => this._extSettings.settings_schema.has_key('appmenu-sort')
+                ? this._extSettings.get_string('appmenu-sort') : 'name',
+            setSortMode: mode => {
+                if (this._extSettings.settings_schema.has_key('appmenu-sort'))
+                    this._extSettings.set_string('appmenu-sort', mode);
+            },
             toggleMenu: () => this._toggleMenu(),
             toggleDark: () => this._iface.set_string('color-scheme',
                 this._isDark() ? 'default' : 'prefer-dark'),
             openChanged: open => {
+                this._menuOpen = open;
+                this._syncDockVisibility();
                 this._dock?.setMenuActive(open);
                 this._updateAutohide();
             },
@@ -211,16 +239,17 @@ export class DockFeature {
         this._preview = new WindowPreview({
             blocked: () => !!(this._menu?.isOpen || this._dockCtx?.isOpen || Main.overview.visible),
             openChanged: () => this._updateAutohide(),
+            previewScale: () => this._extSettings.settings_schema.has_key('preview-scale')
+                ? this._extSettings.get_double('preview-scale') : 1,
         });
 
         // GNOME 51 no longer accepts `affectsInputRegion`; chrome always
         // takes part in the input region, so only the fullscreen option is
         // passed (and dropped too if a future shell rejects it).
-        try {
-            Main.layoutManager.addChrome(this._dock.actor, {trackFullscreen: true});
-        } catch {
-            Main.layoutManager.addChrome(this._dock.actor);
-        }
+        // Not tracked for fullscreen either (see _syncDockVisibility): the
+        // dock sits in the same layer as the app menu so both can show over
+        // a fullscreen app.
+        Main.layoutManager.addChrome(this._dock.actor);
         // Not tracked for fullscreen: the layout manager would re-show the
         // (hidden) popover whenever a fullscreen window goes away.
         Main.layoutManager.addChrome(this._menu.actor);
@@ -269,6 +298,7 @@ export class DockFeature {
         });
         watch(global.window_manager, 'unminimize', () => this._queueIndicators());
         watch(Main.layoutManager, 'monitors-changed', () => this._reposition());
+        watch(global.display, 'in-fullscreen-changed', () => this._syncDockVisibility());
         watch(Main.layoutManager, 'startup-complete', () => this._reposition());
         watch(Main.overview, 'showing', () => {
             this._menu.close();

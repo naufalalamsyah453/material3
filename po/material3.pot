@@ -6,6 +6,9 @@ msgstr ""
 msgid "%d Connected"
 msgstr ""
 
+msgid "%d windows open"
+msgstr ""
+
 msgid "%s of %s used"
 msgstr ""
 
@@ -16,6 +19,9 @@ msgid "1 hour"
 msgstr ""
 
 msgid "1 minute"
+msgstr ""
+
+msgid "1 window open"
 msgstr ""
 
 msgid "1.00 is the default size"
@@ -69,10 +75,7 @@ msgstr ""
 msgid "Accessibility"
 msgstr ""
 
-msgid "Accounts, password and login"
-msgstr ""
-
-msgid "Accounts, printers, more"
+msgid "Accounts, printers and devices"
 msgstr ""
 
 msgid "Active screen edges"
@@ -81,10 +84,10 @@ msgstr ""
 msgid "Adaptive"
 msgstr ""
 
-msgid "Add and manage printers"
+msgid "Add category"
 msgstr ""
 
-msgid "Add category"
+msgid "Add reminder..."
 msgstr ""
 
 msgid "Advanced network settings"
@@ -114,6 +117,9 @@ msgstr ""
 msgid "App Menu"
 msgstr ""
 
+msgid "App grid"
+msgstr ""
+
 msgid "App menu"
 msgstr ""
 
@@ -126,10 +132,16 @@ msgstr ""
 msgid "App menu width"
 msgstr ""
 
+msgid "App sort order"
+msgstr ""
+
 msgid "App switching"
 msgstr ""
 
 msgid "Appearance"
+msgstr ""
+
+msgid "Applies after you log in again"
 msgstr ""
 
 msgid "Apply"
@@ -142,6 +154,9 @@ msgid "Areas"
 msgstr ""
 
 msgid "Ask"
+msgstr ""
+
+msgid "Authorize"
 msgstr ""
 
 msgid "Auto-hide"
@@ -163,6 +178,9 @@ msgid "Automatically empty trash"
 msgstr ""
 
 msgid "Automatically remove empty workspaces"
+msgstr ""
+
+msgid "Back"
 msgstr ""
 
 msgid "Background"
@@ -210,6 +228,9 @@ msgstr ""
 msgid "Bounce keys"
 msgstr ""
 
+msgid "Brightness and volume sliders"
+msgstr ""
+
 msgid "Built-in"
 msgstr ""
 
@@ -217,6 +238,9 @@ msgid "Built-in display"
 msgstr ""
 
 msgid "CONTINUE WHERE YOU LEFT OFF"
+msgstr ""
+
+msgid "Calculator"
 msgstr ""
 
 msgid "Calendar"
@@ -231,10 +255,10 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
-msgid "Changes the size of text in every app"
+msgid "Change shortcuts for windows, apps and media"
 msgstr ""
 
-msgid "Changing the system language needs administrator rights"
+msgid "Changes the size of text in every app"
 msgstr ""
 
 msgid "Choose a background"
@@ -252,13 +276,25 @@ msgstr ""
 msgid "Choose the name shown next to the avatar."
 msgstr ""
 
+msgid "Classic: capsule with - and + buttons"
+msgstr ""
+
 msgid "Classic: click toggles, right-click opens options"
+msgstr ""
+
+msgid "Classic: compact card"
 msgstr ""
 
 msgid "Cleanup"
 msgstr ""
 
+msgid "Clear"
+msgstr ""
+
 msgid "Clear Search"
+msgstr ""
+
+msgid "Click a shortcut to change it"
 msgstr ""
 
 msgid "Click method"
@@ -277,6 +313,9 @@ msgid "Close"
 msgstr ""
 
 msgid "Close All Windows"
+msgstr ""
+
+msgid "Close window"
 msgstr ""
 
 msgid "Color"
@@ -309,9 +348,6 @@ msgstr ""
 msgid "Connect"
 msgstr ""
 
-msgid "Connect cloud and calendar accounts"
-msgstr ""
-
 msgid "Connect to %s"
 msgstr ""
 
@@ -327,10 +363,31 @@ msgstr ""
 msgid "Context menu font"
 msgstr ""
 
+msgid "Context menu icons"
+msgstr ""
+
+msgid "Context menu size"
+msgstr ""
+
+msgid "Context menu text size"
+msgstr ""
+
+msgid "Context menus"
+msgstr ""
+
 msgid "Corner radius"
 msgstr ""
 
 msgid "Could not apply the display settings"
+msgstr ""
+
+msgid "Could not authorize"
+msgstr ""
+
+msgid "Could not change the default"
+msgstr ""
+
+msgid "Could not change the language"
 msgstr ""
 
 msgid "Could not change the name"
@@ -343,6 +400,12 @@ msgid "Could not connect"
 msgstr ""
 
 msgid "Could not empty the trash"
+msgstr ""
+
+msgid "Cover: album art with seek bar"
+msgstr ""
+
+msgid "Cursor"
 msgstr ""
 
 msgid "Cursor size"
@@ -366,6 +429,12 @@ msgstr ""
 msgid "Date & Time"
 msgstr ""
 
+msgid "Date menu size"
+msgstr ""
+
+msgid "Date menu text size"
+msgstr ""
+
 msgid "Dates, numbers and currency"
 msgstr ""
 
@@ -382,6 +451,9 @@ msgid "Default apps"
 msgstr ""
 
 msgid "Default apps, media"
+msgstr ""
+
+msgid "Default printer"
 msgstr ""
 
 msgid "Delay"
@@ -444,9 +516,6 @@ msgstr ""
 msgid "Disk usage"
 msgstr ""
 
-msgid "Display color profiles"
-msgstr ""
-
 msgid "Display language"
 msgstr ""
 
@@ -474,6 +543,9 @@ msgstr ""
 msgid "Dock behavior"
 msgstr ""
 
+msgid "Dock end button"
+msgstr ""
+
 msgid "Dock height"
 msgstr ""
 
@@ -489,9 +561,6 @@ msgstr ""
 msgid "Drag windows to the screen edges to tile them"
 msgstr ""
 
-msgid "Drawing Tablets"
-msgstr ""
-
 msgid "Dynamic color, background, text size and animations"
 msgstr ""
 
@@ -499,6 +568,9 @@ msgid "Dynamic workspaces"
 msgstr ""
 
 msgid "Edit connections, IP and DNS"
+msgstr ""
+
+msgid "Email"
 msgstr ""
 
 msgid "Empty"
@@ -537,7 +609,13 @@ msgstr ""
 msgid "Font"
 msgstr ""
 
+msgid "Fonts"
+msgstr ""
+
 msgid "Fonts and themes"
+msgstr ""
+
+msgid "Fonts, icons, cursor"
 msgstr ""
 
 msgid "Forever"
@@ -558,6 +636,9 @@ msgstr ""
 msgid "Full name"
 msgstr ""
 
+msgid "Full screen"
+msgstr ""
+
 msgid "GNOME"
 msgstr ""
 
@@ -567,10 +648,16 @@ msgstr ""
 msgid "General"
 msgstr ""
 
+msgid "Handle: split track with round buttons"
+msgstr ""
+
 msgid "Hardware"
 msgstr ""
 
 msgid "Height of the scrolling app grid in the app menu, in pixels"
+msgstr ""
+
+msgid "Help"
 msgstr ""
 
 msgid "Hibernate"
@@ -580,6 +667,9 @@ msgid "High contrast"
 msgstr ""
 
 msgid "History"
+msgstr ""
+
+msgid "Home folder"
 msgstr ""
 
 msgid "Hot corner"
@@ -595,6 +685,9 @@ msgid "Hover click"
 msgstr ""
 
 msgid "Icon theme"
+msgstr ""
+
+msgid "Icons"
 msgstr ""
 
 msgid "Ignore fast repeated key presses"
@@ -618,6 +711,12 @@ msgstr ""
 msgid "Interface font"
 msgstr ""
 
+msgid "Interface fonts, icon and cursor themes"
+msgstr ""
+
+msgid "Just now"
+msgstr ""
+
 msgid "Keep"
 msgstr ""
 
@@ -633,7 +732,7 @@ msgstr ""
 msgid "Keyboard"
 msgstr ""
 
-msgid "Keyboard shortcuts and layouts"
+msgid "Keyboard shortcuts"
 msgstr ""
 
 msgid "Landscape"
@@ -643,6 +742,9 @@ msgid "Landscape (flipped)"
 msgstr ""
 
 msgid "Language"
+msgstr ""
+
+msgid "Launchers"
 msgstr ""
 
 msgid "Layouts"
@@ -663,10 +765,19 @@ msgstr ""
 msgid "Lock delay after blank"
 msgstr ""
 
+msgid "Lock screen"
+msgstr ""
+
 msgid "Lock screen notifications"
 msgstr ""
 
 msgid "Log Out"
+msgstr ""
+
+msgid "Log out"
+msgstr ""
+
+msgid "Log out and in to apply the language"
 msgstr ""
 
 msgid "Longer battery life"
@@ -678,10 +789,19 @@ msgstr ""
 msgid "Mail"
 msgstr ""
 
+msgid "Make default"
+msgstr ""
+
 msgid "Make the screen warmer in the evening"
 msgstr ""
 
 msgid "Manual"
+msgstr ""
+
+msgid "Material 3 Alt+Tab switcher"
+msgstr ""
+
+msgid "Material 3 date menu"
 msgstr ""
 
 msgid "Material 3 volume and brightness indicator"
@@ -690,7 +810,16 @@ msgstr ""
 msgid "Maximize"
 msgstr ""
 
+msgid "Maximize window"
+msgstr ""
+
 msgid "Maximum performance"
+msgstr ""
+
+msgid "Media"
+msgstr ""
+
+msgid "Media player style"
 msgstr ""
 
 msgid "Memory"
@@ -702,6 +831,9 @@ msgstr ""
 msgid "Minimize"
 msgstr ""
 
+msgid "Minimize window"
+msgstr ""
+
 msgid "Mirrored displays are active. Use the GNOME display panel to change them."
 msgstr ""
 
@@ -709,6 +841,9 @@ msgid "Monospace font"
 msgstr ""
 
 msgid "More Settings"
+msgstr ""
+
+msgid "Most used"
 msgstr ""
 
 msgid "Mount removable media automatically"
@@ -726,6 +861,12 @@ msgstr ""
 msgid "Move later"
 msgstr ""
 
+msgid "Move window left"
+msgstr ""
+
+msgid "Move window right"
+msgstr ""
+
 msgid "Multitasking"
 msgstr ""
 
@@ -741,7 +882,16 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
+msgid "Name (A-Z)"
+msgstr ""
+
+msgid "Name (Z-A)"
+msgstr ""
+
 msgid "Natural scrolling"
+msgstr ""
+
+msgid "Navigation"
 msgstr ""
 
 msgid "Nearby devices"
@@ -762,7 +912,13 @@ msgstr ""
 msgid "New category"
 msgstr ""
 
+msgid "Next track"
+msgstr ""
+
 msgid "Night Light"
+msgstr ""
+
+msgid "No Events"
 msgstr ""
 
 msgid "No VPN configured"
@@ -777,6 +933,12 @@ msgstr ""
 msgid "No networks found"
 msgstr ""
 
+msgid "No new notifications"
+msgstr ""
+
+msgid "No online accounts. Add accounts in your desktop account service."
+msgstr ""
+
 msgid "No paired devices"
 msgstr ""
 
@@ -786,10 +948,16 @@ msgstr ""
 msgid "No power modes available"
 msgstr ""
 
+msgid "No printers configured"
+msgstr ""
+
 msgid "No windows yet"
 msgstr ""
 
 msgid "No wired connection"
+msgstr ""
+
+msgid "None"
 msgstr ""
 
 msgid "Not connected"
@@ -805,6 +973,9 @@ msgid "Notification banners"
 msgstr ""
 
 msgid "Notifications"
+msgstr ""
+
+msgid "Notifications, calendar, reminders, world clocks and weather in the clock menu"
 msgstr ""
 
 msgid "Number of workspaces"
@@ -823,6 +994,9 @@ msgid "Off opens GNOME's Overview from the dock and the Super key"
 msgstr ""
 
 msgid "Off restores GNOME's own panel"
+msgstr ""
+
+msgid "Off restores GNOME's own window switcher"
 msgstr ""
 
 msgid "On"
@@ -852,13 +1026,13 @@ msgstr ""
 msgid "Open the overview by moving the pointer to the top-left corner"
 msgstr ""
 
-msgid "Opens the GNOME keyboard panel"
-msgstr ""
-
 msgid "Opens the app menu on one category and reads only its apps, so the first open stays light. Other categories are read the first time you select them."
 msgstr ""
 
 msgid "Operating system"
+msgstr ""
+
+msgid "Order of the apps in the app menu"
 msgstr ""
 
 msgid "Orientation"
@@ -871,6 +1045,9 @@ msgid "Output volume"
 msgstr ""
 
 msgid "Overlay scroll bars"
+msgstr ""
+
+msgid "Overview"
 msgstr ""
 
 msgid "Overview search providers"
@@ -886,9 +1063,6 @@ msgid "Paired"
 msgstr ""
 
 msgid "Palette: %s"
-msgstr ""
-
-msgid "Panels opened with the GNOME Settings app"
 msgstr ""
 
 msgid "Password"
@@ -907,6 +1081,9 @@ msgid "Pin to Dock"
 msgstr ""
 
 msgid "PipeWire (wpctl) was not found on this system."
+msgstr ""
+
+msgid "Play / pause"
 msgstr ""
 
 msgid "Pointer speed"
@@ -957,6 +1134,12 @@ msgstr ""
 msgid "Press shortcut keys one at a time"
 msgstr ""
 
+msgid "Press the new shortcut. Backspace clears it, Esc cancels."
+msgstr ""
+
+msgid "Previous track"
+msgstr ""
+
 msgid "Primary button on the right"
 msgstr ""
 
@@ -993,9 +1176,6 @@ msgstr ""
 msgid "Remote desktop, media sharing and file sharing are configured by their own services. Open More Settings to launch the full GNOME panel."
 msgstr ""
 
-msgid "Remote login, users and admin"
-msgstr ""
-
 msgid "Removable"
 msgstr ""
 
@@ -1021,6 +1201,12 @@ msgid "Replace GNOME Settings"
 msgstr ""
 
 msgid "Replaces the shell's own on-screen display"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid "Reset all shortcuts"
 msgstr ""
 
 msgid "Resolution"
@@ -1086,6 +1272,9 @@ msgstr ""
 msgid "Screen reader"
 msgstr ""
 
+msgid "Screenshot"
+msgstr ""
+
 msgid "Search"
 msgstr ""
 
@@ -1122,6 +1311,9 @@ msgstr ""
 msgid "Seeing, hearing, typing"
 msgstr ""
 
+msgid "Select Weather Location..."
+msgstr ""
+
 msgid "Send problem reports"
 msgstr ""
 
@@ -1129,6 +1321,9 @@ msgid "Settings"
 msgstr ""
 
 msgid "Settings app"
+msgstr ""
+
+msgid "Settings shortcut"
 msgstr ""
 
 msgid "Settings sidebar buttons"
@@ -1143,10 +1338,16 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
+msgid "Show an icon before each entry of the right-click menus"
+msgstr ""
+
 msgid "Show battery percentage"
 msgstr ""
 
 msgid "Show date"
+msgstr ""
+
+msgid "Show desktop"
 msgstr ""
 
 msgid "Show dock"
@@ -1182,10 +1383,31 @@ msgstr ""
 msgid "Size and font"
 msgstr ""
 
+msgid "Size of the clock menu panel; 1.00 is the default"
+msgstr ""
+
+msgid "Size of the preview shown when hovering a dock icon; 1.00 is the default"
+msgstr ""
+
+msgid "Size of the right-click menus; 1.00 is the default"
+msgstr ""
+
+msgid "Size of the text in the clock menu; 1.00 is the default"
+msgstr ""
+
+msgid "Size of the text in the right-click menus; 1.00 is the default"
+msgstr ""
+
 msgid "Size, behavior, categories and fonts of the dock, app menu and Quick Settings"
 msgstr ""
 
+msgid "Slider style"
+msgstr ""
+
 msgid "Slow keys"
+msgstr ""
+
+msgid "Sort apps"
 msgstr ""
 
 msgid "Sound"
@@ -1233,6 +1455,12 @@ msgstr ""
 msgid "Switch Palette"
 msgstr ""
 
+msgid "Switch apps"
+msgstr ""
+
+msgid "Switch windows"
+msgstr ""
+
 msgid "Sync the clock over the network"
 msgstr ""
 
@@ -1242,10 +1470,10 @@ msgstr ""
 msgid "System sounds"
 msgstr ""
 
-msgid "Tablet and stylus settings"
+msgid "Tap to click"
 msgstr ""
 
-msgid "Tap to click"
+msgid "Terminal"
 msgstr ""
 
 msgid "Text"
@@ -1257,7 +1485,13 @@ msgstr ""
 msgid "The apps themselves are not removed."
 msgstr ""
 
+msgid "The button at the end of the dock"
+msgstr ""
+
 msgid "The card at the bottom of the app menu that reopens the last used window"
+msgstr ""
+
+msgid "The card that shows the playing track"
 msgstr ""
 
 msgid "The category the app menu opens on"
@@ -1275,6 +1509,9 @@ msgstr ""
 msgid "Theme"
 msgstr ""
 
+msgid "Theme switch"
+msgstr ""
+
 msgid "Theme: %s"
 msgstr ""
 
@@ -1287,9 +1524,6 @@ msgstr ""
 msgid "Thunderbolt"
 msgstr ""
 
-msgid "Thunderbolt devices"
-msgstr ""
-
 msgid "Tile style"
 msgstr ""
 
@@ -1297,6 +1531,9 @@ msgid "Time format"
 msgstr ""
 
 msgid "Time zone"
+msgstr ""
+
+msgid "Today"
 msgstr ""
 
 msgid "Toggle Light/Dark Mode"
@@ -1365,16 +1602,28 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
+msgid "Users, printers, accounts"
+msgstr ""
+
 msgid "Video"
 msgstr ""
 
 msgid "Volume and system sounds"
 msgstr ""
 
+msgid "Volume down"
+msgstr ""
+
+msgid "Volume up"
+msgstr ""
+
 msgid "Volume, system sounds"
 msgstr ""
 
 msgid "Web"
+msgstr ""
+
+msgid "Web browser"
 msgstr ""
 
 msgid "Wi-Fi"
@@ -1404,10 +1653,25 @@ msgstr ""
 msgid "Width of the app menu in pixels; the app cards share it evenly"
 msgstr ""
 
+msgid "Window preview size"
+msgstr ""
+
 msgid "Windowing system"
 msgstr ""
 
+msgid "Windows"
+msgstr ""
+
+msgid "Windows, navigation, launchers"
+msgstr ""
+
 msgid "Wired"
+msgstr ""
+
+msgid "Workspace left"
+msgstr ""
+
+msgid "Workspace right"
 msgstr ""
 
 msgid "Workspaces"
@@ -1416,7 +1680,13 @@ msgstr ""
 msgid "Workspaces on primary display only"
 msgstr ""
 
+msgid "World Clocks"
+msgstr ""
+
 msgid "Writes colors to ~/.config/gtk-4.0 and gtk-3.0; apps pick them up when started"
+msgstr ""
+
+msgid "You"
 msgstr ""
 
 msgid "Zoom"
@@ -1426,220 +1696,4 @@ msgid "apps"
 msgstr ""
 
 msgid "bluetoothctl was not found on this system."
-msgstr ""
-
-msgid "gnome-control-center is not installed, so these panels are unavailable."
-msgstr ""
-
-msgid "Accounts, printers and devices"
-msgstr ""
-
-msgid "App grid"
-msgstr ""
-
-msgid "Applies after you log in again"
-msgstr ""
-
-msgid "Authorize"
-msgstr ""
-
-msgid "Calculator"
-msgstr ""
-
-msgid "Change shortcuts for windows, apps and media"
-msgstr ""
-
-msgid "Click a shortcut to change it"
-msgstr ""
-
-msgid "Close window"
-msgstr ""
-
-msgid "Could not authorize"
-msgstr ""
-
-msgid "Could not change the default"
-msgstr ""
-
-msgid "Could not change the language"
-msgstr ""
-
-msgid "Default printer"
-msgstr ""
-
-msgid "Email"
-msgstr ""
-
-msgid "Full screen"
-msgstr ""
-
-msgid "Help"
-msgstr ""
-
-msgid "Home folder"
-msgstr ""
-
-msgid "Keyboard shortcuts"
-msgstr ""
-
-msgid "Launchers"
-msgstr ""
-
-msgid "Lock screen"
-msgstr ""
-
-msgid "Log out"
-msgstr ""
-
-msgid "Log out and in to apply the language"
-msgstr ""
-
-msgid "Make default"
-msgstr ""
-
-msgid "Maximize window"
-msgstr ""
-
-msgid "Media"
-msgstr ""
-
-msgid "Minimize window"
-msgstr ""
-
-msgid "Move window left"
-msgstr ""
-
-msgid "Move window right"
-msgstr ""
-
-msgid "Navigation"
-msgstr ""
-
-msgid "Next track"
-msgstr ""
-
-msgid "No online accounts. Add accounts in your desktop account service."
-msgstr ""
-
-msgid "No printers configured"
-msgstr ""
-
-msgid "Overview"
-msgstr ""
-
-msgid "Play / pause"
-msgstr ""
-
-msgid "Press the new shortcut. Backspace clears it, Esc cancels."
-msgstr ""
-
-msgid "Previous track"
-msgstr ""
-
-msgid "Reset"
-msgstr ""
-
-msgid "Reset all shortcuts"
-msgstr ""
-
-msgid "Screenshot"
-msgstr ""
-
-msgid "Show desktop"
-msgstr ""
-
-msgid "Switch apps"
-msgstr ""
-
-msgid "Switch windows"
-msgstr ""
-
-msgid "Terminal"
-msgstr ""
-
-msgid "Users, printers, accounts"
-msgstr ""
-
-msgid "Volume down"
-msgstr ""
-
-msgid "Volume up"
-msgstr ""
-
-msgid "Web browser"
-msgstr ""
-
-msgid "Windows"
-msgstr ""
-
-msgid "Windows, navigation, launchers"
-msgstr ""
-
-msgid "Workspace left"
-msgstr ""
-
-msgid "Workspace right"
-msgstr ""
-
-msgid "You"
-msgstr ""
-
-msgid "Back"
-msgstr ""
-
-msgid "Cursor"
-msgstr ""
-
-msgid "Fonts"
-msgstr ""
-
-msgid "Fonts, icons, cursor"
-msgstr ""
-
-msgid "Icons"
-msgstr ""
-
-msgid "Interface fonts, icon and cursor themes"
-msgstr ""
-
-msgid "Slider style"
-msgstr ""
-
-msgid "Brightness and volume sliders"
-msgstr ""
-
-msgid "Classic: capsule with - and + buttons"
-msgstr ""
-
-msgid "Handle: split track with round buttons"
-msgstr ""
-
-msgid "Media player style"
-msgstr ""
-
-msgid "The card that shows the playing track"
-msgstr ""
-
-msgid "Classic: compact card"
-msgstr ""
-
-msgid "Cover: album art with seek bar"
-msgstr ""
-
-msgid "Context menu size"
-msgstr ""
-
-msgid "Size of the right-click menus; 1.00 is the default"
-msgstr ""
-
-msgid "Context menu text size"
-msgstr ""
-
-msgid "Size of the text in the right-click menus; 1.00 is the default"
-msgstr ""
-
-msgid "Context menu icons"
-msgstr ""
-
-msgid "Show an icon before each entry of the right-click menus"
 msgstr ""

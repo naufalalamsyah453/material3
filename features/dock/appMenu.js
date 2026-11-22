@@ -125,6 +125,11 @@ export class AppMenu {
             reactive: false,
         });
         this.actor.add_child(this._overlay);
+        // The overlay must not grow with the right-click menu inside it: that
+        // would stretch this actor and move the panel. It always matches the panel.
+        const fitOverlay = () => this._overlay.set_size(this._panel.width, this._panel.height);
+        this._panel.connect('notify::width', fitOverlay);
+        this._panel.connect('notify::height', fitOverlay);
         this._ctx = new ContextMenu({container: this._overlay, grabHost: this.actor});
 
         this.actor.connect('key-press-event', (_actor, event) => {
@@ -239,23 +244,26 @@ export class AppMenu {
             style: `spacing: ${px(6)}px;`,
         });
 
-        const theme = new St.Button({
-            style_class: 'm3-appmenu-pill',
-            accessible_name: _('Switch Palette'),
-            height: px(32),
-            can_focus: true,
-            reactive: true,
-            y_align: Clutter.ActorAlign.CENTER,
-        });
-        const themeContent = new St.BoxLayout({style: `spacing: ${px(4)}px;`});
-        themeContent.add_child(symbolIcon('palette', {size: 15, filled: true}));
-        themeContent.add_child(textLabel(_('Theme'), 'm3-appmenu-pill-text'));
-        theme.set_child(themeContent);
-        pressFeedback(theme);
-        theme.connect('clicked', () => this._host.cycleTheme());
-        actions.add_child(theme);
+        const headerButton = 'theme';
+        if (headerButton === 'theme') {
+            const theme = new St.Button({
+                style_class: 'm3-appmenu-pill',
+                accessible_name: _('Switch Palette'),
+                height: px(32),
+                can_focus: true,
+                reactive: true,
+                y_align: Clutter.ActorAlign.CENTER,
+            });
+            const themeContent = new St.BoxLayout({style: `spacing: ${px(4)}px;`});
+            themeContent.add_child(symbolIcon('palette', {size: 15, filled: true}));
+            themeContent.add_child(textLabel(_('Theme'), 'm3-appmenu-pill-text'));
+            theme.set_child(themeContent);
+            pressFeedback(theme);
+            theme.connect('clicked', () => this._host.cycleTheme());
+            actions.add_child(theme);
+        }
 
-        // Power mode: a button next to the theme one, popping up the
+        // Power mode: a button popping up the
         // available profiles (Performance, Balanced, Power Saver).
         this._powerBtn = iconButton('balance', {size: 17, buttonSize: 32});
         this._powerBtn.accessible_name = _('Power Mode');
@@ -413,11 +421,19 @@ export class AppMenu {
         this._catSlot = new St.Widget({
             layout_manager: new Clutter.BinLayout(),
             x_expand: true,
-            style: `margin-bottom: ${px(12)}px;`,
         });
         this._catSlot.add_child(this._catScroll);
         this._catSlot.add_child(this._searchHint);
-        return this._catSlot;
+
+        // Round sort button after the pills.
+        this._sortBtn = iconButton('sort', {size: 17, buttonSize: 32});
+        this._sortBtn.accessible_name = _('Sort apps');
+        this._sortBtn.y_align = Clutter.ActorAlign.CENTER;
+        this._sortBtn.connect('clicked', () => this._showSortMenu());
+        const row = new St.BoxLayout({x_expand: true, style: `spacing: ${px(8)}px; margin-bottom: ${px(12)}px;`});
+        row.add_child(this._catSlot);
+        row.add_child(this._sortBtn);
+        return row;
     }
 
     /** Pills while browsing, a result line while searching. */
@@ -620,16 +636,16 @@ export class AppMenu {
             this._loadApps('all');
 
         const category = searching ? 'all' : this._category;
-        const key = `${category}|${query}|${this._appsVersion}`;
+        const key = `${category}|${query}|${this._appsVersion}|${this._host.sortMode?.() ?? 'name'}`;
         if (key === this._renderKey) {
             this._syncSearchMode(searching, this._shown.length);
             return;
         }
         this._renderKey = key;
 
-        const list = this._apps.filter(({cats, text}) =>
+        const list = this._sorted(this._apps.filter(({cats, text}) =>
             (category === 'all' || cats.has(category)) &&
-            (!query || text.includes(query)));
+            (!query || text.includes(query))));
         this._syncSearchMode(searching, list.length);
 
         this._cancelFill();
@@ -798,6 +814,41 @@ export class AppMenu {
         this._ctx.open(items, {x: x + width, y: y + height + px(6), placement: 'below-end'});
     }
 
+    _showSortMenu() {
+        const current = this._host.sortMode?.() ?? 'name';
+        const items = [
+            ['name', 'sort_by_alpha', _('Name (A-Z)')],
+            ['name-desc', 'sort_by_alpha', _('Name (Z-A)')],
+            ['usage', 'history', _('Most used')],
+        ].map(([id, icon, label]) => ({
+            icon, label,
+            selected: id === current,
+            activate: () => {
+                this._host.setSortMode?.(id);
+                this._renderKey = null;
+                this._render();
+            },
+        }));
+        const [x, y] = this._sortBtn.get_transformed_position();
+        const [width, height] = this._sortBtn.get_transformed_size();
+        this._ctx.open(items, {x: x + width, y: y + height + px(6), placement: 'below-end'});
+    }
+
+    /** `list` ordered by the chosen sort mode (name A-Z is how it is read). */
+    _sorted(list) {
+        const mode = this._host.sortMode?.() ?? 'name';
+        if (mode === 'name')
+            return list;
+        if (mode === 'name-desc')
+            return [...list].reverse();
+        try {
+            const usage = Shell.AppUsage.get_default();
+            return [...list].sort((a, b) => usage.compare(a.app.get_id(), b.app.get_id()));
+        } catch {
+            return list;
+        }
+    }
+
     /** Right-click menu of an app card, at the pointer. */
     _showContext(app) {
         const [x, y] = global.get_pointer();
@@ -891,6 +942,7 @@ export class AppMenu {
             Math.min(centerX - width / 2, monitor.x + monitor.width - width - margin));
         const y = Math.max(monitor.y + margin, bottomY - height);
         this.actor.set_position(Math.round(x), Math.round(y));
+        this._overlay.set_size(width, height);
 
         this.isOpen = true;
         this._grabInput();

@@ -5,6 +5,23 @@ import {Ease, lerp, tweenerFor} from './animation.js';
 import {px} from './ui.js';
 import {symbolIcon, centerBin, textLabel} from './widgets.js';
 
+/**
+ * Width and height the actor was last allocated.
+ *
+ * `actor.width` is not that while a relayout is pending, and the sliders queue
+ * one themselves every time they resize their children: it then answers with
+ * the preferred width instead (for the handle slider a small placeholder), so
+ * a render triggered by a volume or brightness change drew the track at that
+ * width and kept it there until the next real allocation.
+ *
+ * @param {St.Widget} actor
+ * @returns {[number, number]}
+ */
+function allocatedSize(actor) {
+    const box = actor.get_allocation_box();
+    return [box.x2 - box.x1, box.y2 - box.y1];
+}
+
 const FILL_RIGHT_RADIUS = 8;
 // Minimum fill width so the thumb and icon always fit inside the fill:
 // 13 left padding + 20 icon + 8 gap + 4 thumb + 7 right padding.
@@ -248,7 +265,7 @@ class PillSlider {
 
     _moveTo(x) {
         const minFill = px(MIN_FILL);
-        const width = Math.max(this._slider.width, minFill + 1);
+        const width = Math.max(allocatedSize(this._slider)[0], minFill + 1);
         const fraction = Math.max(0, Math.min(1, (x - minFill) / (width - minFill)));
         this._commit(this._min + fraction * (this._max - this._min), false);
     }
@@ -366,8 +383,9 @@ class PillSlider {
     }
 
     _render() {
-        const trackWidth = this._slider.width > 0 ? this._slider.width : px(228);
-        const trackHeight = this._slider.height > 0 ? this._slider.height : px(44);
+        const [allocatedWidth, allocatedHeight] = allocatedSize(this._slider);
+        const trackWidth = allocatedWidth > 0 ? allocatedWidth : px(228);
+        const trackHeight = allocatedHeight > 0 ? allocatedHeight : px(44);
         const fraction = (this._shown - this._min) / (this._max - this._min);
 
         // The fill never gets narrower than MIN_FILL, so at low values it
@@ -405,7 +423,7 @@ class HandleSlider {
      * @param {object} params
      * @param {Array<{iconFor: function(number): string, onClick: ?function(): void}>} [params.trailing]
      */
-    constructor({min, max, iconFor, backend, trailing = null}) {
+    constructor({min, max, iconFor, backend, trailing = null, slots = 1}) {
         this._min = min;
         this._max = max;
         this._backend = backend;
@@ -417,9 +435,13 @@ class HandleSlider {
         this._wrap = new St.BoxLayout({style_class: 'm3-slider-wrap', style: `spacing: ${px(8)}px;`});
         this._tweener = tweenerFor(this._wrap);
 
+        // The children are positioned by hand, so the track would otherwise ask
+        // for as much width as it last had and push the buttons out of the card.
         this._slider = new St.Widget({
             x_expand: true,
             height: px(HS_HEIGHT),
+            min_width: 0,
+            natural_width: px(80),
             reactive: true,
             can_focus: true,
             layout_manager: new Clutter.FixedLayout(),
@@ -446,6 +468,9 @@ class HandleSlider {
             this._buttons.push({icon, item});
             this._wrap.add_child(button);
         }
+        // Empty slots keep every slider's track the same length.
+        for (let i = this._buttons.length; i < slots; i++)
+            this._wrap.add_child(new St.Widget({width: px(HS_BUTTON), height: px(HS_BUTTON)}));
 
         this._slider.connect('notify::width', () => this._render());
         this._slider.connect('key-press-event', (_actor, event) => this._onKey(event));
@@ -510,7 +535,7 @@ class HandleSlider {
     }
 
     _moveTo(x) {
-        const width = Math.max(1, this._slider.width);
+        const width = Math.max(1, allocatedSize(this._slider)[0]);
         const fraction = Math.max(0, Math.min(1, x / width));
         this._commit(this._min + fraction * (this._max - this._min));
     }
@@ -536,7 +561,8 @@ class HandleSlider {
     }
 
     _render() {
-        const width = this._slider.width > 0 ? this._slider.width : px(228);
+        const allocatedWidth = allocatedSize(this._slider)[0];
+        const width = allocatedWidth > 0 ? allocatedWidth : px(228);
         const track = px(HS_TRACK);
         const top = Math.round((px(HS_HEIGHT) - track) / 2);
         const thumbW = px(HS_THUMB);
@@ -581,8 +607,9 @@ export function buildSliderGroup(sliders, {style = 'classic'} = {}) {
         style: `spacing: ${px(10)}px;`,
     });
 
+    const slots = Math.max(...sliders.map(c => c.trailing?.length ?? 1));
     const instances = sliders.map(config => {
-        const slider = style === 'handle' ? new HandleSlider(config) : new PillSlider(config);
+        const slider = style === 'handle' ? new HandleSlider({...config, slots}) : new PillSlider(config);
         card.add_child(slider.actor);
         return slider;
     });
