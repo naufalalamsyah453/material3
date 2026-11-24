@@ -85,12 +85,9 @@ export function card(...children) {
 
 /** Card of rows separated by hairlines. */
 export function listCard(rows) {
-    const holder = vbox(0, 'm3-card list');
-    rows.filter(Boolean).forEach((item, index) => {
-        if (index > 0)
-            holder.append(separator());
-        holder.append(item);
-    });
+    // Android style: every row is a tile of its own, the group's outer corners are round.
+    const holder = vbox(3, 'm3-card list');
+    rows.filter(Boolean).forEach(item => holder.append(item));
     return holder;
 }
 
@@ -1190,10 +1187,8 @@ export function gsSlider({schema, key, title, caption = '', min, max, step, scal
 
 /** Label/value pairs, one per line. */
 export function infoRows(pairs) {
-    const holder = vbox(0);
-    pairs.filter(Boolean).forEach(([name, value], index) => {
-        if (index > 0)
-            holder.append(separator());
+    const holder = vbox(3);
+    pairs.filter(Boolean).forEach(([name, value]) => {
         const line = hbox(12, 'm3-row');
         line.append(label(name, 'm3-row-sub', {hexpand: true}));
         const v = label(value, 'm3-row-title', {xalign: 1, wrap: true, selectable: true});
@@ -1251,3 +1246,120 @@ export function rowsFrom(specs) {
         }
     }).filter(Boolean);
 }
+
+/**
+ * Preview of how the monitors sit next to each other. Drag one to the other
+ * side of another monitor to rearrange; `onDrop(id, cx, cy)` gets the drop
+ * point of the monitor's center in layout coordinates.
+ */
+export const MonitorArrangement = GObject.registerClass(
+class M3MonitorArrangement extends Gtk.DrawingArea {
+    /** @param {{getMonitors: function(): Array<{id: string, name: string, detail: string, x: number, y: number, w: number, h: number, primary: boolean}>, onDrop: function(string, number, number): void}} params */
+    _init({getMonitors, onDrop}) {
+        super._init({hexpand: true, focusable: false});
+        this._get = getMonitors;
+        this._onDrop = onDrop;
+        this._drag = null;
+        this.set_size_request(260, 190);
+        this.set_draw_func((_area, cr, w, h) => this._draw(cr, w, h));
+
+        const drag = new Gtk.GestureDrag();
+        drag.connect('drag-begin', (_g, x, y) => {
+            const view = this._view(this.get_width(), this.get_height());
+            const hit = view.rects.find(r => x >= r.sx && x <= r.sx + r.sw && y >= r.sy && y <= r.sy + r.sh);
+            this._drag = hit ? {id: hit.id, dx: 0, dy: 0} : null;
+            this.queue_draw();
+        });
+        drag.connect('drag-update', (_g, dx, dy) => {
+            if (!this._drag)
+                return;
+            this._drag.dx = dx;
+            this._drag.dy = dy;
+            this.queue_draw();
+        });
+        drag.connect('drag-end', () => {
+            const state = this._drag;
+            this._drag = null;
+            this.queue_draw();
+            if (!state)
+                return;
+            const view = this._view(this.get_width(), this.get_height());
+            const rect = view.rects.find(r => r.id === state.id);
+            if (!rect || Math.hypot(state.dx, state.dy) < 8)
+                return;
+            const cx = (rect.sx + state.dx + rect.sw / 2 - view.ox) / view.scale;
+            const cy = (rect.sy + state.dy + rect.sh / 2 - view.oy) / view.scale;
+            this._onDrop(state.id, cx, cy);
+        });
+        this.add_controller(drag);
+        palette.onChange(() => this.queue_draw());
+    }
+
+    /** Monitors scaled to the widget, centered with room around them. */
+    _view(width, height) {
+        const monitors = this._get();
+        if (monitors.length === 0)
+            return {rects: [], scale: 1, ox: 0, oy: 0};
+        const pad = 28;
+        const minX = Math.min(...monitors.map(m => m.x));
+        const minY = Math.min(...monitors.map(m => m.y));
+        const maxX = Math.max(...monitors.map(m => m.x + m.w));
+        const maxY = Math.max(...monitors.map(m => m.y + m.h));
+        // Room to drag a monitor beyond the others: the area is a bit larger than the layout.
+        const bw = (maxX - minX) * 1.5;
+        const bh = (maxY - minY) * 1.5;
+        const scale = Math.min((width - pad * 2) / bw, (height - pad * 2) / bh);
+        const ox = (width - (maxX - minX) * scale) / 2 - minX * scale;
+        const oy = (height - (maxY - minY) * scale) / 2 - minY * scale;
+        return {
+            scale, ox, oy,
+            rects: monitors.map(m => ({
+                ...m, sx: ox + m.x * scale, sy: oy + m.y * scale, sw: m.w * scale, sh: m.h * scale,
+            })),
+        };
+    }
+
+    _draw(cr, width, height) {
+        const t = palette.t;
+        if (!t || width <= 0) {
+            cr.$dispose();
+            return;
+        }
+        roundedRect(cr, 0, 0, width, height, [20, 20, 20, 20]);
+        rgba(cr, t.highest);
+        cr.fillPreserve();
+        rgba(cr, t.outlineVariant);
+        cr.setLineWidth(1);
+        cr.stroke();
+
+        const view = this._view(width, height);
+        // The dragged monitor is painted last, so it is above the others.
+        const order = [...view.rects].sort((a, b) => (a.id === this._drag?.id) - (b.id === this._drag?.id));
+        for (const r of order) {
+            const dragging = this._drag?.id === r.id;
+            const x = r.sx + (dragging ? this._drag.dx : 0);
+            const y = r.sy + (dragging ? this._drag.dy : 0);
+            roundedRect(cr, x, y, r.sw, r.sh, [10, 10, 10, 10]);
+            rgba(cr, r.primary ? t.primary : t.primaryContainer, dragging ? 0.85 : 1);
+            cr.fillPreserve();
+            rgba(cr, r.primary ? t.onPrimary : t.onPrimaryContainer, 0.5);
+            cr.setLineWidth(dragging ? 2 : 1);
+            cr.stroke();
+
+            const ink = r.primary ? t.onPrimary : t.onPrimaryContainer;
+            cr.selectFontFace('sans-serif', 0, 1);
+            cr.setFontSize(Math.max(10, Math.min(14, r.sh / 5)));
+            const title = cr.textExtents(r.name);
+            rgba(cr, ink);
+            cr.moveTo(x + (r.sw - title.width) / 2, y + r.sh / 2 - 2);
+            cr.showText(r.name);
+            cr.selectFontFace('sans-serif', 0, 0);
+            cr.setFontSize(Math.max(9, Math.min(12, r.sh / 6)));
+            const detail = cr.textExtents(r.detail);
+            rgba(cr, ink, 0.8);
+            cr.moveTo(x + (r.sw - detail.width) / 2, y + r.sh / 2 + detail.height + 4);
+            cr.showText(r.detail);
+        }
+        cr.$dispose();
+    }
+});

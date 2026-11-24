@@ -147,8 +147,7 @@ export class QuickSettingsPanel {
                 key === 'context-scale' || key === 'context-font-scale' || key === 'context-show-icons')
                 this._scheduleRetune();
             else if (key === 'theme-shell' || key === 'theme-apps' || key === 'disable-shadows' ||
-                key.startsWith('border-qs-') || key.startsWith('border-appmenu-') || key.startsWith('border-dock-') ||
-                key.startsWith('border-ctx-'))
+                key.startsWith('border-'))
                 this._applyTheme();
             else if (!this._flashId)
                 this._syncName();
@@ -325,6 +324,14 @@ export class QuickSettingsPanel {
                 const [, width] = content.get_preferred_width(-1);
                 const [, height] = content.get_preferred_height(width);
                 return {width, height};
+            },
+            openSettings: page => {
+                this._menu.close();
+                try {
+                    openSettings(page);
+                } catch (e) {
+                    console.error(`material3: failed to launch settings: ${e}`);
+                }
             },
         });
         // The pane sits directly in the root at (-OUTSET, -OUTSET); see DetailPane._fit().

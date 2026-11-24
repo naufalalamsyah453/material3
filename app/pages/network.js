@@ -22,9 +22,9 @@ export function build() {
         return page;
     }
 
-    const wifiList = vbox(0);
-    const wiredList = vbox(0);
-    const vpnList = vbox(0);
+    const wifiList = vbox(3, 'm3-card list');
+    const wiredList = vbox(3, 'm3-card list');
+    const vpnList = vbox(3, 'm3-card list');
 
     const wifi = customSwitch({
         title: _('Wi-Fi'), icon: 'wifi',
@@ -41,17 +41,11 @@ export function build() {
     page.append(listCard([wifi, airplane]));
 
     page.append(sectionLabel(_('Wi-Fi networks')));
-    const wifiCard = vbox(0, 'm3-card list');
-    wifiCard.append(wifiList);
-    page.append(wifiCard);
+    page.append(wifiList);
     page.append(sectionLabel(_('Wired')));
-    const wiredCard = vbox(0, 'm3-card list');
-    wiredCard.append(wiredList);
-    page.append(wiredCard);
+    page.append(wiredList);
     page.append(sectionLabel('VPN'));
-    const vpnCard = vbox(0, 'm3-card list');
-    vpnCard.append(vpnList);
-    page.append(vpnCard);
+    page.append(vpnList);
 
     page.append(sectionLabel(_('Proxy')));
     page.append(listCard([

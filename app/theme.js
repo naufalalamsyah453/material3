@@ -232,9 +232,10 @@ window.m3.csd .m3-content { border-radius: 0 0 ${Math.max(0, t.windowRadius - 1)
 .m3-mono { font-family: "Roboto Mono", monospace; }
 
 .m3-card { background-color: ${t.container}; border-radius: 24px; padding: 16px; }
-.m3-card.list { padding: 0; }
-.m3-card.list > .m3-row:first-child { border-radius: 24px 24px 0 0; }
-.m3-card.list > .m3-row:last-child { border-radius: 0 0 24px 24px; }
+.m3-card.list { background-color: transparent; padding: 0; border-radius: 0; }
+.m3-card.list > .m3-row { background-color: ${t.container}; border-radius: 6px; padding: 16px; }
+.m3-card.list > .m3-row:first-child { border-radius: 24px 24px 6px 6px; }
+.m3-card.list > .m3-row:last-child { border-radius: 6px 6px 24px 24px; }
 .m3-card.list > .m3-row:only-child { border-radius: 24px; }
 .m3-row { padding: 14px 16px; }
 .m3-row.clickable:hover { background-color: ${t.hover}; }

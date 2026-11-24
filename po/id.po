@@ -5,6 +5,9 @@ msgstr ""
 "Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgid "\"Keep these display settings?\" after a change in Displays"
+msgstr "\"Pertahankan pengaturan layar ini?\" setelah perubahan di Layar"
+
 msgid "%d Connected"
 msgstr "%d Terhubung"
 
@@ -28,6 +31,9 @@ msgstr "1 jendela terbuka"
 
 msgid "1.00 is the default size"
 msgstr "1,00 adalah ukuran bawaan"
+
+msgid "1.00 is the default, 0 turns the animations off"
+msgstr "1.00 bawaan, 0 mematikan animasi"
 
 msgid "10 minutes"
 msgstr "10 menit"
@@ -61,6 +67,9 @@ msgstr "Pintasan ke sampah"
 
 msgid "A shortcut to your home folder"
 msgstr "Pintasan ke folder beranda"
+
+msgid "A width of 0 removes the border"
+msgstr "Lebar 0 menghapus garis tepi"
 
 msgid "AM/PM"
 msgstr "AM/PM"
@@ -134,17 +143,8 @@ msgstr "Kisi aplikasi"
 msgid "App menu"
 msgstr "Menu aplikasi"
 
-msgid "App menu height"
-msgstr "Tinggi menu aplikasi"
-
-msgid "App menu size"
-msgstr "Ukuran menu aplikasi"
-
-msgid "App menu width"
-msgstr "Lebar menu aplikasi"
-
-msgid "App sort order"
-msgstr "Urutan aplikasi"
+msgid "App menu categories"
+msgstr "Kategori menu aplikasi"
 
 msgid "App switching"
 msgstr "Pergantian aplikasi"
@@ -158,11 +158,17 @@ msgstr "Berlaku setelah login ulang"
 msgid "Apply"
 msgstr "Terapkan"
 
+msgid "Apply to every part of the extension."
+msgstr "Berlaku untuk seluruh bagian ekstensi."
+
 msgid "Apps"
 msgstr "Aplikasi"
 
 msgid "Areas"
 msgstr "Area"
+
+msgid "Arrangement"
+msgstr "Susunan"
 
 msgid "Ask"
 msgstr "Tanya"
@@ -230,17 +236,17 @@ msgstr "Bluetooth mati"
 msgid "Bluetooth is unavailable"
 msgstr "Bluetooth tidak tersedia"
 
-msgid "Border and corners of each surface, set separately. A width of 0 removes the border."
-msgstr "Border dan sudut tiap elemen, diatur terpisah. Lebar 0 berarti tanpa border."
+msgid "Border and corners"
+msgstr "Garis tepi dan sudut"
 
-msgid "Borders and corners"
-msgstr "Border dan sudut"
+msgid "Border color"
+msgstr "Warna garis tepi"
+
+msgid "Border width"
+msgstr "Lebar garis tepi"
 
 msgid "Bounce keys"
 msgstr "Bounce keys"
-
-msgid "Brightness and volume sliders"
-msgstr "Slider kecerahan dan volume"
 
 msgid "Built-in"
 msgstr "Bawaan"
@@ -296,14 +302,8 @@ msgstr "Pilih gambar..."
 msgid "Choose the name shown next to the avatar."
 msgstr "Pilih nama yang ditampilkan di samping avatar."
 
-msgid "Classic: capsule with - and + buttons"
-msgstr "Klasik: kapsul dengan tombol - dan +"
-
-msgid "Classic: click toggles, right-click opens options"
-msgstr "Klasik: klik mengalihkan, klik kanan membuka opsi"
-
-msgid "Classic: compact card"
-msgstr "Klasik: kartu ringkas"
+msgid "Classic"
+msgstr "Klasik"
 
 msgid "Cleanup"
 msgstr "Pembersihan"
@@ -383,18 +383,6 @@ msgstr "Terhubung ke %s"
 msgid "Connections"
 msgstr "Koneksi"
 
-msgid "Context menu font"
-msgstr "Font menu konteks"
-
-msgid "Context menu icons"
-msgstr "Ikon context menu"
-
-msgid "Context menu size"
-msgstr "Ukuran context menu"
-
-msgid "Context menu text size"
-msgstr "Ukuran teks context menu"
-
 msgid "Context menus"
 msgstr "Context menu"
 
@@ -428,8 +416,8 @@ msgstr "Tidak bisa terhubung"
 msgid "Could not empty the trash"
 msgstr "Tidak dapat mengosongkan sampah"
 
-msgid "Cover: album art with seek bar"
-msgstr "Cover: sampul album dengan seek bar"
+msgid "Cover"
+msgstr "Sampul"
 
 msgid "Cursor"
 msgstr "Kursor"
@@ -458,11 +446,8 @@ msgstr "Gaya gelap"
 msgid "Date & Time"
 msgstr "Tanggal & Waktu"
 
-msgid "Date menu size"
-msgstr "Ukuran menu tanggal"
-
-msgid "Date menu text size"
-msgstr "Ukuran teks menu tanggal"
+msgid "Date menu"
+msgstr "Menu tanggal"
 
 msgid "Dates, numbers and currency"
 msgstr "Tanggal, angka, dan mata uang"
@@ -499,9 +484,6 @@ msgstr "Hapus kategori"
 
 msgid "Delete files older than"
 msgstr "Hapus berkas yang lebih lama dari"
-
-msgid "Desktop icon size"
-msgstr "Ukuran ikon desktop"
 
 msgid "Desktop icons"
 msgstr "Ikon desktop"
@@ -560,11 +542,14 @@ msgstr "Pengaturan Layar"
 msgid "Display language"
 msgstr "Bahasa tampilan"
 
+msgid "Display prompt"
+msgstr "Dialog layar"
+
+msgid "Display settings applied"
+msgstr "Pengaturan layar diterapkan"
+
 msgid "Display settings are unavailable in this session."
 msgstr "Pengaturan layar tidak tersedia di sesi ini."
-
-msgid "Display settings saved"
-msgstr "Pengaturan layar disimpan"
 
 msgid "Displays"
 msgstr "Layar"
@@ -584,20 +569,14 @@ msgstr "Dock dan menu aplikasi"
 msgid "Dock behavior"
 msgstr "Perilaku dock"
 
-msgid "Dock end button"
-msgstr "Tombol ujung dock"
-
-msgid "Dock height"
-msgstr "Tinggi dock"
-
-msgid "Dock size"
-msgstr "Ukuran dock"
-
 msgid "Document font"
 msgstr "Font dokumen"
 
 msgid "Documents"
 msgstr "Dokumen"
+
+msgid "Drag a display next to another one to arrange them"
+msgstr "Seret layar ke samping layar lain untuk mengatur susunan"
 
 msgid "Drag windows to the screen edges to tile them"
 msgstr "Seret jendela ke tepi layar untuk menyusunnya"
@@ -626,11 +605,20 @@ msgstr "Kosongkan tempat sampah"
 msgid "Enabled"
 msgstr "Aktif"
 
+msgid "End button"
+msgstr "Tombol akhir"
+
 msgid "Every app"
 msgstr "Semua aplikasi"
 
-msgid "Extra text scale on top of the UI scale"
-msgstr "Skala teks tambahan di atas skala UI"
+msgid "Every component of the extension: switch, size and border"
+msgstr "Tiap komponen ekstensi: sakelar, ukuran, dan garis tepi"
+
+msgid "Extension"
+msgstr "Ekstensi"
+
+msgid "Extra text scale on top of the size"
+msgstr "Skala teks tambahan di atas ukuran"
 
 msgid "Favorite category"
 msgstr "Kategori favorit"
@@ -692,14 +680,20 @@ msgstr "Jarak dock ke tepi bawah layar, dalam piksel"
 msgid "General"
 msgstr "Umum"
 
-msgid "Handle: split track with round buttons"
-msgstr "Handle: track terbelah dengan tombol bulat"
+msgid "Grid height"
+msgstr "Tinggi grid"
+
+msgid "Handle"
+msgstr "Gagang"
 
 msgid "Hardware"
 msgstr "Perangkat keras"
 
-msgid "Height of the scrolling app grid in the app menu, in pixels"
-msgstr "Tinggi grid aplikasi yang bisa digulir di menu aplikasi, dalam piksel"
+msgid "Height above the edge"
+msgstr "Tinggi dari tepi"
+
+msgid "Height of the scrolling app grid, in pixels"
+msgstr "Tinggi grid aplikasi yang bisa digulir, dalam piksel"
 
 msgid "Help"
 msgstr "Bantuan"
@@ -719,9 +713,6 @@ msgstr "Beranda"
 msgid "Home folder"
 msgstr "Folder home"
 
-msgid "Home on the desktop"
-msgstr "Beranda di desktop"
-
 msgid "Hot corner"
 msgstr "Sudut aktif"
 
@@ -733,6 +724,9 @@ msgstr "Sudut panas, susun jendela, dan ruang kerja"
 
 msgid "Hover click"
 msgstr "Klik dengan menahan"
+
+msgid "Icon size"
+msgstr "Ukuran ikon"
 
 msgid "Icon theme"
 msgstr "Tema ikon"
@@ -770,8 +764,8 @@ msgstr "Font antarmuka, tema ikon dan kursor"
 msgid "Just now"
 msgstr "Baru saja"
 
-msgid "Keep"
-msgstr "Simpan"
+msgid "Keep Changes"
+msgstr "Pertahankan"
 
 msgid "Keep history for"
 msgstr "Simpan riwayat selama"
@@ -839,8 +833,11 @@ msgstr "Keluar lalu masuk lagi untuk menerapkan bahasa"
 msgid "Longer battery life"
 msgstr "Baterai lebih awet"
 
-msgid "Look of the page list in the Settings app"
-msgstr "Tampilan daftar halaman di aplikasi Pengaturan"
+msgid "Look and feel"
+msgstr "Tampilan"
+
+msgid "Look of the page list"
+msgstr "Tampilan daftar halaman"
 
 msgid "Mail"
 msgstr "Surel"
@@ -854,14 +851,8 @@ msgstr "Buat layar lebih hangat di malam hari"
 msgid "Manual"
 msgstr "Manual"
 
-msgid "Material 3 Alt+Tab switcher"
-msgstr "Pengalih jendela Alt+Tab Material 3"
-
-msgid "Material 3 date menu"
-msgstr "Menu tanggal Material 3"
-
-msgid "Material 3 volume and brightness indicator"
-msgstr "Indikator volume dan kecerahan Material 3"
+msgid "Material 3"
+msgstr "Material 3"
 
 msgid "Maximize"
 msgstr "Perbesar"
@@ -880,6 +871,9 @@ msgstr "Gaya pemutar media"
 
 msgid "Memory"
 msgstr "Memori"
+
+msgid "Menus"
+msgstr "Menu"
 
 msgid "Microphone"
 msgstr "Mikrofon"
@@ -947,6 +941,9 @@ msgstr "Nama (A-Z)"
 msgid "Name (Z-A)"
 msgstr "Nama (Z-A)"
 
+msgid "Name in Quick Settings"
+msgstr "Nama di Pengaturan Cepat"
+
 msgid "Natural scrolling"
 msgstr "Gulir alami"
 
@@ -955,6 +952,9 @@ msgstr "Navigasi"
 
 msgid "Nearby devices"
 msgstr "Perangkat terdekat"
+
+msgid "Needs no other extension"
+msgstr "Tanpa ekstensi lain"
 
 msgid "NetworkManager (nmcli) was not found on this system."
 msgstr "NetworkManager (nmcli) tidak ditemukan di sistem ini."
@@ -988,6 +988,9 @@ msgstr "Tidak ada acara"
 
 msgid "No VPN configured"
 msgstr "Belum ada VPN"
+
+msgid "No application found"
+msgstr "Aplikasi tidak ditemukan"
 
 msgid "No apps found"
 msgstr "Aplikasi tidak ditemukan"
@@ -1028,6 +1031,9 @@ msgstr "Tidak ada koneksi kabel"
 msgid "None"
 msgstr "Tidak ada"
 
+msgid "Not available"
+msgstr "Tidak tersedia"
+
 msgid "Not connected"
 msgstr "Tidak terhubung"
 
@@ -1043,8 +1049,8 @@ msgstr "Banner notifikasi"
 msgid "Notifications"
 msgstr "Notifikasi"
 
-msgid "Notifications, calendar, reminders, world clocks and weather in the clock menu"
-msgstr "Notifikasi, kalender, pengingat, jam dunia, dan cuaca di menu jam"
+msgid "Notifications, calendar, reminders, world clocks and weather"
+msgstr "Notifikasi, kalender, pengingat, jam dunia, dan cuaca"
 
 msgid "Number of workspaces"
 msgstr "Jumlah ruang kerja"
@@ -1058,14 +1064,26 @@ msgstr "Mati"
 msgid "Off (Light)"
 msgstr "Mati (Terang)"
 
+msgid "Off hides the dock and the app menu button"
+msgstr "Nonaktif menyembunyikan dock dan tombol menu aplikasi"
+
 msgid "Off opens GNOME's Overview from the dock and the Super key"
 msgstr "Nonaktif: dock dan tombol Super membuka Overview GNOME"
+
+msgid "Off restores GNOME's own clock menu"
+msgstr "Nonaktif: menu jam bawaan GNOME dipakai kembali"
 
 msgid "Off restores GNOME's own panel"
 msgstr "Nonaktif: panel bawaan GNOME dipakai kembali"
 
 msgid "Off restores GNOME's own window switcher"
 msgstr "Mati: pakai pengalih jendela bawaan GNOME"
+
+msgid "Off restores the shell's own on-screen display"
+msgstr "Nonaktif: tampilan layar bawaan shell dipakai kembali"
+
+msgid "Off shows the shell's own prompt"
+msgstr "Nonaktif: dialog bawaan shell dipakai"
 
 msgid "On"
 msgstr "Hidup"
@@ -1088,11 +1106,14 @@ msgstr "Buka Folder Desktop"
 msgid "Open GNOME display settings"
 msgstr "Buka pengaturan layar GNOME"
 
+msgid "Open With"
+msgstr "Buka dengan"
+
 msgid "Open folder for new media"
 msgstr "Buka folder untuk media baru"
 
-msgid "Open the Material 3 Settings app instead of GNOME Settings (takes effect immediately)"
-msgstr "Buka aplikasi Pengaturan Material 3 menggantikan Pengaturan GNOME (langsung berlaku)"
+msgid "Open the Material 3 Settings app instead of GNOME Settings"
+msgstr "Buka aplikasi Pengaturan Material 3, bukan Pengaturan GNOME"
 
 msgid "Open the overview by moving the pointer to the top-left corner"
 msgstr "Buka ringkasan dengan menggerakkan penunjuk ke pojok kiri atas"
@@ -1103,8 +1124,8 @@ msgstr "Membuka menu aplikasi pada satu kategori dan hanya membaca aplikasinya, 
 msgid "Operating system"
 msgstr "Sistem operasi"
 
-msgid "Order of the apps in the app menu"
-msgstr "Urutan aplikasi di menu aplikasi"
+msgid "Order of the apps in the grid"
+msgstr "Urutan aplikasi di grid"
 
 msgid "Orientation"
 msgstr "Orientasi"
@@ -1135,6 +1156,9 @@ msgstr "Terpasang"
 
 msgid "Palette: %s"
 msgstr "Palet: %s"
+
+msgid "Panels, dock, menus, borders"
+msgstr "Panel, dock, menu, garis tepi"
 
 msgid "Password"
 msgstr "Kata sandi"
@@ -1241,6 +1265,9 @@ msgstr "Pengaturan Cepat"
 msgid "Quick Settings header"
 msgstr "Header Pengaturan Cepat"
 
+msgid "Recent window card"
+msgstr "Kartu jendela terakhir"
+
 msgid "Refresh rate"
 msgstr "Refresh rate"
 
@@ -1280,9 +1307,6 @@ msgstr "Ulangi tombol"
 msgid "Replace GNOME Settings"
 msgstr "Ganti Pengaturan GNOME"
 
-msgid "Replaces the shell's own on-screen display"
-msgstr "Menggantikan indikator layar bawaan shell"
-
 msgid "Reset"
 msgstr "Atur ulang"
 
@@ -1304,8 +1328,8 @@ msgstr "Mulai Ulang"
 msgid "Revert"
 msgstr "Kembalikan"
 
-msgid "Reverting in %d seconds"
-msgstr "Dikembalikan dalam %d detik"
+msgid "Revert Settings"
+msgstr "Kembalikan"
 
 msgid "Right of %s"
 msgstr "Di kanan %s"
@@ -1313,17 +1337,14 @@ msgstr "Di kanan %s"
 msgid "Same as language"
 msgstr "Sama dengan bahasa"
 
-msgid "Same as the font above"
-msgstr "Sama dengan font di atas"
+msgid "Same as the Quick Settings font"
+msgstr "Sama dengan font Pengaturan Cepat"
 
 msgid "Save"
 msgstr "Simpan"
 
 msgid "Scale"
 msgstr "Skala"
-
-msgid "Scale the Quick Settings panel, dock and app menu, and choose their font. Changes apply immediately."
-msgstr "Atur skala panel Pengaturan Cepat, dock, dan menu aplikasi, serta pilih fontnya. Perubahan langsung berlaku."
 
 msgid "Scan"
 msgstr "Pindai"
@@ -1397,6 +1418,9 @@ msgstr "Pilih Semua"
 msgid "Select Weather Location..."
 msgstr "Pilih lokasi cuaca..."
 
+msgid "Selection border"
+msgstr "Garis tepi pilihan"
+
 msgid "Send problem reports"
 msgstr "Kirim laporan masalah"
 
@@ -1409,9 +1433,6 @@ msgstr "Aplikasi Pengaturan"
 msgid "Settings shortcut"
 msgstr "Pintasan pengaturan"
 
-msgid "Settings sidebar buttons"
-msgstr "Tombol sidebar Pengaturan"
-
 msgid "Settings updated"
 msgstr "Pengaturan diperbarui"
 
@@ -1421,8 +1442,8 @@ msgstr "Berbagi"
 msgid "Show"
 msgstr "Tampilkan"
 
-msgid "Show an icon before each entry of the right-click menus"
-msgstr "Tampilkan ikon sebelum tiap entri menu klik kanan"
+msgid "Show an icon before each entry"
+msgstr "Tampilkan ikon sebelum tiap entri"
 
 msgid "Show battery percentage"
 msgstr "Tampilkan persentase baterai"
@@ -1432,6 +1453,9 @@ msgstr "Tampilkan tanggal"
 
 msgid "Show desktop"
 msgstr "Tampilkan desktop"
+
+msgid "Show desktop icons"
+msgstr "Tampilkan ikon desktop"
 
 msgid "Show dock"
 msgstr "Tampilkan dock"
@@ -1448,14 +1472,8 @@ msgstr "Tampilkan notifikasi saat layar terkunci"
 msgid "Show or hide the sidebar"
 msgstr "Tampilkan atau sembunyikan bilah samping"
 
-msgid "Show recent window"
-msgstr "Tampilkan jendela terakhir"
-
 msgid "Show seconds"
 msgstr "Tampilkan detik"
-
-msgid "Show the files of your Desktop folder on the desktop, no other extension needed"
-msgstr "Tampilkan isi folder Desktop di desktop, tanpa ekstensi lain"
 
 msgid "Show week numbers"
 msgstr "Tampilkan nomor minggu"
@@ -1466,32 +1484,23 @@ msgstr "Tampilkan hari"
 msgid "Shut Down"
 msgstr "Matikan"
 
+msgid "Sidebar buttons"
+msgstr "Tombol sidebar"
+
 msgid "Simulated secondary click"
 msgstr "Klik sekunder simulasi"
 
 msgid "Size"
 msgstr "Ukuran"
 
-msgid "Size and font"
-msgstr "Ukuran dan font"
+msgid "Size of the icons in pixels"
+msgstr "Ukuran ikon dalam piksel"
 
-msgid "Size of the clock menu panel; 1.00 is the default"
-msgstr "Ukuran panel menu jam; 1.00 adalah bawaan"
+msgid "Size of the preview shown when hovering a dock icon"
+msgstr "Ukuran pratinjau saat mengarahkan ke ikon dock"
 
-msgid "Size of the desktop icons in pixels"
-msgstr "Ukuran ikon desktop dalam piksel"
-
-msgid "Size of the preview shown when hovering a dock icon; 1.00 is the default"
-msgstr "Ukuran preview saat kursor di ikon dock; 1.00 adalah bawaan"
-
-msgid "Size of the right-click menus; 1.00 is the default"
-msgstr "Ukuran menu klik kanan; 1.00 adalah bawaan"
-
-msgid "Size of the text in the clock menu; 1.00 is the default"
-msgstr "Ukuran teks di menu jam; 1.00 adalah bawaan"
-
-msgid "Size of the text in the right-click menus; 1.00 is the default"
-msgstr "Ukuran teks di menu klik kanan; 1.00 adalah bawaan"
+msgid "Size of the window previews"
+msgstr "Ukuran pratinjau jendela"
 
 msgid "Size, behavior, categories and fonts of the dock, app menu and Quick Settings"
 msgstr "Ukuran, perilaku, kategori, dan font dock, menu aplikasi, dan Pengaturan Cepat"
@@ -1505,11 +1514,14 @@ msgstr "Slow keys"
 msgid "Sort apps"
 msgstr "Urutkan aplikasi"
 
+msgid "Sort order"
+msgstr "Urutan"
+
 msgid "Sound"
 msgstr "Suara"
 
-msgid "Split: icon toggles, text opens options"
-msgstr "Terbagi: ikon mengalihkan, teks membuka opsi"
+msgid "Split"
+msgstr "Terbagi"
 
 msgid "Standard performance and battery"
 msgstr "Performa dan baterai standar"
@@ -1577,29 +1589,44 @@ msgstr "Teks"
 msgid "Text size"
 msgstr "Ukuran teks"
 
+msgid "The Alt+Tab window list"
+msgstr "Daftar jendela Alt+Tab"
+
+msgid "The Material 3 replacement for GNOME Settings"
+msgstr "Pengganti Pengaturan GNOME versi Material 3"
+
 msgid "The apps themselves are not removed."
 msgstr "Aplikasinya sendiri tidak dihapus."
+
+msgid "The bar with your apps and the window previews above it"
+msgstr "Bilah aplikasi beserta pratinjau jendela di atasnya"
 
 msgid "The button at the end of the dock"
 msgstr "Tombol di ujung dock"
 
-msgid "The card at the bottom of the app menu that reopens the last used window"
-msgstr "Kartu di bawah menu aplikasi yang membuka kembali jendela terakhir dipakai"
-
-msgid "The card that shows the playing track"
-msgstr "Kartu yang menampilkan lagu yang diputar"
+msgid "The card at the bottom that reopens the last used window"
+msgstr "Kartu di bawah untuk membuka lagi jendela terakhir"
 
 msgid "The category the app menu opens on"
 msgstr "Kategori yang dibuka menu aplikasi"
 
-msgid "The floating dock at the bottom of the screen and the app menu it opens."
-msgstr "Dock melayang di bawah layar dan menu aplikasi yang dibukanya."
+msgid "The display settings will revert in %d seconds."
+msgstr "Pengaturan layar akan dikembalikan dalam %d detik."
 
-msgid "The indicator shown when you change the volume or brightness."
-msgstr "Indikator yang muncul saat mengubah volume atau kecerahan."
+msgid "The files of your Desktop folder on the desktop"
+msgstr "File folder Desktop ditampilkan di desktop"
 
-msgid "The panel opened from the top bar."
-msgstr "Panel yang dibuka dari bilah atas."
+msgid "The indicator shown when you change the volume or brightness"
+msgstr "Indikator saat volume atau kecerahan diubah"
+
+msgid "The launcher opened from the dock"
+msgstr "Peluncur yang dibuka dari dock"
+
+msgid "The panel from the system menu in the top bar"
+msgstr "Panel dari menu sistem di bilah atas"
+
+msgid "The right-click menus of the dock, app menu and desktop"
+msgstr "Menu klik kanan dock, menu aplikasi, dan desktop"
 
 msgid "Theme"
 msgstr "Tema"
@@ -1646,9 +1673,6 @@ msgstr "Sampah"
 msgid "Trash emptied"
 msgstr "Sampah dikosongkan"
 
-msgid "Trash on the desktop"
-msgstr "Sampah di desktop"
-
 msgid "Turn off for Do Not Disturb"
 msgstr "Matikan untuk mode Jangan Ganggu"
 
@@ -1670,9 +1694,6 @@ msgstr "Pengetikan, tata letak"
 msgid "Typing, layouts and shortcuts"
 msgstr "Pengetikan, tata letak, dan pintasan"
 
-msgid "UI scale"
-msgstr "Skala UI"
-
 msgid "USB protection"
 msgstr "Perlindungan USB"
 
@@ -1685,20 +1706,32 @@ msgstr "Lepas dari Dock"
 msgid "Untitled"
 msgstr "Tanpa judul"
 
+msgid "Use Material 3 Alt+Tab switcher"
+msgstr "Pakai Alt+Tab Material 3"
+
 msgid "Use Material 3 Quick Settings"
 msgstr "Pakai Pengaturan Cepat Material 3"
 
 msgid "Use Material 3 app menu"
 msgstr "Pakai menu aplikasi Material 3"
 
+msgid "Use Material 3 date menu"
+msgstr "Pakai menu tanggal Material 3"
+
+msgid "Use Material 3 indicator"
+msgstr "Pakai indikator Material 3"
+
+msgid "Use Material 3 prompt"
+msgstr "Pakai dialog Material 3"
+
+msgid "Use the Quick Settings font"
+msgstr "Pakai font Pengaturan Cepat"
+
 msgid "Use the dark color scheme across the system"
 msgstr "Pakai skema warna gelap di seluruh sistem"
 
 msgid "Use the default font"
 msgstr "Pakai font bawaan"
-
-msgid "Use the font above"
-msgstr "Pakai font di atas"
 
 msgid "Username"
 msgstr "Nama pengguna"
@@ -1760,11 +1793,17 @@ msgstr "Lebar menu aplikasi dalam piksel; kartu aplikasi membagi lebarnya sama r
 msgid "Window preview size"
 msgstr "Ukuran preview jendela"
 
+msgid "Window switcher"
+msgstr "Pengalih jendela"
+
 msgid "Windowing system"
 msgstr "Sistem jendela"
 
 msgid "Windows"
 msgstr "Jendela"
+
+msgid "Windows and screen"
+msgstr "Jendela dan layar"
 
 msgid "Windows, navigation, launchers"
 msgstr "Jendela, navigasi, peluncur"

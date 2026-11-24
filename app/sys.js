@@ -16,6 +16,13 @@ export class Gs {
         if (this._settings.has(schema))
             return this._settings.get(schema);
 
+        // The extension's own schema is compiled in its folder, not installed system-wide.
+        if (schema === EXT_SCHEMA) {
+            const own = extSettings();
+            this._settings.set(schema, own);
+            return own;
+        }
+
         let settings = null;
         try {
             const source = Gio.SettingsSchemaSource.get_default();
@@ -277,6 +284,7 @@ export function splitTerse(line) {
 
 
 /** Directory of the extension that ships this app. */
+export const EXT_SCHEMA = 'org.gnome.shell.extensions.material3';
 export const EXTENSION_DIR = Gio.File.new_for_uri(import.meta.url).get_parent().get_parent().get_path();
 
 let extCache;

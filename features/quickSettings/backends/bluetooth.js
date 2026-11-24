@@ -55,6 +55,7 @@ export class BluetoothBackend extends Backend {
     get options() {
         return {
             title: _('Bluetooth'),
+            settingsPage: 'bluetooth',
             icon: 'bluetooth',
             subscribe: cb => this.subscribe(cb),
             getOptions: () => this._options(),

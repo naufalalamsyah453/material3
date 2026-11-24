@@ -18,6 +18,7 @@ const BINDINGS = [
     'switch-group', 'switch-group-backward',
 ];
 const SHOW_DELAY = 150; // ms; a quick Alt+Tab tap switches without showing the HUD
+let sizeFactor = 1; // switcher-scale
 const THUMB_H = 128; // preview height at full size
 const MIN_THUMB_H = 84;
 const MIN_THUMB_W = 120; // keeps the icon, title and close button on one line
@@ -240,12 +241,12 @@ class WindowSwitcher {
         });
         const sizes = height => aspects.map(a => {
             const thumbW = Math.round(height * a);
-            return {thumbW, thumbH: height, cardW: Math.max(thumbW, px(MIN_THUMB_W)) + px(CARD_CHROME)};
+            return {thumbW, thumbH: height, cardW: Math.max(thumbW, Math.round(px(MIN_THUMB_W) * Math.min(1, sizeFactor))) + px(CARD_CHROME)};
         });
-        let height = px(THUMB_H);
+        let height = Math.round(px(THUMB_H) * sizeFactor);
         let layout = sizes(height);
         const total = l => l.reduce((sum, c) => sum + c.cardW, 0) + px(GAP) * Math.max(0, l.length - 1);
-        while (total(layout) > available && height > px(MIN_THUMB_H)) {
+        while (total(layout) > available && height > Math.round(px(MIN_THUMB_H) * Math.min(1, sizeFactor))) {
             height -= px(4);
             layout = sizes(height);
         }
@@ -561,6 +562,8 @@ export class SwitcherFeature {
     }
 
     enable() {
+        this._applyScale();
+        this._scaleId = this._settings.connect('changed::switcher-scale', () => this._applyScale());
         this._iface = new Gio.Settings({schema_id: 'org.gnome.desktop.interface'});
         for (const name of BINDINGS) {
             Main.wm.setCustomKeybindingHandler(name, Shell.ActionMode.NORMAL,
@@ -569,6 +572,9 @@ export class SwitcherFeature {
     }
 
     disable() {
+        if (this._scaleId)
+            this._settings.disconnect(this._scaleId);
+        this._scaleId = 0;
         this._switcher?.destroy();
         this._switcher = null;
         for (const name of BINDINGS) {
@@ -605,6 +611,11 @@ export class SwitcherFeature {
                 console.error(`material3: the shell's switcher failed too: ${fallback.message}`);
             }
         }
+    }
+
+    _applyScale() {
+        sizeFactor = this._settings.settings_schema.has_key('switcher-scale')
+            ? this._settings.get_double('switcher-scale') : 1;
     }
 
     _start(display, binding) {

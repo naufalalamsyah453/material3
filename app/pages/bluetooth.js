@@ -25,16 +25,12 @@ export function build() {
     page.append(listCard([power]));
 
     page.append(sectionLabel(_('My devices')));
-    const mine = vbox(0, 'm3-card list');
-    const mineList = vbox(0);
-    mine.append(mineList);
-    page.append(mine);
+    const mineList = vbox(3, 'm3-card list');
+    page.append(mineList);
 
     page.append(sectionLabel(_('Nearby devices')));
-    const nearby = vbox(0, 'm3-card list');
-    const nearList = vbox(0);
-    nearby.append(nearList);
-    page.append(nearby);
+    const nearList = vbox(3, 'm3-card list');
+    page.append(nearList);
     page.append(listCard([row({
         title: _('Scan for devices'), sub: _('Scans for ten seconds'), icon: 'bluetooth_searching',
         trailing: pillButton(_('Scan'), () => {

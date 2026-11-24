@@ -103,6 +103,7 @@ export class PowerBackend extends Backend {
     get options() {
         return {
             title: _('Power Mode'),
+            settingsPage: 'power',
             icon: 'battery_saver',
             fitContent: true,
             subscribe: cb => this.subscribe(cb),

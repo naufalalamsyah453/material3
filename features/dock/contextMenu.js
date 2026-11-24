@@ -1,4 +1,5 @@
 import Clutter from 'gi://Clutter';
+import Gio from 'gi://Gio';
 import Shell from 'gi://Shell';
 import St from 'gi://St';
 
@@ -6,6 +7,7 @@ import * as AppFavorites from 'resource:///org/gnome/shell/ui/appFavorites.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import {_} from '../../i18n.js';
 import {activateApp} from '../settings/launcher.js';
+import {openWithItems, showProperties} from '../fileTools.js';
 
 import {px, scoped, ui} from '../quickSettings/ui.js';
 import {pressFeedback, symbolIcon, textLabel} from '../quickSettings/widgets.js';
@@ -110,7 +112,7 @@ function onPress(actor, callback) {
  * @param {function(): void} done called after an entry ran (to close menus)
  * @returns {Array<object>}
  */
-export function appContextItems(app, done) {
+export function appContextItems(app, done, {reopen = null} = {}) {
     const run = callback => () => {
         done();
         try {
@@ -165,6 +167,25 @@ export function appContextItems(app, done) {
             icon: 'keep',
             label: _('Pin to Dock'),
             activate: run(() => favorites.addFavorite(id)),
+        });
+    }
+
+    const path = info?.get_filename?.();
+    if (path && reopen) {
+        const file = Gio.File.new_for_path(path);
+        items.push({separator: true});
+        items.push({
+            icon: 'apps',
+            label: _('Open With'),
+            activate: () => reopen(openWithItems(file, {
+                done,
+                back: () => reopen(appContextItems(app, done, {reopen})),
+            })),
+        });
+        items.push({
+            icon: 'info',
+            label: _('Properties'),
+            activate: run(() => showProperties(file, {gicon: app.get_icon(), isDir: false})),
         });
     }
 
@@ -361,13 +382,14 @@ export class ContextMenu {
         });
     }
 
-    _row({label, icon, activate, destructive, selected}) {
+    _row({label, icon, activate, destructive, selected, showIcon = false}) {
         const button = new St.Button({
             style_class: `m3-ctx-item${destructive ? ' m3-ctx-danger' : ''}${selected ? ' m3-ctx-selected' : ''}`,
             can_focus: true,
             reactive: true,
             track_hover: true,
             x_expand: true,
+            style: showIcon ? `padding: ${px(10)}px ${px(14)}px; min-width: ${px(170)}px;` : '',
         });
         // Left-aligned: the content fills the row and its icon and text start
         // at the left edge. The menu is as wide as its longest label.
@@ -376,7 +398,7 @@ export class ContextMenu {
             x_expand: true,
             x_align: Clutter.ActorAlign.FILL,
         });
-        if (ui.ctxIcons)
+        if (ui.ctxIcons || showIcon)
             content.add_child(symbolIcon(icon ?? 'chevron_right', {size: 18}));
         content.add_child(textLabel(label, 'm3-ctx-text', {x_expand: true}));
         if (selected)

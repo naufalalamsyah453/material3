@@ -803,15 +803,16 @@ export class AppMenu {
         if (options.length === 0)
             return;
 
-        const items = options.map(({icon, label, selected, activate}) => ({
-            icon,
+        const items = options.map(({id, icon, label, selected, activate}) => ({
+            icon: POWER_ICONS[id] ?? icon ?? 'bolt',
             label,
             selected,
             activate,
+            showIcon: true,
         }));
         const [x, y] = this._powerBtn.get_transformed_position();
         const [width, height] = this._powerBtn.get_transformed_size();
-        this._ctx.open(items, {x: x + width, y: y + height + px(6), placement: 'below-end'});
+        this._ctx.open(items, {x: x + width, y: y + height + px(8), placement: 'below-end'});
     }
 
     _showSortMenu() {
@@ -852,7 +853,10 @@ export class AppMenu {
     /** Right-click menu of an app card, at the pointer. */
     _showContext(app) {
         const [x, y] = global.get_pointer();
-        this._ctx.open(appContextItems(app, () => this.close()), {x, y, placement: 'pointer'});
+        const at = {x, y, placement: 'pointer'};
+        this._ctx.open(appContextItems(app, () => this.close(), {
+            reopen: items => this._ctx.open(items, at),
+        }), at);
     }
 
     _launch(app) {

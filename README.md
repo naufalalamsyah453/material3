@@ -124,8 +124,8 @@ wallpaper, with no other extension needed. The icons sit on a grid between the
 wallpaper and the windows: a click selects, a double click opens, dragging moves
 (positions are kept in `desktop-positions`), dragging on the wallpaper draws a
 selection rectangle, and the right button opens the extension's own menu (open,
-cut / copy / paste, rename, properties, new folder or document, change
-background). Home and Trash shortcuts can be added (`desktop-show-home`,
+open with, cut / copy / paste, rename, properties, new folder or document,
+change background). Home and Trash shortcuts can be added (`desktop-show-home`,
 `desktop-show-trash`), and the icon size is `desktop-icon-size` (32–128 px).
 
 ## Date menu
@@ -143,16 +143,26 @@ one card per window with the app icon, title, close button and a live preview
 sized from the window's own aspect ratio, plus the workspace hint. Off restores
 GNOME's own switcher.
 
+## Display prompt
+
+`show-display-prompt` replaces the shell's "Keep these display settings?"
+dialog with a Material 3 prompt: it counts down 20 seconds and offers *Keep
+Changes* or *Revert Settings*. Its border has its own settings
+(`border-prompt-width`, `border-prompt-radius`, `border-prompt-color`).
+
 ## Pengaturan (pengganti GNOME Settings)
 
 Aplikasi GTK 4 asli (`app/`, dijalankan `gjs -m app/main.js`), jadi tiling, snap, resize,
 drag, dan scrollbar ditangani compositor. Tampilan mengikuti HTML (sidebar pil, kartu,
-switch M3, slider ekspresif). 21 halaman: Wi-Fi & Jaringan, Bluetooth, Tampilan,
+switch M3, slider ekspresif). 22 halaman: Wi-Fi & Jaringan, Bluetooth, Tampilan,
 Notifikasi, Pencarian, Multitasking, Aplikasi, Privasi, Berbagi, Layar, Suara, Daya,
 Mouse & Touchpad, Keyboard, Pintasan Keyboard, Pengaturan Lainnya, Tanggal & Waktu,
-Wilayah & Bahasa, Aksesibilitas, Penyimpanan, Tentang. Halaman Font & Tema dibuka dari
-Tampilan. Nilai dibaca/ditulis lewat GSettings (sama dengan perintah `gsettings`),
-plus nmcli, bluetoothctl, wpctl, timedatectl, D-Bus Accounts, lpstat/colormgr/boltctl.
+Wilayah & Bahasa, Aksesibilitas, Penyimpanan, **Material 3**, Tentang. Halaman Font &
+Tema dibuka dari Tampilan. Halaman Material 3 mengatur seluruh komponen extension
+(switch, ukuran, border) dari daftar yang sama dengan jendela preferences
+(`componentSpec.js`). Nilai dibaca/ditulis lewat GSettings (sama dengan perintah
+`gsettings`), plus nmcli, bluetoothctl, wpctl, timedatectl, D-Bus Accounts,
+lpstat/colormgr/boltctl.
 
 - Extension membuat `~/.local/share/applications/org.gnome.Settings.desktop` (override),
   menyembunyikan entri panel GNOME Settings, dan menonaktifkan search provider-nya.
@@ -179,6 +189,11 @@ plus nmcli, bluetoothctl, wpctl, timedatectl, D-Bus Accounts, lpstat/colormgr/bo
 - `disable-shadows` removes the drop shadows from every surface (panels,
   menus, dock, switcher, date menu) while keeping text shadows so labels stay
   readable on the wallpaper.
+- Border width, radius and color are set per surface: Quick Settings, app menu,
+  dock, context menus, Settings app, date menu, switcher, OSD, display prompt
+  and desktop selection (`border-<surface>-width`, `-radius`, `-color`).
+- `switcher-scale` resizes the Alt+Tab previews and `osd-scale` the
+  volume/brightness pill; both live 0.6–1.6.
 
 ## Settings
 
@@ -201,6 +216,8 @@ Each add-on can be disabled individually in the extension preferences:
   switcher (`show-switcher`).
 - **Desktop icons** — draws the Desktop folder on the wallpaper without another
   extension (`show-desktop-icons`).
+- **Display prompt** — off restores the shell's own "Keep these display
+  settings?" dialog (`show-display-prompt`).
 - **Tile style** — *Classic* (click toggles, right-click opens the options) or
   *Split* (the icon chip toggles, the text area opens the options; only tiles
   with options are divided) (`qs-tile-style`).
@@ -258,6 +275,9 @@ features/dateMenu/index.js       clock menu: notifications, calendar, reminders,
                                  world clocks, weather
 features/switcher/index.js       Alt+Tab window picker with live previews
 features/desktop/index.js        desktop icons, selection, drag and file menu
+features/displayConfirm/index.js "Keep these display settings?" prompt
+features/fileTools.js            Open With / Properties menus for files
+componentSpec.js                 settings list shared by preferences and the app
 stylesheet.css                   Material tokens + component CSS
 tools/run-nested.sh              isolated headless screenshot harness
 tools/shot.py                    screenshot helper (private session bus)

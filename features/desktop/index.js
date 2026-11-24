@@ -3,13 +3,13 @@ import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 import St from 'gi://St';
 
-import * as CheckBox from 'resource:///org/gnome/shell/ui/checkBox.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as ModalDialog from 'resource:///org/gnome/shell/ui/modalDialog.js';
 
 import {_} from '../../i18n.js';
 import {ContextMenu} from '../dock/contextMenu.js';
 import {openSettings} from '../settings/launcher.js';
+import {openWithItems, showProperties} from '../fileTools.js';
 
 const ATTRS = 'standard::name,standard::display-name,standard::icon,standard::is-hidden,standard::type,' +
     'metadata::custom-icon,metadata::custom-icon-name';
@@ -379,11 +379,9 @@ export class DesktopFeature {
             return Clutter.EVENT_PROPAGATE;
 
         this._menu.close(false);
-        try {
-            this._grab = global.stage.grab(this._root);
-        } catch {
-            this._grab = null;
-        }
+        // No stage grab on a plain click: it is taken only once a drag starts,
+        // so a lost button release can never leave the shell without input.
+        this._releaseGrab();
         this._press = {x, y, hit, ctrl, moved: false, base: this._selected()};
 
         if (hit) {
@@ -416,6 +414,13 @@ export class DesktopFeature {
         if (!press.moved && Math.hypot(dx, dy) < DRAG_THRESHOLD)
             return Clutter.EVENT_STOP;
         press.moved = true;
+        if (!this._grab) {
+            try {
+                this._grab = global.stage.grab(this._root);
+            } catch {
+                this._grab = null;
+            }
+        }
 
         if (press.hit) {
             for (const item of this._selected()) {
@@ -450,7 +455,15 @@ export class DesktopFeature {
     _endPress() {
         this._press = null;
         this._rubber.hide();
-        this._grab?.dismiss();
+        this._releaseGrab();
+    }
+
+    _releaseGrab() {
+        try {
+            this._grab?.dismiss();
+        } catch (e) {
+            console.error(`material3: desktop grab: ${e.message}`);
+        }
         this._grab = null;
     }
 
@@ -518,6 +531,7 @@ export class DesktopFeature {
     }
 
     _openMenu(items, x, y) {
+        this._menuAt = [x, y];
         this._menu.open(items.map(entry => entry.separator ? entry : {
             ...entry,
             activate: () => {
@@ -553,8 +567,14 @@ export class DesktopFeature {
             items.push({icon: 'content_cut', label: _('Cut'), activate: () => this._copy(files, 'cut')});
             items.push({icon: 'content_copy', label: _('Copy'), activate: () => this._copy(files, 'copy')});
             if (single && !single.special) {
+                items.push({icon: 'apps', label: _('Open With'), activate: () => {
+                    const [mx, my] = this._menuAt ?? [0, 0];
+                    this._openMenu(openWithItems(single.file, {
+                        back: () => this._openMenu(this._itemMenu(), mx, my),
+                    }), mx, my);
+                }});
                 items.push({icon: 'edit', label: _('Rename…'), activate: () => this._rename(single)});
-                items.push({icon: 'info', label: _('Properties'), activate: () => this._properties(single)});
+                items.push({icon: 'info', label: _('Properties'), activate: () => showProperties(single.file, {gicon: single.gicon, isDir: single.isDir, onDone: () => this._queue()})});
             }
             items.push({separator: true});
             items.push({icon: 'delete', label: _('Move to Trash'), destructive: true,
@@ -648,173 +668,6 @@ export class DesktopFeature {
                     : ['cp', '-r', '--', from, target.get_path()]);
             }
         });
-    }
-
-    /** Properties: name, icon and the permission to run the file as a program. */
-    _properties(item) {
-        const file = item.file;
-        let mode = 0;
-        let customIcon = '';
-        const facts = [];
-        try {
-            const info = file.query_info('unix::mode,standard::size,standard::content-type,time::modified,' +
-                'metadata::custom-icon,metadata::custom-icon-name',
-                Gio.FileQueryInfoFlags.NONE, null);
-            mode = info.get_attribute_uint32('unix::mode');
-            const type = info.get_content_type();
-            if (type)
-                facts.push([_('Type'), Gio.content_type_get_description(type)]);
-            if (!item.isDir)
-                facts.push([_('Size'), GLib.format_size(info.get_size())]);
-            const modified = info.get_attribute_uint64('time::modified');
-            if (modified > 0) {
-                facts.push([_('Last modified'),
-                    GLib.DateTime.new_from_unix_local(modified).format('%x, %H:%M')]);
-            }
-            const uri = info.get_attribute_string('metadata::custom-icon');
-            customIcon = uri ? Gio.File.new_for_uri(uri).get_path() ?? uri
-                : info.get_attribute_string('metadata::custom-icon-name') ?? '';
-        } catch (e) {
-            console.error(`material3: properties: ${e.message}`);
-        }
-        const originalIcon = customIcon;
-        const originalExec = (mode & 0o111) !== 0;
-
-        const dialog = new ModalDialog.ModalDialog({styleClass: 'prompt-dialog'});
-        const box = new St.BoxLayout({orientation: Clutter.Orientation.VERTICAL, style: 'spacing: 12px; min-width: 380px;'});
-        box.add_child(new St.Label({text: _('Properties'), style_class: 'headline'}));
-
-        // Name on the right of a big icon; clicking the icon opens the chooser.
-        const top = new St.BoxLayout({style: 'spacing: 16px;'});
-        const preview = new St.Icon({gicon: item.gicon, icon_size: 64});
-        const iconButton = new St.Button({
-            child: preview, can_focus: true, y_align: Clutter.ActorAlign.START,
-            accessible_name: _('Change icon'),
-            style: 'padding: 10px; border-radius: 18px; background-color: rgba(255, 255, 255, 0.08);',
-        });
-        top.add_child(iconButton);
-        const fields = new St.BoxLayout({orientation: Clutter.Orientation.VERTICAL, x_expand: true, y_align: Clutter.ActorAlign.CENTER, style: 'spacing: 6px;'});
-        fields.add_child(new St.Label({text: _('Name')}));
-        const nameEntry = new St.Entry({text: file.get_basename(), can_focus: true, x_expand: true});
-        fields.add_child(nameEntry);
-        fields.add_child(new St.Label({text: _('Click the icon to change it'), style: 'font-size: 11px; opacity: 150;'}));
-        top.add_child(fields);
-        box.add_child(top);
-
-        const iconRow = new St.BoxLayout({style: 'spacing: 8px;'});
-        const iconEntry = new St.Entry({text: customIcon, hint_text: _('Icon: image path or icon name (default)'), can_focus: true, x_expand: true});
-        iconRow.add_child(iconEntry);
-        const reset = new St.Button({label: _('Reset'), style_class: 'button', can_focus: true});
-        reset.connect('clicked', () => iconEntry.set_text(''));
-        iconRow.add_child(reset);
-        box.add_child(iconRow);
-
-        // The chooser opens as soon as the icon is clicked (zenity, when installed).
-        iconButton.connect('clicked', () => {
-            if (!GLib.find_program_in_path('zenity')) {
-                iconEntry.grab_key_focus();
-                return;
-            }
-            // The dialog is modal and sits above every window: hide it while the
-            // chooser is open, then bring it back with what was typed.
-            const reopen = () => {
-                try {
-                    dialog.open();
-                    iconEntry.grab_key_focus();
-                } catch (e) {
-                    console.error(`material3: dialog reopen: ${e.message}`);
-                }
-            };
-            try {
-                const proc = Gio.Subprocess.new(['zenity', '--file-selection', '--title', _('Choose an icon'),
-                    '--file-filter=Images | *.png *.svg *.jpg *.jpeg *.webp *.xpm *.ico'],
-                Gio.SubprocessFlags.STDOUT_PIPE);
-                dialog.close();
-                proc.communicate_utf8_async(null, null, (p, res) => {
-                    try {
-                        const [, out] = p.communicate_utf8_finish(res);
-                        if (out?.trim())
-                            iconEntry.set_text(out.trim());
-                    } catch (e) {
-                        console.error(`material3: icon chooser: ${e.message}`);
-                    }
-                    if (this._root)
-                        reopen();
-                });
-            } catch (e) {
-                console.error(`material3: icon chooser: ${e.message}`);
-            }
-        });
-
-        if (facts.length > 0) {
-            const grid = new St.BoxLayout({orientation: Clutter.Orientation.VERTICAL, style: 'spacing: 4px; margin-top: 4px;'});
-            for (const [label, value] of facts) {
-                const row = new St.BoxLayout({style: 'spacing: 12px;'});
-                row.add_child(new St.Label({text: label, style: 'min-width: 110px; opacity: 160;'}));
-                row.add_child(new St.Label({text: value, x_expand: true}));
-                grid.add_child(row);
-            }
-            box.add_child(grid);
-        }
-
-        const resolve = text => {
-            const value = text.trim();
-            if (!value)
-                return item.gicon;
-            const path = value.startsWith('file://') ? Gio.File.new_for_uri(value).get_path() : value;
-            if (path?.startsWith('/') && GLib.file_test(path, GLib.FileTest.EXISTS))
-                return new Gio.FileIcon({file: Gio.File.new_for_path(path)});
-            return new Gio.ThemedIcon({name: value});
-        };
-        iconEntry.clutter_text.connect('text-changed', () => preview.set_gicon(resolve(iconEntry.get_text())));
-
-        let exec = null;
-        if (!item.isDir) {
-            exec = new CheckBox.CheckBox(_('Allow executing as a program'));
-            exec.checked = originalExec;
-            box.add_child(exec);
-        }
-        dialog.contentLayout.add_child(box);
-
-        const apply = () => {
-            const name = nameEntry.get_text().trim().replace(/\//g, '');
-            const iconText = iconEntry.get_text().trim();
-            dialog.close();
-            const none = Gio.FileQueryInfoFlags.NONE;
-            try {
-                if (iconText !== originalIcon) {
-                    file.set_attribute('metadata::custom-icon', Gio.FileAttributeType.INVALID, null, none, null);
-                    file.set_attribute('metadata::custom-icon-name', Gio.FileAttributeType.INVALID, null, none, null);
-                    if (iconText) {
-                        const path = iconText.startsWith('file://') ? Gio.File.new_for_uri(iconText).get_path() : iconText;
-                        if (path?.startsWith('/'))
-                            file.set_attribute_string('metadata::custom-icon', Gio.File.new_for_path(path).get_uri(), none, null);
-                        else
-                            file.set_attribute_string('metadata::custom-icon-name', iconText, none, null);
-                    }
-                }
-                if (exec && exec.checked !== originalExec) {
-                    const next = exec.checked ? mode | 0o111 : mode & ~0o111;
-                    try {
-                        file.set_attribute_uint32('unix::mode', next, none, null);
-                    } catch (e) {
-                        // Not allowed as this user (a file of root, say): ask for
-                        // the password through polkit and run chmod as root.
-                        console.error(`material3: chmod needs privileges: ${e.message}`);
-                        this._run(['pkexec', 'chmod', exec.checked ? 'a+x' : 'a-x', '--', file.get_path()], true);
-                    }
-                }
-                if (name && name !== file.get_basename())
-                    file.set_display_name(name, null);
-            } catch (e) {
-                console.error(`material3: cannot apply properties: ${e.message}`);
-            }
-            this._queue();
-        };
-        dialog.addButton({label: _('Cancel'), action: () => dialog.close(), key: Clutter.KEY_Escape});
-        dialog.addButton({label: _('Apply'), action: apply, default: true});
-        dialog.open();
-        nameEntry.grab_key_focus();
     }
 
     /** One-line text prompt in the shell's modal dialog. */

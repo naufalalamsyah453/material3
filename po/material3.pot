@@ -3,6 +3,9 @@ msgstr ""
 "Project-Id-Version: material3\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 
+msgid "\"Keep these display settings?\" after a change in Displays"
+msgstr ""
+
 msgid "%d Connected"
 msgstr ""
 
@@ -25,6 +28,9 @@ msgid "1 window open"
 msgstr ""
 
 msgid "1.00 is the default size"
+msgstr ""
+
+msgid "1.00 is the default, 0 turns the animations off"
 msgstr ""
 
 msgid "10 minutes"
@@ -58,6 +64,9 @@ msgid "A shortcut to the trash"
 msgstr ""
 
 msgid "A shortcut to your home folder"
+msgstr ""
+
+msgid "A width of 0 removes the border"
 msgstr ""
 
 msgid "AM/PM"
@@ -132,16 +141,7 @@ msgstr ""
 msgid "App menu"
 msgstr ""
 
-msgid "App menu height"
-msgstr ""
-
-msgid "App menu size"
-msgstr ""
-
-msgid "App menu width"
-msgstr ""
-
-msgid "App sort order"
+msgid "App menu categories"
 msgstr ""
 
 msgid "App switching"
@@ -156,10 +156,16 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
+msgid "Apply to every part of the extension."
+msgstr ""
+
 msgid "Apps"
 msgstr ""
 
 msgid "Areas"
+msgstr ""
+
+msgid "Arrangement"
 msgstr ""
 
 msgid "Ask"
@@ -228,16 +234,16 @@ msgstr ""
 msgid "Bluetooth is unavailable"
 msgstr ""
 
-msgid "Border and corners of each surface, set separately. A width of 0 removes the border."
+msgid "Border and corners"
 msgstr ""
 
-msgid "Borders and corners"
+msgid "Border color"
+msgstr ""
+
+msgid "Border width"
 msgstr ""
 
 msgid "Bounce keys"
-msgstr ""
-
-msgid "Brightness and volume sliders"
 msgstr ""
 
 msgid "Built-in"
@@ -294,13 +300,7 @@ msgstr ""
 msgid "Choose the name shown next to the avatar."
 msgstr ""
 
-msgid "Classic: capsule with - and + buttons"
-msgstr ""
-
-msgid "Classic: click toggles, right-click opens options"
-msgstr ""
-
-msgid "Classic: compact card"
+msgid "Classic"
 msgstr ""
 
 msgid "Cleanup"
@@ -381,18 +381,6 @@ msgstr ""
 msgid "Connections"
 msgstr ""
 
-msgid "Context menu font"
-msgstr ""
-
-msgid "Context menu icons"
-msgstr ""
-
-msgid "Context menu size"
-msgstr ""
-
-msgid "Context menu text size"
-msgstr ""
-
 msgid "Context menus"
 msgstr ""
 
@@ -426,7 +414,7 @@ msgstr ""
 msgid "Could not empty the trash"
 msgstr ""
 
-msgid "Cover: album art with seek bar"
+msgid "Cover"
 msgstr ""
 
 msgid "Cursor"
@@ -456,10 +444,7 @@ msgstr ""
 msgid "Date & Time"
 msgstr ""
 
-msgid "Date menu size"
-msgstr ""
-
-msgid "Date menu text size"
+msgid "Date menu"
 msgstr ""
 
 msgid "Dates, numbers and currency"
@@ -496,9 +481,6 @@ msgid "Delete category"
 msgstr ""
 
 msgid "Delete files older than"
-msgstr ""
-
-msgid "Desktop icon size"
 msgstr ""
 
 msgid "Desktop icons"
@@ -558,10 +540,13 @@ msgstr ""
 msgid "Display language"
 msgstr ""
 
-msgid "Display settings are unavailable in this session."
+msgid "Display prompt"
 msgstr ""
 
-msgid "Display settings saved"
+msgid "Display settings applied"
+msgstr ""
+
+msgid "Display settings are unavailable in this session."
 msgstr ""
 
 msgid "Displays"
@@ -582,19 +567,13 @@ msgstr ""
 msgid "Dock behavior"
 msgstr ""
 
-msgid "Dock end button"
-msgstr ""
-
-msgid "Dock height"
-msgstr ""
-
-msgid "Dock size"
-msgstr ""
-
 msgid "Document font"
 msgstr ""
 
 msgid "Documents"
+msgstr ""
+
+msgid "Drag a display next to another one to arrange them"
 msgstr ""
 
 msgid "Drag windows to the screen edges to tile them"
@@ -624,10 +603,19 @@ msgstr ""
 msgid "Enabled"
 msgstr ""
 
+msgid "End button"
+msgstr ""
+
 msgid "Every app"
 msgstr ""
 
-msgid "Extra text scale on top of the UI scale"
+msgid "Every component of the extension: switch, size and border"
+msgstr ""
+
+msgid "Extension"
+msgstr ""
+
+msgid "Extra text scale on top of the size"
 msgstr ""
 
 msgid "Favorite category"
@@ -690,13 +678,19 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-msgid "Handle: split track with round buttons"
+msgid "Grid height"
+msgstr ""
+
+msgid "Handle"
 msgstr ""
 
 msgid "Hardware"
 msgstr ""
 
-msgid "Height of the scrolling app grid in the app menu, in pixels"
+msgid "Height above the edge"
+msgstr ""
+
+msgid "Height of the scrolling app grid, in pixels"
 msgstr ""
 
 msgid "Help"
@@ -717,9 +711,6 @@ msgstr ""
 msgid "Home folder"
 msgstr ""
 
-msgid "Home on the desktop"
-msgstr ""
-
 msgid "Hot corner"
 msgstr ""
 
@@ -730,6 +721,9 @@ msgid "Hot corner, window tiling and workspaces"
 msgstr ""
 
 msgid "Hover click"
+msgstr ""
+
+msgid "Icon size"
 msgstr ""
 
 msgid "Icon theme"
@@ -768,7 +762,7 @@ msgstr ""
 msgid "Just now"
 msgstr ""
 
-msgid "Keep"
+msgid "Keep Changes"
 msgstr ""
 
 msgid "Keep history for"
@@ -837,7 +831,10 @@ msgstr ""
 msgid "Longer battery life"
 msgstr ""
 
-msgid "Look of the page list in the Settings app"
+msgid "Look and feel"
+msgstr ""
+
+msgid "Look of the page list"
 msgstr ""
 
 msgid "Mail"
@@ -852,13 +849,7 @@ msgstr ""
 msgid "Manual"
 msgstr ""
 
-msgid "Material 3 Alt+Tab switcher"
-msgstr ""
-
-msgid "Material 3 date menu"
-msgstr ""
-
-msgid "Material 3 volume and brightness indicator"
+msgid "Material 3"
 msgstr ""
 
 msgid "Maximize"
@@ -877,6 +868,9 @@ msgid "Media player style"
 msgstr ""
 
 msgid "Memory"
+msgstr ""
+
+msgid "Menus"
 msgstr ""
 
 msgid "Microphone"
@@ -945,6 +939,9 @@ msgstr ""
 msgid "Name (Z-A)"
 msgstr ""
 
+msgid "Name in Quick Settings"
+msgstr ""
+
 msgid "Natural scrolling"
 msgstr ""
 
@@ -952,6 +949,9 @@ msgid "Navigation"
 msgstr ""
 
 msgid "Nearby devices"
+msgstr ""
+
+msgid "Needs no other extension"
 msgstr ""
 
 msgid "NetworkManager (nmcli) was not found on this system."
@@ -985,6 +985,9 @@ msgid "No Events"
 msgstr ""
 
 msgid "No VPN configured"
+msgstr ""
+
+msgid "No application found"
 msgstr ""
 
 msgid "No apps found"
@@ -1026,6 +1029,9 @@ msgstr ""
 msgid "None"
 msgstr ""
 
+msgid "Not available"
+msgstr ""
+
 msgid "Not connected"
 msgstr ""
 
@@ -1041,7 +1047,7 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
-msgid "Notifications, calendar, reminders, world clocks and weather in the clock menu"
+msgid "Notifications, calendar, reminders, world clocks and weather"
 msgstr ""
 
 msgid "Number of workspaces"
@@ -1056,13 +1062,25 @@ msgstr ""
 msgid "Off (Light)"
 msgstr ""
 
+msgid "Off hides the dock and the app menu button"
+msgstr ""
+
 msgid "Off opens GNOME's Overview from the dock and the Super key"
+msgstr ""
+
+msgid "Off restores GNOME's own clock menu"
 msgstr ""
 
 msgid "Off restores GNOME's own panel"
 msgstr ""
 
 msgid "Off restores GNOME's own window switcher"
+msgstr ""
+
+msgid "Off restores the shell's own on-screen display"
+msgstr ""
+
+msgid "Off shows the shell's own prompt"
 msgstr ""
 
 msgid "On"
@@ -1086,10 +1104,13 @@ msgstr ""
 msgid "Open GNOME display settings"
 msgstr ""
 
+msgid "Open With"
+msgstr ""
+
 msgid "Open folder for new media"
 msgstr ""
 
-msgid "Open the Material 3 Settings app instead of GNOME Settings (takes effect immediately)"
+msgid "Open the Material 3 Settings app instead of GNOME Settings"
 msgstr ""
 
 msgid "Open the overview by moving the pointer to the top-left corner"
@@ -1101,7 +1122,7 @@ msgstr ""
 msgid "Operating system"
 msgstr ""
 
-msgid "Order of the apps in the app menu"
+msgid "Order of the apps in the grid"
 msgstr ""
 
 msgid "Orientation"
@@ -1132,6 +1153,9 @@ msgid "Paired"
 msgstr ""
 
 msgid "Palette: %s"
+msgstr ""
+
+msgid "Panels, dock, menus, borders"
 msgstr ""
 
 msgid "Password"
@@ -1239,6 +1263,9 @@ msgstr ""
 msgid "Quick Settings header"
 msgstr ""
 
+msgid "Recent window card"
+msgstr ""
+
 msgid "Refresh rate"
 msgstr ""
 
@@ -1278,9 +1305,6 @@ msgstr ""
 msgid "Replace GNOME Settings"
 msgstr ""
 
-msgid "Replaces the shell's own on-screen display"
-msgstr ""
-
 msgid "Reset"
 msgstr ""
 
@@ -1302,7 +1326,7 @@ msgstr ""
 msgid "Revert"
 msgstr ""
 
-msgid "Reverting in %d seconds"
+msgid "Revert Settings"
 msgstr ""
 
 msgid "Right of %s"
@@ -1311,16 +1335,13 @@ msgstr ""
 msgid "Same as language"
 msgstr ""
 
-msgid "Same as the font above"
+msgid "Same as the Quick Settings font"
 msgstr ""
 
 msgid "Save"
 msgstr ""
 
 msgid "Scale"
-msgstr ""
-
-msgid "Scale the Quick Settings panel, dock and app menu, and choose their font. Changes apply immediately."
 msgstr ""
 
 msgid "Scan"
@@ -1395,6 +1416,9 @@ msgstr ""
 msgid "Select Weather Location..."
 msgstr ""
 
+msgid "Selection border"
+msgstr ""
+
 msgid "Send problem reports"
 msgstr ""
 
@@ -1407,9 +1431,6 @@ msgstr ""
 msgid "Settings shortcut"
 msgstr ""
 
-msgid "Settings sidebar buttons"
-msgstr ""
-
 msgid "Settings updated"
 msgstr ""
 
@@ -1419,7 +1440,7 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-msgid "Show an icon before each entry of the right-click menus"
+msgid "Show an icon before each entry"
 msgstr ""
 
 msgid "Show battery percentage"
@@ -1429,6 +1450,9 @@ msgid "Show date"
 msgstr ""
 
 msgid "Show desktop"
+msgstr ""
+
+msgid "Show desktop icons"
 msgstr ""
 
 msgid "Show dock"
@@ -1446,13 +1470,7 @@ msgstr ""
 msgid "Show or hide the sidebar"
 msgstr ""
 
-msgid "Show recent window"
-msgstr ""
-
 msgid "Show seconds"
-msgstr ""
-
-msgid "Show the files of your Desktop folder on the desktop, no other extension needed"
 msgstr ""
 
 msgid "Show week numbers"
@@ -1464,31 +1482,22 @@ msgstr ""
 msgid "Shut Down"
 msgstr ""
 
+msgid "Sidebar buttons"
+msgstr ""
+
 msgid "Simulated secondary click"
 msgstr ""
 
 msgid "Size"
 msgstr ""
 
-msgid "Size and font"
+msgid "Size of the icons in pixels"
 msgstr ""
 
-msgid "Size of the clock menu panel; 1.00 is the default"
+msgid "Size of the preview shown when hovering a dock icon"
 msgstr ""
 
-msgid "Size of the desktop icons in pixels"
-msgstr ""
-
-msgid "Size of the preview shown when hovering a dock icon; 1.00 is the default"
-msgstr ""
-
-msgid "Size of the right-click menus; 1.00 is the default"
-msgstr ""
-
-msgid "Size of the text in the clock menu; 1.00 is the default"
-msgstr ""
-
-msgid "Size of the text in the right-click menus; 1.00 is the default"
+msgid "Size of the window previews"
 msgstr ""
 
 msgid "Size, behavior, categories and fonts of the dock, app menu and Quick Settings"
@@ -1503,10 +1512,13 @@ msgstr ""
 msgid "Sort apps"
 msgstr ""
 
+msgid "Sort order"
+msgstr ""
+
 msgid "Sound"
 msgstr ""
 
-msgid "Split: icon toggles, text opens options"
+msgid "Split"
 msgstr ""
 
 msgid "Standard performance and battery"
@@ -1575,28 +1587,43 @@ msgstr ""
 msgid "Text size"
 msgstr ""
 
+msgid "The Alt+Tab window list"
+msgstr ""
+
+msgid "The Material 3 replacement for GNOME Settings"
+msgstr ""
+
 msgid "The apps themselves are not removed."
+msgstr ""
+
+msgid "The bar with your apps and the window previews above it"
 msgstr ""
 
 msgid "The button at the end of the dock"
 msgstr ""
 
-msgid "The card at the bottom of the app menu that reopens the last used window"
-msgstr ""
-
-msgid "The card that shows the playing track"
+msgid "The card at the bottom that reopens the last used window"
 msgstr ""
 
 msgid "The category the app menu opens on"
 msgstr ""
 
-msgid "The floating dock at the bottom of the screen and the app menu it opens."
+msgid "The display settings will revert in %d seconds."
 msgstr ""
 
-msgid "The indicator shown when you change the volume or brightness."
+msgid "The files of your Desktop folder on the desktop"
 msgstr ""
 
-msgid "The panel opened from the top bar."
+msgid "The indicator shown when you change the volume or brightness"
+msgstr ""
+
+msgid "The launcher opened from the dock"
+msgstr ""
+
+msgid "The panel from the system menu in the top bar"
+msgstr ""
+
+msgid "The right-click menus of the dock, app menu and desktop"
 msgstr ""
 
 msgid "Theme"
@@ -1644,9 +1671,6 @@ msgstr ""
 msgid "Trash emptied"
 msgstr ""
 
-msgid "Trash on the desktop"
-msgstr ""
-
 msgid "Turn off for Do Not Disturb"
 msgstr ""
 
@@ -1668,9 +1692,6 @@ msgstr ""
 msgid "Typing, layouts and shortcuts"
 msgstr ""
 
-msgid "UI scale"
-msgstr ""
-
 msgid "USB protection"
 msgstr ""
 
@@ -1683,19 +1704,31 @@ msgstr ""
 msgid "Untitled"
 msgstr ""
 
+msgid "Use Material 3 Alt+Tab switcher"
+msgstr ""
+
 msgid "Use Material 3 Quick Settings"
 msgstr ""
 
 msgid "Use Material 3 app menu"
 msgstr ""
 
+msgid "Use Material 3 date menu"
+msgstr ""
+
+msgid "Use Material 3 indicator"
+msgstr ""
+
+msgid "Use Material 3 prompt"
+msgstr ""
+
+msgid "Use the Quick Settings font"
+msgstr ""
+
 msgid "Use the dark color scheme across the system"
 msgstr ""
 
 msgid "Use the default font"
-msgstr ""
-
-msgid "Use the font above"
 msgstr ""
 
 msgid "Username"
@@ -1758,10 +1791,16 @@ msgstr ""
 msgid "Window preview size"
 msgstr ""
 
+msgid "Window switcher"
+msgstr ""
+
 msgid "Windowing system"
 msgstr ""
 
 msgid "Windows"
+msgstr ""
+
+msgid "Windows and screen"
 msgstr ""
 
 msgid "Windows, navigation, launchers"

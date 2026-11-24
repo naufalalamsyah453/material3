@@ -153,6 +153,12 @@ export class OsdFeature {
         }
     }
 
+    /** Size in pixels, with the on-screen display size setting applied. */
+    _px(value) {
+        const k = this._settings.settings_schema.has_key('osd-scale') ? this._settings.get_double('osd-scale') : 1;
+        return Math.round(px(value) * k);
+    }
+
     _build() {
         // `m3-qs` (+ light/dark) brings the palette rules into scope.
         this._actor = new St.Widget({
@@ -176,18 +182,18 @@ export class OsdFeature {
         this._track = new St.Widget({
             style_class: 'm3-osd-track',
             layout_manager: new Clutter.FixedLayout(),
-            width: px(TRACK_WIDTH),
-            height: px(TRACK_HEIGHT),
+            width: this._px(TRACK_WIDTH),
+            height: this._px(TRACK_HEIGHT),
             x_align: Clutter.ActorAlign.CENTER,
         });
         pill.add_child(this._track);
 
         this._fill = new St.Widget({
             style_class: 'm3-osd-fill',
-            width: px(TRACK_WIDTH),
-            height: px(MIN_FILL),
+            width: this._px(TRACK_WIDTH),
+            height: this._px(MIN_FILL),
         });
-        this._fill.set_position(0, px(TRACK_HEIGHT - MIN_FILL));
+        this._fill.set_position(0, this._px(TRACK_HEIGHT - MIN_FILL));
         this._track.add_child(this._fill);
 
         // The icon is centered by a bin the size of the lowest MIN_FILL of the
@@ -196,10 +202,10 @@ export class OsdFeature {
         // its ligature name ("brightness_medium"), which threw the icon off.
         this._icon = symbolIcon('volume_up', {size: 24, filled: true, styleClass: 'm3-osd-icon'});
         const iconHolder = centerBin(this._icon, '', {
-            width: px(TRACK_WIDTH),
-            height: px(MIN_FILL),
+            width: this._px(TRACK_WIDTH),
+            height: this._px(MIN_FILL),
         });
-        iconHolder.set_position(0, px(TRACK_HEIGHT - MIN_FILL));
+        iconHolder.set_position(0, this._px(TRACK_HEIGHT - MIN_FILL));
         this._track.add_child(iconHolder);
 
         // (The actor is not reactive, so it never takes input; this shell has
@@ -241,8 +247,8 @@ export class OsdFeature {
         // The shell passes -1 when there is no maximum.
         const max = maxLevel > 0 ? maxLevel : 1;
         const fraction = Math.max(0, Math.min(1, level / max));
-        const track = px(TRACK_HEIGHT);
-        const minFill = px(MIN_FILL);
+        const track = this._px(TRACK_HEIGHT);
+        const minFill = this._px(MIN_FILL);
         const fillHeight = Math.round(minFill + (track - minFill) * fraction);
 
         this._icon.set_text(info.symbol);

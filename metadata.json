@@ -5,5 +5,5 @@
   "shell-version": ["51"],
   "gettext-domain": "material3",
   "settings-schema": "org.gnome.shell.extensions.material3",
-  "version": 6
+  "version": 7
 }

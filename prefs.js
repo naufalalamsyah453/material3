@@ -7,6 +7,7 @@ import Pango from 'gi://Pango';
 import {ExtensionPreferences, gettext as _} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
 import {orderedCategories, serializeCustom} from './features/dock/categories.js';
+import {BORDER_COLORS, componentSpec, globalSpec} from './componentSpec.js';
 
 const SOURCES = ['real-name', 'username', 'hostname', 'custom'];
 const THEMES = ['lavender', 'sage', 'ocean', 'terracotta'];
@@ -91,243 +92,76 @@ export default class Material3Preferences extends ExtensionPreferences {
             themeGroup.add(themeCombo);
         }
 
-        const addSwitch = (key, title, subtitle) => {
-            const row = new Adw.SwitchRow({title, subtitle, active: settings.get_boolean(key)});
-            row.connect('notify::active', () => settings.set_boolean(key, row.active));
-            settings.connect(`changed::${key}`, () => {
-                if (row.active !== settings.get_boolean(key))
-                    row.active = settings.get_boolean(key);
-            });
-            themeGroup.add(row);
-        };
-        addSwitch('theme-shell', _('Color the shell'),
-            _('Top bar, menus and notifications use the theme colors (dark mode)'));
-        addSwitch('theme-apps', _('Color GTK apps'),
-            _('Writes colors to ~/.config/gtk-4.0 and gtk-3.0; apps pick them up when started'));
-
         page.add(themeGroup);
 
-        const qsGroup = new Adw.PreferencesGroup({
-            title: _('Quick Settings'),
-            description: _('The panel opened from the top bar.'),
+        // General: settings that belong to no single component.
+        const generalGroup = new Adw.PreferencesGroup({
+            title: _('Look and feel'),
+            description: _('Apply to every part of the extension.'),
         });
-        page.add(qsGroup);
-        const qsSwitch = new Adw.SwitchRow({
-            title: _('Use Material 3 Quick Settings'),
-            subtitle: _('Off restores GNOME\'s own panel'),
-        });
-        settings.bind('show-quicksettings', qsSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
-        qsGroup.add(qsSwitch);
-        const TILE_STYLES = ['classic', 'split'];
-        const tileModel = new Gtk.StringList();
-        tileModel.append(_('Classic: click toggles, right-click opens options'));
-        tileModel.append(_('Split: icon toggles, text opens options'));
-        const tileRow = new Adw.ComboRow({
-            title: _('Tile style'),
-            subtitle: _('In the split style only tiles that have options are divided'),
-            model: tileModel,
-            selected: Math.max(0, TILE_STYLES.indexOf(settings.get_string('qs-tile-style'))),
-        });
-        tileRow.connect('notify::selected', () =>
-            settings.set_string('qs-tile-style', TILE_STYLES[tileRow.selected] ?? 'classic'));
-        qsGroup.add(tileRow);
+        page.add(generalGroup);
+        for (const spec of globalSpec(_))
+            generalGroup.add(this._row(settings, spec));
+        window.add(page);
 
-        const choiceRow = (key, title, subtitle, values, labels) => {
-            const model = new Gtk.StringList();
-            labels.forEach(l => model.append(l));
-            const row = new Adw.ComboRow({
-                title, subtitle, model,
-                selected: Math.max(0, values.indexOf(settings.get_string(key))),
-            });
-            row.connect('notify::selected', () => settings.set_string(key, values[row.selected] ?? values[0]));
-            qsGroup.add(row);
-        };
-        choiceRow('qs-slider-style', _('Slider style'), _('Brightness and volume sliders'),
-            ['classic', 'handle'], [_('Classic: capsule with - and + buttons'), _('Handle: split track with round buttons')]);
-        choiceRow('qs-media-style', _('Media player style'), _('The card that shows the playing track'),
-            ['classic', 'cover'], [_('Classic: compact card'), _('Cover: album art with seek bar')]);
-
-        const dateMenuSwitch = new Adw.SwitchRow({
-            title: _('Material 3 date menu'),
-            subtitle: _('Notifications, calendar, reminders, world clocks and weather in the clock menu'),
-        });
-        settings.bind('show-datemenu', dateMenuSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
-        qsGroup.add(dateMenuSwitch);
-        const switcherSwitch = new Adw.SwitchRow({
-            title: _('Material 3 Alt+Tab switcher'),
-            subtitle: _('Off restores GNOME\'s own window switcher'),
-        });
-        settings.bind('show-switcher', switcherSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
-        qsGroup.add(switcherSwitch);
-        const shadowSwitch = new Adw.SwitchRow({
-            title: _('Disable shadows'),
-            subtitle: _('No drop shadows on any surface of the extension'),
-        });
-        settings.bind('disable-shadows', shadowSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
-        qsGroup.add(shadowSwitch);
-        const desktopRows = [
-            ['show-desktop-icons', _('Desktop icons'), _('Show the files of your Desktop folder on the desktop, no other extension needed')],
-            ['desktop-show-home', _('Home on the desktop'), _('A shortcut to your home folder')],
-            ['desktop-show-trash', _('Trash on the desktop'), _('A shortcut to the trash')],
+        // One page per area; a component is a group with its switch, sizes and border.
+        const byId = Object.fromEntries(componentSpec(_).map(c => [c.id, c]));
+        const pages = [
+            ['qs', _('Quick Settings'), 'preferences-system-symbolic', ['qs']],
+            ['dock', _('Dock'), 'view-app-grid-symbolic', ['dock']],
+            ['appmenu', _('App menu'), 'view-list-symbolic', ['appmenu']],
+            ['menus', _('Menus'), 'view-more-symbolic', ['ctx', 'datemenu']],
+            ['windows', _('Windows and screen'), 'video-display-symbolic', ['switcher', 'osd', 'prompt', 'desktop']],
+            ['system', _('Settings app'), 'emblem-system-symbolic', ['settings']],
         ];
-        for (const [key, title, subtitle] of desktopRows) {
-            const row = new Adw.SwitchRow({title, subtitle});
+        for (const [id, title, icon, components] of pages) {
+            const componentPage = new Adw.PreferencesPage({title, icon_name: icon});
+            for (const key of components)
+                componentPage.add(this._componentGroup(settings, byId[key]));
+            window.add(componentPage);
+            // The app menu keeps its categories editor right after its own page.
+            if (id === 'appmenu')
+                window.add(buildCategoriesPage(window, settings));
+        }
+    }
+
+    /** One row of a component spec, bound to its key. */
+    _row(settings, spec) {
+        const key = spec.key;
+        if (!settings.settings_schema.has_key(key))
+            return new Adw.ActionRow({title: spec.title, subtitle: _('Not available'), sensitive: false});
+
+        if (spec.k === 'switch') {
+            const row = new Adw.SwitchRow({title: spec.title, subtitle: spec.sub ?? ''});
             settings.bind(key, row, 'active', Gio.SettingsBindFlags.DEFAULT);
-            qsGroup.add(row);
+            return row;
         }
-
-        const dockGroup = new Adw.PreferencesGroup({
-            title: _('Dock and app menu'),
-            description: _('The floating dock at the bottom of the screen and the app menu it opens.'),
-        });
-        page.add(dockGroup);
-        const dockSwitch = new Adw.SwitchRow({
-            title: _('Show dock'),
-            active: settings.get_boolean('show-dock'),
-        });
-        dockSwitch.connect('notify::active', () =>
-            settings.set_boolean('show-dock', dockSwitch.active));
-        settings.connect('changed::show-dock', () => {
-            if (dockSwitch.active !== settings.get_boolean('show-dock'))
-                dockSwitch.active = settings.get_boolean('show-dock');
-        });
-        dockGroup.add(dockSwitch);
-
-        const menuSwitch = new Adw.SwitchRow({
-            title: _('Use Material 3 app menu'),
-            subtitle: _('Off opens GNOME\'s Overview from the dock and the Super key'),
-        });
-        settings.bind('show-appmenu', menuSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
-        dockGroup.add(menuSwitch);
-
-        const recentSwitch = new Adw.SwitchRow({
-            title: _('Show recent window'),
-            subtitle: _('The card at the bottom of the app menu that reopens the last used window'),
-            active: settings.get_boolean('show-recent'),
-        });
-        recentSwitch.connect('notify::active', () =>
-            settings.set_boolean('show-recent', recentSwitch.active));
-        settings.connect('changed::show-recent', () => {
-            if (recentSwitch.active !== settings.get_boolean('show-recent'))
-                recentSwitch.active = settings.get_boolean('show-recent');
-        });
-        dockGroup.add(recentSwitch);
-
-        const settingsSwitch = new Adw.SwitchRow({
-            title: _('Replace GNOME Settings'),
-            subtitle: _('Open the Material 3 Settings app instead of GNOME Settings (takes effect immediately)'),
-            active: settings.get_boolean('show-settings'),
-        });
-        settingsSwitch.connect('notify::active', () =>
-            settings.set_boolean('show-settings', settingsSwitch.active));
-        settings.connect('changed::show-settings', () => {
-            if (settingsSwitch.active !== settings.get_boolean('show-settings'))
-                settingsSwitch.active = settings.get_boolean('show-settings');
-        });
-        dockGroup.add(settingsSwitch);
-
-        const styleModel = new Gtk.StringList();
-        const STYLES = ['cards', 'pills'];
-        styleModel.append(_('Cards with colored icons'));
-        styleModel.append(_('Compact pills'));
-        const styleRow = new Adw.ComboRow({
-            title: _('Settings sidebar buttons'),
-            subtitle: _('Look of the page list in the Settings app'),
-            model: styleModel,
-            selected: Math.max(0, STYLES.indexOf(settings.get_string('settings-sidebar-style'))),
-        });
-        styleRow.connect('notify::selected', () =>
-            settings.set_string('settings-sidebar-style', STYLES[styleRow.selected] ?? 'cards'));
-        dockGroup.add(styleRow);
-
-        const borderGroup = new Adw.PreferencesGroup({
-            title: _('Borders and corners'),
-            description: _('Border and corners of each surface, set separately. A width of 0 removes the border.'),
-        });
-        page.add(borderGroup);
-        const COLORS = ['outline', 'primary', 'secondary', 'text'];
-        const colorModel = () => {
-            const model = new Gtk.StringList();
-            [_('Outline'), _('Accent'), _('Secondary'), _('Text')].forEach(c => model.append(c));
-            return model;
-        };
-        for (const [id, name] of [
-            ['qs', _('Quick Settings')], ['appmenu', _('App menu')], ['dock', _('Dock')], ['ctx', _('Context menus')],
-            ['settings', _('Settings app')],
-        ]) {
-            const expander = new Adw.ExpanderRow({title: name});
-            const width = new Adw.SpinRow({
-                title: _('Width'),
-                adjustment: new Gtk.Adjustment({lower: 0, upper: 4, step_increment: 1,
-                    value: settings.get_int(`border-${id}-width`)}),
+        if (spec.k === 'choice') {
+            const row = new Adw.ComboRow({
+                title: spec.title, subtitle: spec.sub ?? '',
+                model: Gtk.StringList.new(spec.labels),
+                selected: Math.max(0, spec.values.indexOf(settings.get_string(key))),
             });
-            settings.bind(`border-${id}-width`, width, 'value', Gio.SettingsBindFlags.DEFAULT);
-            const radius = new Adw.SpinRow({
-                title: _('Corner radius'),
-                adjustment: new Gtk.Adjustment({lower: 0, upper: 48, step_increment: 2,
-                    value: settings.get_int(`border-${id}-radius`)}),
+            row.connect('notify::selected', () =>
+                settings.set_string(key, spec.values[row.selected] ?? spec.values[0]));
+            settings.connect(`changed::${key}`, () => {
+                const index = spec.values.indexOf(settings.get_string(key));
+                if (index >= 0 && row.selected !== index)
+                    row.selected = index;
             });
-            settings.bind(`border-${id}-radius`, radius, 'value', Gio.SettingsBindFlags.DEFAULT);
-            const color = new Adw.ComboRow({
-                title: _('Color'),
-                model: colorModel(),
-                selected: Math.max(0, COLORS.indexOf(settings.get_string(`border-${id}-color`))),
-            });
-            color.connect('notify::selected', () =>
-                settings.set_string(`border-${id}-color`, COLORS[color.selected] ?? 'outline'));
-            expander.add_row(width);
-            expander.add_row(radius);
-            expander.add_row(color);
-            borderGroup.add(expander);
+            return row;
         }
-
-        const osdGroup = new Adw.PreferencesGroup({
-            title: _('On-screen display'),
-            description: _('The indicator shown when you change the volume or brightness.'),
-        });
-        page.add(osdGroup);
-        const osdSwitch = new Adw.SwitchRow({
-            title: _('Material 3 volume and brightness indicator'),
-            subtitle: _('Replaces the shell\'s own on-screen display'),
-            active: settings.get_boolean('osd-enabled'),
-        });
-        osdSwitch.connect('notify::active', () =>
-            settings.set_boolean('osd-enabled', osdSwitch.active));
-        settings.connect('changed::osd-enabled', () => {
-            if (osdSwitch.active !== settings.get_boolean('osd-enabled'))
-                osdSwitch.active = settings.get_boolean('osd-enabled');
-        });
-        osdGroup.add(osdSwitch);
-
-        const MODES = ['static', 'autohide'];
-        const modeRow = new Adw.ComboRow({
-            title: _('Dock behavior'),
-            subtitle: _('Static keeps the dock in view and stops maximized windows above it'),
-            model: Gtk.StringList.new([_('Static'), _('Auto-hide')]),
-            selected: Math.max(0, MODES.indexOf(settings.get_string('dock-mode'))),
-        });
-        modeRow.connect('notify::selected', () =>
-            settings.set_string('dock-mode', MODES[modeRow.selected]));
-        settings.connect('changed::dock-mode', () => {
-            const index = MODES.indexOf(settings.get_string('dock-mode'));
-            if (index >= 0 && modeRow.selected !== index)
-                modeRow.selected = index;
-        });
-        dockGroup.add(modeRow);
-
-        const addSpin = (group, key, title, subtitle, {lower, upper, step, digits, integer}) => {
-            const get = () => integer ? settings.get_int(key) : settings.get_double(key);
+        if (spec.k === 'num') {
+            const get = () => spec.integer ? settings.get_int(key) : settings.get_double(key);
             const row = new Adw.SpinRow({
-                title,
-                subtitle,
+                title: spec.title, subtitle: spec.sub ?? '', digits: spec.digits,
                 adjustment: new Gtk.Adjustment({
-                    lower, upper, step_increment: step, page_increment: step * 4,
-                    value: get(),
+                    lower: spec.min, upper: spec.max, step_increment: spec.step,
+                    page_increment: spec.step * 4, value: get(),
                 }),
-                digits,
             });
             row.connect('notify::value', () => {
-                if (integer)
+                if (spec.integer)
                     settings.set_int(key, Math.round(row.value));
                 else
                     settings.set_double(key, row.value);
@@ -336,156 +170,70 @@ export default class Material3Preferences extends ExtensionPreferences {
                 if (Math.abs(row.value - get()) > 0.001)
                     row.value = get();
             });
-            group.add(row);
-        };
-        addSpin(dockGroup, 'dock-scale', _('Dock size'), _('1.00 is the default size'),
-            {lower: 0.7, upper: 1.6, step: 0.05, digits: 2});
-        addSpin(dockGroup, 'dock-margin', _('Dock height'),
-            _('Gap between the dock and the bottom edge of the screen, in pixels'),
-            {lower: 0, upper: 96, step: 2, digits: 0, integer: true});
-        addSpin(dockGroup, 'appmenu-scale', _('App menu size'), _('1.00 is the default size'),
-            {lower: 0.7, upper: 1.5, step: 0.05, digits: 2});
-        addSpin(dockGroup, 'preview-scale', _('Window preview size'),
-            _('Size of the preview shown when hovering a dock icon; 1.00 is the default'),
-            {lower: 0.6, upper: 2.0, step: 0.05, digits: 2});
-        addSpin(qsGroup, 'desktop-icon-size', _('Desktop icon size'),
-            _('Size of the desktop icons in pixels'),
-            {lower: 32, upper: 128, step: 4, digits: 0, integer: true});
-        const dockChoice = (key, title, subtitle, values, labels) => {
-            const model = new Gtk.StringList();
-            labels.forEach(l => model.append(l));
-            const row = new Adw.ComboRow({
-                title, subtitle, model,
-                selected: Math.max(0, values.indexOf(settings.get_string(key))),
-            });
-            row.connect('notify::selected', () => settings.set_string(key, values[row.selected] ?? values[0]));
-            dockGroup.add(row);
-        };
-        dockChoice('dock-end-button', _('Dock end button'),
-            _('The button at the end of the dock'),
-            ['none', 'theme', 'settings'], [_('None'), _('Theme switch'), _('Settings shortcut')]);
-        dockChoice('appmenu-sort', _('App sort order'), _('Order of the apps in the app menu'),
-            ['name', 'name-desc', 'usage'], [_('Name (A-Z)'), _('Name (Z-A)'), _('Most used')]);
-        addSpin(dockGroup, 'appmenu-width', _('App menu width'),
-            _('Width of the app menu in pixels; the app cards share it evenly'),
-            {lower: 360, upper: 900, step: 10, digits: 0, integer: true});
-        addSpin(dockGroup, 'appmenu-height', _('App menu height'),
-            _('Height of the scrolling app grid in the app menu, in pixels'),
-            {lower: 120, upper: 640, step: 10, digits: 0, integer: true});
-
-        const sizeGroup = new Adw.PreferencesGroup({
-            title: _('Size and font'),
-            description: _('Scale the Quick Settings panel, dock and app menu, and choose their font. Changes apply immediately.'),
+            return row;
+        }
+        // font
+        const row = new Adw.ActionRow({title: spec.title, subtitle: settings.get_string(key) || spec.fallback});
+        const button = new Gtk.FontDialogButton({
+            valign: Gtk.Align.CENTER, dialog: new Gtk.FontDialog(), level: Gtk.FontLevel.FAMILY, use_font: true,
         });
-        page.add(sizeGroup);
-
-        const addScale = (key, title, subtitle, lower, upper) => {
-            const row = new Adw.SpinRow({
-                title,
-                subtitle,
-                adjustment: new Gtk.Adjustment({
-                    lower, upper, step_increment: 0.05, page_increment: 0.1,
-                    value: settings.get_double(key),
-                }),
-                digits: 2,
-            });
-            row.connect('notify::value', () => settings.set_double(key, row.value));
-            settings.connect(`changed::${key}`, () => {
-                if (Math.abs(row.value - settings.get_double(key)) > 0.001)
-                    row.value = settings.get_double(key);
-            });
-            sizeGroup.add(row);
-        };
-        addScale('ui-scale', _('UI scale'), _('1.00 is the default size'), 0.75, 1.5);
-        addScale('font-scale', _('Text size'), _('Extra text scale on top of the UI scale'), 0.8, 1.4);
-
-        const fontRow = new Adw.ActionRow({
-            title: _('Font'),
-            subtitle: settings.get_string('font-family') || _('Default (Plus Jakarta Sans)'),
-        });
-        const fontButton = new Gtk.FontDialogButton({
-            valign: Gtk.Align.CENTER,
-            dialog: new Gtk.FontDialog(),
-            level: Gtk.FontLevel.FAMILY,
-            use_font: true,
-        });
-        const current = settings.get_string('font-family');
+        const current = settings.get_string(key);
         if (current)
-            fontButton.font_desc = Pango.FontDescription.from_string(current);
-        fontButton.connect('notify::font-desc', () => {
-            const family = fontButton.font_desc?.get_family() ?? '';
-            if (family && family !== settings.get_string('font-family'))
-                settings.set_string('font-family', family);
+            button.font_desc = Pango.FontDescription.from_string(current);
+        button.connect('notify::font-desc', () => {
+            const family = button.font_desc?.get_family() ?? '';
+            if (family && family !== settings.get_string(key))
+                settings.set_string(key, family);
         });
-        const resetButton = new Gtk.Button({
-            icon_name: 'edit-clear-symbolic',
-            valign: Gtk.Align.CENTER,
-            tooltip_text: _('Use the default font'),
-            css_classes: ['flat'],
+        const reset = new Gtk.Button({
+            icon_name: 'edit-clear-symbolic', valign: Gtk.Align.CENTER, tooltip_text: spec.reset, css_classes: ['flat'],
         });
-        resetButton.connect('clicked', () => settings.set_string('font-family', ''));
-        settings.connect('changed::font-family', () => {
-            fontRow.subtitle = settings.get_string('font-family') || _('Default (Plus Jakarta Sans)');
+        reset.connect('clicked', () => settings.set_string(key, ''));
+        settings.connect(`changed::${key}`, () => {
+            row.subtitle = settings.get_string(key) || spec.fallback;
         });
-        fontRow.add_suffix(resetButton);
-        fontRow.add_suffix(fontButton);
-        sizeGroup.add(fontRow);
+        row.add_suffix(reset);
+        row.add_suffix(button);
+        return row;
+    }
 
-        // The right-click menus (dock icons and app menu) can use their own font.
-        const ctxDefault = () => _('Same as the font above');
-        const ctxRow = new Adw.ActionRow({
-            title: _('Context menu font'),
-            subtitle: settings.get_string('context-font-family') || ctxDefault(),
-        });
-        const ctxButton = new Gtk.FontDialogButton({
-            valign: Gtk.Align.CENTER,
-            dialog: new Gtk.FontDialog(),
-            level: Gtk.FontLevel.FAMILY,
-            use_font: true,
-        });
-        const ctxCurrent = settings.get_string('context-font-family');
-        if (ctxCurrent)
-            ctxButton.font_desc = Pango.FontDescription.from_string(ctxCurrent);
-        ctxButton.connect('notify::font-desc', () => {
-            const family = ctxButton.font_desc?.get_family() ?? '';
-            if (family && family !== settings.get_string('context-font-family'))
-                settings.set_string('context-font-family', family);
-        });
-        const ctxReset = new Gtk.Button({
-            icon_name: 'edit-clear-symbolic',
-            valign: Gtk.Align.CENTER,
-            tooltip_text: _('Use the font above'),
-            css_classes: ['flat'],
-        });
-        ctxReset.connect('clicked', () => settings.set_string('context-font-family', ''));
-        settings.connect('changed::context-font-family', () => {
-            ctxRow.subtitle = settings.get_string('context-font-family') || ctxDefault();
-        });
-        ctxRow.add_suffix(ctxReset);
-        ctxRow.add_suffix(ctxButton);
-        sizeGroup.add(ctxRow);
-        addSpin(sizeGroup, 'context-scale', _('Context menu size'),
-            _('Size of the right-click menus; 1.00 is the default'),
-            {lower: 0.7, upper: 1.6, step: 0.05, digits: 2});
-        addSpin(sizeGroup, 'context-font-scale', _('Context menu text size'),
-            _('Size of the text in the right-click menus; 1.00 is the default'),
-            {lower: 0.7, upper: 1.6, step: 0.05, digits: 2});
-        const ctxIcons = new Adw.SwitchRow({
-            title: _('Context menu icons'),
-            subtitle: _('Show an icon before each entry of the right-click menus'),
-        });
-        settings.bind('context-show-icons', ctxIcons, 'active', Gio.SettingsBindFlags.DEFAULT);
-        sizeGroup.add(ctxIcons);
-        addSpin(sizeGroup, 'datemenu-scale', _('Date menu size'),
-            _('Size of the clock menu panel; 1.00 is the default'),
-            {lower: 0.7, upper: 1.5, step: 0.05, digits: 2});
-        addSpin(sizeGroup, 'datemenu-font-scale', _('Date menu text size'),
-            _('Size of the text in the clock menu; 1.00 is the default'),
-            {lower: 0.7, upper: 1.5, step: 0.05, digits: 2});
-
-
-        window.add(page);
-        window.add(buildCategoriesPage(window, settings));
+    /** A component: its on/off switch, its own settings, then width, radius and color of its border. */
+    _componentGroup(settings, component) {
+        const group = new Adw.PreferencesGroup({title: component.title, description: component.sub});
+        const rows = [];
+        if (component.toggle) {
+            const toggle = this._row(settings, {k: 'switch', ...component.toggle});
+            group.add(toggle);
+        }
+        for (const spec of component.rows) {
+            const row = this._row(settings, spec);
+            rows.push(row);
+            group.add(row);
+        }
+        if (component.border) {
+            const id = component.border;
+            const expander = new Adw.ExpanderRow({
+                title: component.borderTitle ?? _('Border and corners'),
+                subtitle: _('A width of 0 removes the border'),
+            });
+            expander.add_row(this._row(settings, {k: 'num', key: `border-${id}-width`, title: _('Width'),
+                min: 0, max: 4, step: 1, digits: 0, integer: true}));
+            expander.add_row(this._row(settings, {k: 'num', key: `border-${id}-radius`, title: _('Corner radius'),
+                min: 0, max: 48, step: 2, digits: 0, integer: true}));
+            expander.add_row(this._row(settings, {k: 'choice', key: `border-${id}-color`, title: _('Color'),
+                values: BORDER_COLORS, labels: [_('Outline'), _('Accent'), _('Secondary'), _('Text')]}));
+            group.add(expander);
+        }
+        // The rows below the switch follow it: nothing to adjust while the component is off.
+        if (component.toggle && settings.settings_schema.has_key(component.toggle.key)) {
+            const follow = () => {
+                const on = settings.get_boolean(component.toggle.key);
+                rows.forEach(row => (row.sensitive = on));
+            };
+            settings.connect(`changed::${component.toggle.key}`, follow);
+            follow();
+        }
+        return group;
     }
 }
 

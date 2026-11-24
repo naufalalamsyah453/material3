@@ -92,6 +92,8 @@ export class Ripple {
         const [width, height] = this.actor.get_size();
         if (!ok || width <= 0)
             return;
+        if (this._waves.length >= 4)
+            this._waves.shift();
         this._waves.push({
             x, y,
             start: now(),
@@ -155,15 +157,23 @@ export class Ripple {
                 cr.setSourceRGBA(r, g, b, a * 0.5 * hover);
                 cr.fill();
             }
+            // One union fill: overlapping waves (spam clicking) must not
+            // stack their alpha, or the tile turns solid white.
             const t = now();
+            let fadeMax = 0;
             for (const wave of this._waves) {
                 const grow = Math.min(1, (t - wave.start) / GROW_MS);
                 const radius = wave.max * (1 - Math.pow(1 - grow, 3));
                 const fade = wave.released === null
                     ? 1
                     : Math.max(0, 1 - (t - this._fadeStart(wave)) / FADE_MS);
+                fadeMax = Math.max(fadeMax, fade);
+                cr.newSubPath();
                 cr.arc(wave.x, wave.y, Math.max(0.1, radius), 0, 2 * Math.PI);
-                cr.setSourceRGBA(r, g, b, a * fade);
+            }
+            if (fadeMax > 0) {
+                cr.setFillRule(0); // winding: the circles merge into one shape
+                cr.setSourceRGBA(r, g, b, a * fadeMax);
                 cr.fill();
             }
         }

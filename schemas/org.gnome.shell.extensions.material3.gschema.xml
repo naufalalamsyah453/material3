@@ -414,5 +414,137 @@
       <summary>Material 3 volume and brightness indicator</summary>
       <description>Replaces the shell's on-screen display for volume, brightness and microphone with a Material 3 pill.</description>
     </key>
+    <key name="border-datemenu-width" type="i">
+      <range min="0" max="4"/>
+      <default>1</default>
+      <summary>Date menu border width</summary>
+      <description>Border width of the date menu in pixels; 0 removes the border.</description>
+    </key>
+    <key name="border-datemenu-radius" type="i">
+      <range min="0" max="48"/>
+      <default>36</default>
+      <summary>Date menu corner radius</summary>
+      <description>Corner radius of the date menu in pixels.</description>
+    </key>
+    <key name="border-datemenu-color" type="s">
+      <choices>
+        <choice value="outline"/>
+        <choice value="primary"/>
+        <choice value="secondary"/>
+        <choice value="text"/>
+      </choices>
+      <default>"outline"</default>
+      <summary>Date menu border color</summary>
+      <description>Color of the date menu border.</description>
+    </key>
+    <key name="border-switcher-width" type="i">
+      <range min="0" max="4"/>
+      <default>1</default>
+      <summary>Window switcher border width</summary>
+      <description>Border width of the window switcher in pixels; 0 removes the border.</description>
+    </key>
+    <key name="border-switcher-radius" type="i">
+      <range min="0" max="48"/>
+      <default>22</default>
+      <summary>Window switcher corner radius</summary>
+      <description>Corner radius of the window switcher in pixels.</description>
+    </key>
+    <key name="border-switcher-color" type="s">
+      <choices>
+        <choice value="outline"/>
+        <choice value="primary"/>
+        <choice value="secondary"/>
+        <choice value="text"/>
+      </choices>
+      <default>"outline"</default>
+      <summary>Window switcher border color</summary>
+      <description>Color of the window switcher border.</description>
+    </key>
+    <key name="border-osd-width" type="i">
+      <range min="0" max="4"/>
+      <default>1</default>
+      <summary>On-screen display border width</summary>
+      <description>Border width of the on-screen display in pixels; 0 removes the border.</description>
+    </key>
+    <key name="border-osd-radius" type="i">
+      <range min="0" max="48"/>
+      <default>34</default>
+      <summary>On-screen display corner radius</summary>
+      <description>Corner radius of the on-screen display in pixels.</description>
+    </key>
+    <key name="border-osd-color" type="s">
+      <choices>
+        <choice value="outline"/>
+        <choice value="primary"/>
+        <choice value="secondary"/>
+        <choice value="text"/>
+      </choices>
+      <default>"outline"</default>
+      <summary>On-screen display border color</summary>
+      <description>Color of the on-screen display border.</description>
+    </key>
+    <key name="border-prompt-width" type="i">
+      <range min="0" max="4"/>
+      <default>0</default>
+      <summary>Display prompt border width</summary>
+      <description>Border width of the display prompt in pixels; 0 removes the border.</description>
+    </key>
+    <key name="border-prompt-radius" type="i">
+      <range min="0" max="48"/>
+      <default>28</default>
+      <summary>Display prompt corner radius</summary>
+      <description>Corner radius of the display prompt in pixels.</description>
+    </key>
+    <key name="border-prompt-color" type="s">
+      <choices>
+        <choice value="outline"/>
+        <choice value="primary"/>
+        <choice value="secondary"/>
+        <choice value="text"/>
+      </choices>
+      <default>"outline"</default>
+      <summary>Display prompt border color</summary>
+      <description>Color of the display prompt border.</description>
+    </key>
+    <key name="border-desktop-width" type="i">
+      <range min="0" max="4"/>
+      <default>1</default>
+      <summary>Desktop icon selection border width</summary>
+      <description>Border width of the desktop icon selection in pixels; 0 removes the border.</description>
+    </key>
+    <key name="border-desktop-radius" type="i">
+      <range min="0" max="48"/>
+      <default>14</default>
+      <summary>Desktop icon selection corner radius</summary>
+      <description>Corner radius of the desktop icon selection in pixels.</description>
+    </key>
+    <key name="border-desktop-color" type="s">
+      <choices>
+        <choice value="outline"/>
+        <choice value="primary"/>
+        <choice value="secondary"/>
+        <choice value="text"/>
+      </choices>
+      <default>"outline"</default>
+      <summary>Desktop icon selection border color</summary>
+      <description>Color of the desktop icon selection border.</description>
+    </key>
+    <key name="switcher-scale" type="d">
+      <range min="0.6" max="1.6"/>
+      <default>1.0</default>
+      <summary>Window switcher size</summary>
+      <description>Scale factor for the size of the window switcher size.</description>
+    </key>
+    <key name="osd-scale" type="d">
+      <range min="0.7" max="1.6"/>
+      <default>1.0</default>
+      <summary>On-screen display size</summary>
+      <description>Scale factor for the size of the on-screen display size.</description>
+    </key>
+    <key name="show-display-prompt" type="b">
+      <default>true</default>
+      <summary>Display change prompt</summary>
+      <description>Show the Material 3 prompt that asks to keep new display settings.</description>
+    </key>
   </schema>
 </schemalist>

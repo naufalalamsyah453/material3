@@ -110,6 +110,11 @@ export const PAGES = {
         sub: () => _('Disk usage'), tone: 'amber',
         keywords: 'storage penyimpanan disk trash sampah temporary files cleanup',
     },
+    extension: {
+        file: 'extension', icon: 'auto_awesome', title: () => _('Material 3'),
+        sub: () => _('Panels, dock, menus, borders'), tone: 'violet',
+        keywords: 'material3 material 3 extension ekstensi quick settings dock app menu context menu border radius size ukuran shadow bayangan alt tab osd desktop icons ikon date menu',
+    },
     about: {
         file: 'about', icon: 'info', title: () => _('About'),
         sub: () => _('Device and software'), tone: 'gray',
@@ -123,6 +128,7 @@ export const groups = () => [
     {title: _('Personal'), pages: ['appearance', 'notifications', 'search', 'multitasking', 'apps', 'privacy', 'sharing']},
     {title: _('Hardware'), pages: ['display', 'sound', 'power', 'mouse', 'keyboard', 'shortcuts', 'other']},
     {title: _('System'), pages: ['datetime', 'region', 'accessibility', 'storage', 'about']},
+    {title: _('Extension'), pages: ['extension']},
 ];
 
 /** GNOME Settings panel names (command line) -> page. */

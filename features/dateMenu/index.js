@@ -83,7 +83,7 @@ class DatePanel {
         this.actor = new St.Bin({style_class: 'm3-qs'});
         this._root = new St.BoxLayout({
             style_class: 'm3-dm-root',
-            style: `spacing: ${sx(20)}px; padding: ${sx(22)}px; border-radius: ${sx(36)}px;`,
+            style: `spacing: ${sx(20)}px; padding: ${sx(22)}px;`,
         });
         this.actor.set_child(this._root);
         this._buildNotifications();

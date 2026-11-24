@@ -5,8 +5,8 @@ import Gtk from 'gi://Gtk?version=4.0';
 import {_} from '../i18n.js';
 import {gs, hasCommand, run} from '../sys.js';
 import {
-    clearBox, customSwitch, dialog, dropdown, fire, heading, hbox, label, listCard, note, pillButton, row,
-    rowsFrom, sectionLabel, spinnerRow, toast, vbox,
+    clearBox, customSwitch, dropdown, fire, heading, hbox, listCard, note, pillButton, row,
+    MonitorArrangement, rowsFrom, sectionLabel, spinnerRow, toast, vbox,
 } from '../ui.js';
 
 const BUS = 'org.gnome.Mutter.DisplayConfig';
@@ -155,43 +155,6 @@ const same = (a, b) => JSON.stringify(a.entries.map(e => [e.enabled, e.modeId, e
     e.relation])) === JSON.stringify(b.entries.map(e => [e.enabled, e.modeId, e.scale, e.transform, e.primary,
     e.relation]));
 
-/** "Keep these settings?" with a countdown; resolves true to keep. */
-function keepDialog() {
-    return new Promise(resolve => {
-        let left = 15;
-        const text = label('', 'm3-row-sub');
-        let timer = 0;
-        let closeFn = null;
-        const update = () => text.set_label(_('Reverting in %d seconds').format(left));
-        update();
-        dialog({
-            title: _('Keep these display settings?'),
-            content: text,
-            buttons: [
-                {id: 'revert', label: _('Revert')},
-                {id: 'keep', label: _('Keep'), variant: 'filled'},
-            ],
-            onOpen: (_win, closeWith) => {
-                closeFn = closeWith;
-                timer = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 1, () => {
-                    left -= 1;
-                    update();
-                    if (left <= 0) {
-                        timer = 0;
-                        closeFn('revert');
-                        return GLib.SOURCE_REMOVE;
-                    }
-                    return GLib.SOURCE_CONTINUE;
-                });
-            },
-        }).then(answer => {
-            if (timer)
-                GLib.source_remove(timer);
-            resolve(answer === 'keep');
-        });
-    });
-}
-
 export function build() {
     const page = vbox(16);
     page.append(heading(_('Displays'), _('Resolution, scale, orientation, arrangement and Night Light')));
@@ -203,6 +166,7 @@ export function build() {
     let applied = null;
     let pending = null;
     let busy = false;
+    let lastApply = 0;
 
     const render = () => {
         clearBox(holder);
@@ -224,6 +188,41 @@ export function build() {
         const entries = pending.entries;
         const enabledCount = entries.filter(e => e.enabled).length;
         const ref = entries.filter(e => e.enabled).find(e => e.primary) ?? entries.find(e => e.enabled);
+
+        if (enabledCount > 1) {
+            holder.append(sectionLabel(_('Arrangement')));
+            holder.append(note(_('Drag a display next to another one to arrange them'), 'open_with'));
+            holder.append(new MonitorArrangement({
+                getMonitors: () => {
+                    const state = clone(pending);
+                    layout(state);
+                    return state.entries.filter(e => e.enabled).map(e => {
+                        const [w, h] = sizeOf(e, state.layoutMode);
+                        const mode = modeOf(e);
+                        return {
+                            id: e.monitor.connector, name: e.monitor.name, primary: e.primary,
+                            detail: `${mode.w} × ${mode.h}`, x: e.x, y: e.y, w, h,
+                        };
+                    });
+                },
+                onDrop: (id, cx, cy) => {
+                    const state = clone(pending);
+                    layout(state);
+                    const on = state.entries.filter(e => e.enabled);
+                    const base = on.find(e => e.primary) ?? on[0];
+                    const target = pending.entries.find(e => e.monitor.connector === id);
+                    if (!target || target.monitor.connector === base.monitor.connector)
+                        return;
+                    const [bw, bh] = sizeOf(base, state.layoutMode);
+                    const dx = (cx - (base.x + bw / 2)) / bw;
+                    const dy = (cy - (base.y + bh / 2)) / bh;
+                    target.relation = Math.abs(dx) >= Math.abs(dy)
+                        ? (dx > 0 ? 'right' : 'left')
+                        : (dy > 0 ? 'below' : 'above');
+                    render();
+                },
+            }));
+        }
 
         for (const e of entries) {
             const rows = [];
@@ -347,25 +346,17 @@ export function build() {
         render();
     };
 
+    // One persistent apply: the shell asks "Keep these display settings?" (in
+    // the extension's own dialog) and mutter reverts by itself when it is
+    // declined, so this page shows no prompt of its own.
     const apply = async () => {
         if (busy || !pending)
             return;
         busy = true;
-        const before = clone(applied);
         try {
-            await call('ApplyMonitorsConfig', toVariant(clone(pending), 1));
-            const keep = await keepDialog();
-            if (keep) {
-                const fresh = parse((await call('GetCurrentState')).recursiveUnpack());
-                const next = clone(pending);
-                next.serial = fresh.serial;
-                await call('ApplyMonitorsConfig', toVariant(next, 2));
-                toast(_('Display settings saved'));
-            } else {
-                const fresh = parse((await call('GetCurrentState')).recursiveUnpack());
-                before.serial = fresh.serial;
-                await call('ApplyMonitorsConfig', toVariant(before, 1));
-            }
+            await call('ApplyMonitorsConfig', toVariant(clone(pending), 2));
+            lastApply = Date.now();
+            toast(_('Display settings applied'));
         } catch (e) {
             console.error(`material3: apply displays: ${e.message}`);
             toast(_('Could not apply the display settings'));
@@ -375,7 +366,9 @@ export function build() {
     };
 
     Gio.DBus.session.signal_subscribe(BUS, BUS, 'MonitorsChanged', PATH, null, Gio.DBusSignalFlags.NONE, () => {
-        if (!busy && pending && applied && same(pending, applied))
+        // After an apply the answer to the prompt (keep or revert) changes the
+        // monitors again: follow it, but never throw away unsaved edits otherwise.
+        if (!busy && pending && applied && (same(pending, applied) || Date.now() - lastApply < 30000))
             fire(load());
     });
 

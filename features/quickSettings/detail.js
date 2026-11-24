@@ -1,6 +1,7 @@
 import Clutter from 'gi://Clutter';
 import St from 'gi://St';
 
+import {_} from '../../i18n.js';
 import {Ease, lerp, tweenerFor} from './animation.js';
 import {px} from './ui.js';
 import {iconButton, pressFeedback, symbolIcon, textLabel, truncatedLabel} from './widgets.js';
@@ -19,7 +20,7 @@ const LIST_SPACING = 6;
  * Pop-up that covers the tile grid and lists the options of one tile
  * (Wi-Fi networks, Bluetooth devices, power modes).
  *
- * A provider is `{title, icon, getOptions(), subscribe(cb), onOpen?()}`;
+ * A provider is `{title, icon, getOptions(), subscribe(cb), onOpen?(), settingsPage?}`;
  * getOptions() returns `{items, emptyText}` where an item is
  * `{id, icon, label, sublabel, selected, trailing, activate(), closeOnActivate}`.
  * The list re-renders whenever the provider notifies.
@@ -30,8 +31,9 @@ export class DetailPane {
      * @param {function(): {width: number, height: number}} params.getSize
      *   size of the surface the pane must cover, read each time it opens
      */
-    constructor({getSize}) {
+    constructor({getSize, openSettings}) {
         this._getSize = getSize;
+        this._openSettings = openSettings;
         this._provider = null;
         this._unsubscribe = null;
         this._t = 0;
@@ -60,6 +62,15 @@ export class DetailPane {
         header.add_child(this._headerIcon);
         this._title = textLabel('', 'm3-detail-title', {x_expand: true});
         header.add_child(this._title);
+        // Gear: the matching page of the extension's Settings app.
+        this._gear = iconButton('settings', {size: 18, buttonSize: HEADER_HEIGHT});
+        this._gear.accessible_name = _('Settings');
+        this._gear.connect('clicked', () => {
+            const page = this._provider?.settingsPage;
+            if (page)
+                this._openSettings?.(page);
+        });
+        header.add_child(this._gear);
         this.actor.add_child(header);
 
         this._scroll = new St.ScrollView({
@@ -98,6 +109,7 @@ export class DetailPane {
 
         this._headerIcon.set_text(provider.icon);
         this._title.set_text(provider.title);
+        this._gear.visible = !!provider.settingsPage;
         this._unsubscribe = provider.subscribe(() => this._render());
         provider.onOpen?.();
         this._render();

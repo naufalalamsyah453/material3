@@ -1,6 +1,7 @@
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 import {setTranslator} from './i18n.js';
+import {DisplayConfirmFeature} from './features/displayConfirm/index.js';
 import {DesktopFeature} from './features/desktop/index.js';
 import {DateMenuFeature} from './features/dateMenu/index.js';
 import {DockFeature} from './features/dock/index.js';
@@ -20,11 +21,22 @@ export default class Material3Extension extends Extension {
         this._qsId = settings.connect('changed::show-quicksettings', () => this._syncQuickSettings());
         this._syncQuickSettings();
 
-        this._dock = new DockFeature(settings);
-        this._dock.enable();
+        // One failing feature must not stop the ones after it.
+        this._dock = null;
+        try {
+            this._dock = new DockFeature(settings);
+            this._dock.enable();
+        } catch (e) {
+            console.error(`material3: dock failed: ${e.message}\n${e.stack}`);
+        }
 
-        this._settingsApp = new SettingsFeature(settings, this.path);
-        this._settingsApp.enable();
+        this._settingsApp = null;
+        try {
+            this._settingsApp = new SettingsFeature(settings, this.path);
+            this._settingsApp.enable();
+        } catch (e) {
+            console.error(`material3: settings app failed: ${e.message}\n${e.stack}`);
+        }
 
         this._dateMenu = null;
         this._dateMenuId = settings.connect('changed::show-datemenu', () => this._syncDateMenu());
@@ -38,8 +50,17 @@ export default class Material3Extension extends Extension {
         this._switcherId = settings.connect('changed::show-switcher', () => this._syncSwitcher());
         this._syncSwitcher();
 
+        this._displayConfirm = null;
+        this._displayConfirmId = settings.connect('changed::show-display-prompt', () => this._syncDisplayConfirm());
+        this._syncDisplayConfirm();
+
         this._osd = null;
         this._osdId = settings.connect('changed::osd-enabled', () => this._syncOsd());
+        this._osdScaleId = settings.connect('changed::osd-scale', () => {
+            this._osd?.disable();
+            this._osd = null;
+            this._syncOsd();
+        });
         this._syncOsd();
     }
 
@@ -51,6 +72,9 @@ export default class Material3Extension extends Extension {
         if (this._osdId)
             this._settings.disconnect(this._osdId);
         this._osdId = 0;
+        if (this._osdScaleId)
+            this._settings.disconnect(this._osdScaleId);
+        this._osdScaleId = 0;
         this._osd?.disable();
         this._osd = null;
         if (this._dateMenuId)
@@ -68,6 +92,12 @@ export default class Material3Extension extends Extension {
         this._switcherId = 0;
         this._switcher?.disable();
         this._switcher = null;
+
+        if (this._displayConfirmId)
+            this._settings.disconnect(this._displayConfirmId);
+        this._displayConfirmId = 0;
+        this._displayConfirm?.disable();
+        this._displayConfirm = null;
 
         this._settingsApp?.disable();
         this._settingsApp = null;
@@ -115,6 +145,24 @@ export default class Material3Extension extends Extension {
                 // Nothing left to undo.
             }
             this._dateMenu = null;
+        }
+    }
+
+    /** The Material 3 "keep these display settings?" prompt. */
+    _syncDisplayConfirm() {
+        const schema = this._settings.settings_schema;
+        const wanted = !schema.has_key('show-display-prompt') || this._settings.get_boolean('show-display-prompt');
+        try {
+            if (wanted && !this._displayConfirm) {
+                this._displayConfirm = new DisplayConfirmFeature(this._settings);
+                this._displayConfirm.enable();
+            } else if (!wanted && this._displayConfirm) {
+                this._displayConfirm.disable();
+                this._displayConfirm = null;
+            }
+        } catch (e) {
+            console.error(`material3: display prompt failed: ${e.message}`);
+            this._displayConfirm = null;
         }
     }
 

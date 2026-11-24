@@ -54,6 +54,7 @@ export class WifiBackend extends Backend {
     get options() {
         return {
             title: _('Wi-Fi'),
+            settingsPage: 'network',
             icon: 'wifi',
             subscribe: cb => this.subscribe(cb),
             onOpen: () => this._scan(),

@@ -558,11 +558,10 @@ export class DockFeature {
         const actor = item.actor;
         const [x, y] = actor.get_transformed_position();
         const [width] = actor.get_transformed_size();
-        this._dockCtx.open(appContextItems(item.app, () => this._dockCtx.close(false)), {
-            x: x + width / 2,
-            y: y - px(8),
-            placement: 'above',
-        });
+        const at = {x: x + width / 2, y: y - px(8), placement: 'above'};
+        this._dockCtx.open(appContextItems(item.app, () => this._dockCtx.close(false), {
+            reopen: items => this._dockCtx.open(items, at),
+        }), at);
     }
 
     /** Rectangle of the Settings icon in the dock (for the window animation). */
