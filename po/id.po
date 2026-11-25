@@ -101,11 +101,17 @@ msgstr "Tepi layar aktif"
 msgid "Adaptive"
 msgstr "Adaptif"
 
+msgid "Add VPN from file"
+msgstr "Tambah VPN dari file"
+
 msgid "Add category"
 msgstr "Tambah kategori"
 
 msgid "Add reminder..."
 msgstr "Tambah pengingat..."
+
+msgid "Address"
+msgstr "Alamat"
 
 msgid "Advanced network settings"
 msgstr "Pengaturan jaringan lanjutan"
@@ -284,6 +290,9 @@ msgstr "Ubah pintasan untuk jendela, aplikasi, dan media"
 msgid "Changes the size of text in every app"
 msgstr "Mengubah ukuran teks di semua aplikasi"
 
+msgid "Choose a VPN file"
+msgstr "Pilih file VPN"
+
 msgid "Choose a background"
 msgstr "Pilih latar belakang"
 
@@ -371,8 +380,14 @@ msgstr "URL konfigurasi"
 msgid "Connect"
 msgstr "Hubungkan"
 
+msgid "Connect automatically"
+msgstr "Sambung otomatis"
+
 msgid "Connect to %s"
 msgstr "Hubungkan ke %s"
+
+msgid "Connect to a network that does not show up"
+msgstr "Sambung ke jaringan yang tidak muncul"
 
 msgid "Connected"
 msgstr "Terhubung"
@@ -398,6 +413,9 @@ msgstr "Tidak bisa menerapkan pengaturan layar"
 msgid "Could not authorize"
 msgstr "Gagal otorisasi"
 
+msgid "Could not change"
+msgstr "Tidak bisa mengubah"
+
 msgid "Could not change the default"
 msgstr "Gagal mengubah default"
 
@@ -415,6 +433,12 @@ msgstr "Tidak bisa terhubung"
 
 msgid "Could not empty the trash"
 msgstr "Tidak dapat mengosongkan sampah"
+
+msgid "Could not import"
+msgstr "Tidak bisa mengimpor"
+
+msgid "Could not start the hotspot"
+msgstr "Tidak bisa memulai hotspot"
 
 msgid "Cover"
 msgstr "Sampul"
@@ -436,6 +460,12 @@ msgstr "Nama kustom"
 
 msgid "Cut"
 msgstr "Potong"
+
+msgid "DNS"
+msgstr "DNS"
+
+msgid "DNS servers"
+msgstr "Server DNS"
 
 msgid "Dark Style"
 msgstr "Gaya Gelap"
@@ -487,6 +517,9 @@ msgstr "Hapus berkas yang lebih lama dari"
 
 msgid "Desktop icons"
 msgstr "Ikon desktop"
+
+msgid "Details"
+msgstr "Detail"
 
 msgid "Device and software"
 msgstr "Perangkat dan perangkat lunak"
@@ -653,6 +686,15 @@ msgstr "Font, ikon, kursor"
 msgid "Forever"
 msgstr "Selamanya"
 
+msgid "Forget"
+msgstr "Lupakan"
+
+msgid "Forget this device?"
+msgstr "Lupakan perangkat ini?"
+
+msgid "Forget this network?"
+msgstr "Lupakan jaringan ini?"
+
 msgid "Formats"
 msgstr "Format"
 
@@ -677,6 +719,9 @@ msgstr "GNOME"
 msgid "Gap between the dock and the bottom edge of the screen, in pixels"
 msgstr "Jarak dock ke tepi bawah layar, dalam piksel"
 
+msgid "Gateway"
+msgstr "Gateway"
+
 msgid "General"
 msgstr "Umum"
 
@@ -688,6 +733,9 @@ msgstr "Gagang"
 
 msgid "Hardware"
 msgstr "Perangkat keras"
+
+msgid "Hardware address"
+msgstr "Alamat perangkat keras"
 
 msgid "Height above the edge"
 msgstr "Tinggi dari tepi"
@@ -701,6 +749,9 @@ msgstr "Bantuan"
 msgid "Hibernate"
 msgstr "Hibernasi"
 
+msgid "Hidden network"
+msgstr "Jaringan tersembunyi"
+
 msgid "High contrast"
 msgstr "Kontras tinggi"
 
@@ -713,6 +764,9 @@ msgstr "Beranda"
 msgid "Home folder"
 msgstr "Folder home"
 
+msgid "Host"
+msgstr "Host"
+
 msgid "Hot corner"
 msgstr "Sudut aktif"
 
@@ -722,8 +776,23 @@ msgstr "Sudut panas, susun jendela, ruang kerja"
 msgid "Hot corner, window tiling and workspaces"
 msgstr "Sudut panas, susun jendela, dan ruang kerja"
 
+msgid "Hotspot"
+msgstr "Hotspot"
+
+msgid "Hotspot is on"
+msgstr "Hotspot aktif"
+
 msgid "Hover click"
 msgstr "Klik dengan menahan"
+
+msgid "How this computer appears to other devices"
+msgstr "Nama komputer ini di perangkat lain"
+
+msgid "IP address"
+msgstr "Alamat IP"
+
+msgid "IPv4"
+msgstr "IPv4"
 
 msgid "Icon size"
 msgstr "Ukuran ikon"
@@ -743,11 +812,17 @@ msgstr "Abaikan tekanan tombol berulang yang cepat"
 msgid "Immediately"
 msgstr "Segera"
 
+msgid "Import"
+msgstr "Impor"
+
 msgid "In the split style only tiles that have options are divided"
 msgstr "Pada gaya terbagi, hanya tile yang punya opsi yang dibagi"
 
 msgid "Include apps from the current workspace only"
 msgstr "Hanya sertakan aplikasi dari ruang kerja saat ini"
+
+msgid "Input device"
+msgstr "Perangkat input"
 
 msgid "Input sources"
 msgstr "Sumber input"
@@ -802,6 +877,12 @@ msgstr "Tata letak"
 
 msgid "Left of %s"
 msgstr "Di kiri %s"
+
+msgid "Limits background data"
+msgstr "Membatasi data latar belakang"
+
+msgid "Link speed"
+msgstr "Kecepatan tautan"
 
 msgid "Load only the favorite category"
 msgstr "Muat kategori favorit saja"
@@ -874,6 +955,9 @@ msgstr "Memori"
 
 msgid "Menus"
 msgstr "Menu"
+
+msgid "Metered connection"
+msgstr "Koneksi berbatas"
 
 msgid "Microphone"
 msgstr "Mikrofon"
@@ -956,6 +1040,9 @@ msgstr "Perangkat terdekat"
 msgid "Needs no other extension"
 msgstr "Tanpa ekstensi lain"
 
+msgid "Network name"
+msgstr "Nama jaringan"
+
 msgid "NetworkManager (nmcli) was not found on this system."
 msgstr "NetworkManager (nmcli) tidak ditemukan di sistem ini."
 
@@ -977,11 +1064,17 @@ msgstr "Jendela Baru"
 msgid "New category"
 msgstr "Kategori baru"
 
+msgid "Next"
+msgstr "Lanjut"
+
 msgid "Next track"
 msgstr "Lagu berikutnya"
 
 msgid "Night Light"
 msgstr "Cahaya Malam"
+
+msgid "No"
+msgstr "Tidak"
 
 msgid "No Events"
 msgstr "Tidak ada acara"
@@ -1118,6 +1211,9 @@ msgstr "Buka aplikasi Pengaturan Material 3, bukan Pengaturan GNOME"
 msgid "Open the overview by moving the pointer to the top-left corner"
 msgstr "Buka ringkasan dengan menggerakkan penunjuk ke pojok kiri atas"
 
+msgid "OpenVPN (.ovpn) or WireGuard (.conf)"
+msgstr "OpenVPN (.ovpn) atau WireGuard (.conf)"
+
 msgid "Opens the app menu on one category and reads only its apps, so the first open stays light. Other categories are read the first time you select them."
 msgstr "Membuka menu aplikasi pada satu kategori dan hanya membaca aplikasinya, jadi pembukaan pertama tetap ringan. Kategori lain dibaca saat pertama kali dipilih."
 
@@ -1130,8 +1226,14 @@ msgstr "Urutan aplikasi di grid"
 msgid "Orientation"
 msgstr "Orientasi"
 
+msgid "Other devices can find this computer"
+msgstr "Perangkat lain bisa menemukan komputer ini"
+
 msgid "Outline"
 msgstr "Garis tepi"
+
+msgid "Output device"
+msgstr "Perangkat output"
 
 msgid "Output volume"
 msgstr "Volume output"
@@ -1162,6 +1264,12 @@ msgstr "Panel, dock, menu, garis tepi"
 
 msgid "Password"
 msgstr "Kata sandi"
+
+msgid "Password (at least 8 characters)"
+msgstr "Kata sandi (minimal 8 karakter)"
+
+msgid "Password (leave empty if open)"
+msgstr "Kata sandi (kosongkan jika terbuka)"
 
 msgid "Paste"
 msgstr "Tempel"
@@ -1343,6 +1451,9 @@ msgstr "Sama dengan font Pengaturan Cepat"
 msgid "Save"
 msgstr "Simpan"
 
+msgid "Saved"
+msgstr "Tersimpan"
+
 msgid "Scale"
 msgstr "Skala"
 
@@ -1403,6 +1514,9 @@ msgstr "Sekunder"
 msgid "Secured"
 msgstr "Aman"
 
+msgid "Security"
+msgstr "Keamanan"
+
 msgid "Seeing"
 msgstr "Penglihatan"
 
@@ -1421,8 +1535,14 @@ msgstr "Pilih lokasi cuaca..."
 msgid "Selection border"
 msgstr "Garis tepi pilihan"
 
+msgid "Send files"
+msgstr "Kirim file"
+
 msgid "Send problem reports"
 msgstr "Kirim laporan masalah"
+
+msgid "Separated by spaces. Empty uses the automatic ones."
+msgstr "Pisahkan dengan spasi. Kosong memakai yang otomatis."
 
 msgid "Settings"
 msgstr "Pengaturan"
@@ -1435,6 +1555,9 @@ msgstr "Pintasan pengaturan"
 
 msgid "Settings updated"
 msgstr "Pengaturan diperbarui"
+
+msgid "Share this connection over Wi-Fi"
+msgstr "Bagikan koneksi ini lewat Wi-Fi"
 
 msgid "Sharing"
 msgstr "Berbagi"
@@ -1487,6 +1610,9 @@ msgstr "Matikan"
 msgid "Sidebar buttons"
 msgstr "Tombol sidebar"
 
+msgid "Signal"
+msgstr "Sinyal"
+
 msgid "Simulated secondary click"
 msgstr "Klik sekunder simulasi"
 
@@ -1526,6 +1652,9 @@ msgstr "Terbagi"
 msgid "Standard performance and battery"
 msgstr "Performa dan baterai standar"
 
+msgid "Start"
+msgstr "Mulai"
+
 msgid "Start a media player"
 msgstr "Jalankan pemutar media"
 
@@ -1535,8 +1664,14 @@ msgstr "Tetap"
 msgid "Static keeps the dock in view and stops maximized windows above it"
 msgstr "Tetap menjaga dock terlihat dan menahan jendela maksimal di atasnya"
 
+msgid "Status"
+msgstr "Status"
+
 msgid "Sticky keys"
 msgstr "Sticky keys"
+
+msgid "Stop"
+msgstr "Berhenti"
 
 msgid "Storage"
 msgstr "Penyimpanan"
@@ -1625,6 +1760,9 @@ msgstr "Peluncur yang dibuka dari dock"
 msgid "The panel from the system menu in the top bar"
 msgstr "Panel dari menu sistem di bilah atas"
 
+msgid "The password is too short"
+msgstr "Kata sandi terlalu pendek"
+
 msgid "The right-click menus of the dock, app menu and desktop"
 msgstr "Menu klik kanan dock, menu aplikasi, dan desktop"
 
@@ -1673,6 +1811,12 @@ msgstr "Sampah"
 msgid "Trash emptied"
 msgstr "Sampah dikosongkan"
 
+msgid "Trust"
+msgstr "Percayai"
+
+msgid "Trusted"
+msgstr "Dipercaya"
+
 msgid "Turn off for Do Not Disturb"
 msgstr "Matikan untuk mode Jangan Ganggu"
 
@@ -1703,8 +1847,14 @@ msgstr "Tidak tersedia"
 msgid "Unpin from Dock"
 msgstr "Lepas dari Dock"
 
+msgid "Unsupported file"
+msgstr "File tidak didukung"
+
 msgid "Untitled"
 msgstr "Tanpa judul"
+
+msgid "Untrust"
+msgstr "Batalkan kepercayaan"
 
 msgid "Use Material 3 Alt+Tab switcher"
 msgstr "Pakai Alt+Tab Material 3"
@@ -1744,6 +1894,9 @@ msgstr "Pengguna, printer, akun"
 
 msgid "Video"
 msgstr "Video"
+
+msgid "Visible"
+msgstr "Terlihat"
 
 msgid "Volume and system sounds"
 msgstr "Volume dan suara sistem"
@@ -1828,6 +1981,9 @@ msgstr "Jam dunia"
 
 msgid "Writes colors to ~/.config/gtk-4.0 and gtk-3.0; apps pick them up when started"
 msgstr "Menulis warna ke ~/.config/gtk-4.0 dan gtk-3.0; aplikasi memakainya saat dibuka"
+
+msgid "Yes"
+msgstr "Ya"
 
 msgid "You"
 msgstr "Anda"

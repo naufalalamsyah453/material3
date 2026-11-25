@@ -3,8 +3,38 @@ import Gio from 'gi://Gio';
 import {_} from '../i18n.js';
 import {hasCommand, run, watchDbus} from '../sys.js';
 import {
-    clearBox, customSwitch, fire, heading, listCard, note, pillButton, row, sectionLabel, spinnerRow, toast, vbox,
+    askText, clearBox, confirm, customSwitch, dialog, fire, hbox, heading, iconButton, infoRows, listCard, note, pillButton,
+    row, sectionLabel, spinnerRow, toast, vbox,
 } from '../ui.js';
+
+const TYPE_ICONS = {
+    'audio-headset': 'headphones', 'audio-headphones': 'headphones', 'audio-card': 'speaker',
+    'input-keyboard': 'keyboard', 'input-mouse': 'mouse', 'input-gaming': 'sports_esports',
+    'input-tablet': 'tablet', phone: 'smartphone', computer: 'computer', 'camera-photo': 'photo_camera',
+    'camera-video': 'photo_camera', 'printer': 'print', 'video-display': 'tv',
+};
+
+/** Fields of `bluetoothctl info` as an object. */
+function parseInfo(text) {
+    const out = {};
+    for (const line of text.split('\n')) {
+        const m = line.match(/^\s+([A-Za-z ]+):\s*(.*)$/);
+        if (m && !(m[1] in out))
+            out[m[1]] = m[2];
+    }
+    const battery = (out['Battery Percentage'] ?? '').match(/\((\d+)\)/);
+    return {
+        alias: out.Alias ?? out.Name ?? '',
+        icon: TYPE_ICONS[out.Icon] ?? 'devices',
+        type: out.Icon ?? '',
+        paired: out.Paired === 'yes',
+        trusted: out.Trusted === 'yes',
+        connected: out.Connected === 'yes',
+        battery: battery ? Number(battery[1]) : null,
+    };
+}
+
+const devicePath = mac => `/org/bluez/hci0/dev_${mac.replace(/:/g, '_')}`;
 
 const parseDevices = text => text.split('\n').filter(Boolean).map(line => {
     const m = line.match(/^Device\s+([0-9A-F:]{17})\s+(.*)$/i);
@@ -22,7 +52,23 @@ export function build() {
         title: _('Bluetooth'), icon: 'bluetooth', get: () => false,
         set: on => fire(run(['bluetoothctl', 'power', on ? 'on' : 'off']).then(() => page.refresh())),
     });
-    page.append(listCard([power]));
+    const nameRow = row({
+        title: _('Device name'), sub: '', icon: 'badge',
+        trailing: iconButton('edit', async () => {
+            const name = await askText({title: _('Device name'), message: _('How this computer appears to other devices'),
+                initial: nameRow.current ?? ''});
+            if (name === null || !name.trim())
+                return;
+            await run(['bluetoothctl', 'system-alias', name.trim()]);
+            toast();
+            page.refresh();
+        }, _('Rename')),
+    });
+    const visible = customSwitch({
+        title: _('Visible'), sub: _('Other devices can find this computer'), icon: 'visibility', get: () => false,
+        set: on => fire(run(['bluetoothctl', 'discoverable', on ? 'on' : 'off']).then(() => page.refresh())),
+    });
+    page.append(listCard([power, nameRow, visible]));
 
     page.append(sectionLabel(_('My devices')));
     const mineList = vbox(3, 'm3-card list');
@@ -47,6 +93,49 @@ export function build() {
     const readPower = async () => {
         const show = await run(['bluetoothctl', 'show']);
         power.setActive(/Powered:\s+yes/.test(show.stdout));
+        visible.setActive(/Discoverable:\s+yes/.test(show.stdout));
+        nameRow.current = show.stdout.match(/Alias:\s*(.+)/)?.[1]?.trim() ?? '';
+        nameRow.setSub(nameRow.current);
+    };
+
+    const details = async (d, info) => {
+        const buttons = [{id: 'close', label: _('Close')}];
+        if (hasCommand('bluetooth-sendto') && info.connected)
+            buttons.unshift({id: 'send', label: _('Send files')});
+        buttons.unshift({id: 'forget', label: _('Forget'), variant: 'danger'});
+        buttons.unshift({id: 'trust', label: info.trusted ? _('Untrust') : _('Trust')});
+        buttons.unshift({id: 'rename', label: _('Rename')});
+        const answer = await dialog({
+            title: info.alias || d.name,
+            content: infoRows([
+                [_('Address'), d.mac],
+                info.type && [_('Type'), info.type],
+                [_('Status'), info.connected ? _('Connected') : _('Not connected')],
+                info.battery !== null && [_('Battery'), `${info.battery}%`],
+                [_('Trusted'), info.trusted ? _('Yes') : _('No')],
+            ]),
+            buttons,
+        });
+        if (answer === 'rename') {
+            const name = await askText({title: _('Rename'), initial: info.alias || d.name});
+            if (name?.trim()) {
+                await run(['busctl', '--system', 'set-property', 'org.bluez', devicePath(d.mac),
+                    'org.bluez.Device1', 'Alias', 's', name.trim()]);
+                toast();
+            }
+        } else if (answer === 'trust') {
+            await run(['bluetoothctl', info.trusted ? 'untrust' : 'trust', d.mac]);
+            toast();
+        } else if (answer === 'forget') {
+            if (await confirm({title: _('Forget this device?'), message: info.alias || d.name,
+                okLabel: _('Forget'), danger: true})) {
+                await run(['bluetoothctl', 'remove', d.mac]);
+                toast();
+            }
+        } else if (answer === 'send') {
+            run(['bluetooth-sendto', `--device=${d.mac}`]);
+        }
+        page.refresh();
     };
 
     const fill = async () => {
@@ -58,17 +147,29 @@ export function build() {
         ]);
         await powered;
         const pairedList = parseDevices(paired.stdout);
+        const infos = new Map();
+        await Promise.all(pairedList.map(async d => {
+            infos.set(d.mac, parseInfo((await run(['bluetoothctl', 'info', d.mac])).stdout));
+        }));
         const live = new Set(parseDevices(connected.stdout).map(d => d.mac));
         const pairedMacs = new Set(pairedList.map(d => d.mac));
 
         clearBox(mineList);
         for (const d of pairedList) {
             const on = live.has(d.mac);
+            const info = infos.get(d.mac) ?? parseInfo('');
+            const state = on ? _('Connected') : _('Not connected');
+            const trailing = hbox(6);
+            trailing.append(pillButton(on ? _('Disconnect') : _('Connect'),
+                () => act([on ? 'disconnect' : 'connect', d.mac], _('Settings updated')),
+                {variant: on ? '' : 'tonal'}));
+            trailing.append(iconButton('more_vert', () => fire(details(d, info)), _('Details')));
             mineList.append(row({
-                title: d.name, sub: on ? _('Connected') : _('Not connected'), icon: 'devices',
-                trailing: pillButton(on ? _('Disconnect') : _('Connect'),
-                    () => act([on ? 'disconnect' : 'connect', d.mac], _('Settings updated')),
-                    {variant: on ? '' : 'tonal'}),
+                title: info.alias || d.name,
+                sub: info.battery !== null ? `${state} · ${info.battery}%` : state,
+                icon: info.icon,
+                trailing,
+                onClick: () => fire(details(d, info)),
             }));
         }
         if (!pairedList.length)

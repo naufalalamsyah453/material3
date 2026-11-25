@@ -62,6 +62,9 @@ export class DetailPane {
         header.add_child(this._headerIcon);
         this._title = textLabel('', 'm3-detail-title', {x_expand: true});
         header.add_child(this._title);
+        // On/off switch of the tile this pane belongs to (Wi-Fi, Bluetooth).
+        this._switch = this._buildSwitch();
+        header.add_child(this._switch);
         // Gear: the matching page of the extension's Settings app.
         this._gear = iconButton('settings', {size: 18, buttonSize: HEADER_HEIGHT});
         this._gear.accessible_name = _('Settings');
@@ -97,6 +100,71 @@ export class DetailPane {
         this.actor.connect('destroy', () => this._unsubscribe?.());
     }
 
+    _buildSwitch() {
+        const W = 52;
+        const H = 32;
+        const button = new St.Button({
+            style_class: 'm3-switch',
+            can_focus: true,
+            reactive: true,
+            track_hover: true,
+            width: px(W),
+            height: px(H),
+            y_align: Clutter.ActorAlign.CENTER,
+            visible: false,
+        });
+        const track = new St.Widget({
+            layout_manager: new Clutter.BinLayout(),
+            x_expand: true,
+            y_expand: true,
+            x_align: Clutter.ActorAlign.FILL,
+            y_align: Clutter.ActorAlign.FILL,
+        });
+        const thumb = new St.Widget({
+            style_class: 'm3-switch-thumb',
+            x_align: Clutter.ActorAlign.START,
+            y_align: Clutter.ActorAlign.CENTER,
+        });
+        track.add_child(thumb);
+        button.set_child(track);
+        button.connect('clicked', () => this._provider?.toggle?.());
+
+        // Off: small thumb at the left (6px in); on: large thumb 4px from the right.
+        // The thumb always sits at the left; the move is a translation.
+        const inner = W - 4;
+        thumb.set_style(`margin-left: ${px(6)}px;`);
+        button._set = (on, animate) => {
+            const d = on ? 24 : 16;
+            const shift = on ? inner - 24 - 4 - 6 : 0;
+            thumb.set_size(px(d), px(d));
+            if (animate && thumb.mapped) {
+                thumb.ease({translation_x: px(shift), duration: 200, mode: Clutter.AnimationMode.EASE_OUT_CUBIC});
+            } else {
+                thumb.translation_x = px(shift);
+            }
+            if (on)
+                button.add_style_class_name('active');
+            else
+                button.remove_style_class_name('active');
+        };
+        button._on = null;
+        return button;
+    }
+
+    _syncSwitch(animate) {
+        const state = this._provider?.getState?.();
+        const has = !!state && !!this._provider?.toggle;
+        this._switch.visible = has;
+        if (!has)
+            return;
+        this._switch.reactive = state.available !== false;
+        this._switch.opacity = state.available !== false ? 255 : 128;
+        if (this._switch._on !== state.active) {
+            this._switch._on = state.active;
+            this._switch._set(state.active, animate && this._switch._on !== null);
+        }
+    }
+
     get isOpen() {
         return this._provider !== null && !this._closing;
     }
@@ -110,6 +178,8 @@ export class DetailPane {
         this._headerIcon.set_text(provider.icon);
         this._title.set_text(provider.title);
         this._gear.visible = !!provider.settingsPage;
+        this._switch._on = null;
+        this._syncSwitch(false);
         this._unsubscribe = provider.subscribe(() => this._render());
         provider.onOpen?.();
         this._render();
@@ -194,6 +264,7 @@ export class DetailPane {
         if (!this._provider)
             return;
 
+        this._syncSwitch(true);
         const adjustment = this._scroll.vadjustment;
         const scrollTop = adjustment.value;
 

@@ -8,16 +8,10 @@ import {openSettings} from '../../settings/launcher.js';
  * @param {number} strength 0..100
  * @returns {string} Material Symbols name
  */
+// The bundled icon font has no per-bar Wi-Fi glyphs: a missing ligature
+// would show up as clipped text, so only icons that exist are used.
 function wifiIcon(strength) {
-    if (strength < 20)
-        return 'signal_wifi_0_bar';
-    if (strength < 40)
-        return 'network_wifi_1_bar';
-    if (strength < 60)
-        return 'network_wifi_2_bar';
-    if (strength < 80)
-        return 'network_wifi_3_bar';
-    return 'signal_wifi_4_bar';
+    return strength < 50 ? 'network_wifi' : 'wifi';
 }
 
 /** Wi-Fi radio switch and active network name through NetworkManager. */
@@ -55,6 +49,8 @@ export class WifiBackend extends Backend {
         return {
             title: _('Wi-Fi'),
             settingsPage: 'network',
+            getState: () => this.state,
+            toggle: () => this.toggle(),
             icon: 'wifi',
             subscribe: cb => this.subscribe(cb),
             onOpen: () => this._scan(),

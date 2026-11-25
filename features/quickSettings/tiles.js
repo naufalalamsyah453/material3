@@ -15,9 +15,11 @@ const TILE_TEXT_WIDTH = 97;
 const RADIUS_IDLE = 28;
 const RADIUS_ACTIVE = 18;
 // Split tiles use squarer icon chips.
-const CHIP_RADIUS_IDLE = 14;
-const CHIP_RADIUS_ACTIVE = 10;
-const SPLIT_TILE_RADIUS = 20;
+const CHIP_RADIUS_IDLE = 26;
+const CHIP_RADIUS_ACTIVE = 18;
+// A split tile is a capsule while off and squarer while on.
+const SPLIT_TILE_RADIUS = 32;
+const SPLIT_TILE_RADIUS_ACTIVE = 20;
 const CHIP_GAP = 6;
 // How long a click is trusted over backend state while the system catches up.
 const PENDING_MS = 2500;
@@ -224,7 +226,7 @@ class Tile {
         this._outerRipple = new Ripple({
             parent: outer,
             source: this._textButton,
-            radii: () => Array(4).fill(px(SPLIT_TILE_RADIUS)),
+            radii: () => Array(4).fill(this._outerRadius ?? px(SPLIT_TILE_RADIUS)),
             // Light on a dark tile, dark on a light one; the icon chip is cut out.
             color: () => (this._dark ? [1, 1, 1, 0.16] : [0, 0, 0, 0.12]),
             exclude: () => [px(CHIP_GAP), px(CHIP_GAP), size, size, this._radius],
@@ -347,8 +349,15 @@ class Tile {
         const style = `border-radius: ${Math.max(0, radius).toFixed(1)}px;`;
         if (!this._split)
             this.actor.set_style(style);
-        else
+        else {
             this._chip.set_style(`${style} margin: ${px(CHIP_GAP)}px 0 ${px(CHIP_GAP)}px ${px(CHIP_GAP)}px;`);
+            // The tile's outer corners follow the chip: capsule off, squarer on.
+            const k = (radius / px(1) - CHIP_RADIUS_ACTIVE) / (CHIP_RADIUS_IDLE - CHIP_RADIUS_ACTIVE);
+            const outer = Math.max(0, px(SPLIT_TILE_RADIUS_ACTIVE + (SPLIT_TILE_RADIUS - SPLIT_TILE_RADIUS_ACTIVE) * k));
+            this._outerRadius = outer;
+            this.actor.set_style(`border-radius: ${outer.toFixed(1)}px;`);
+            this._textButton.set_style(`border-radius: 0 ${outer.toFixed(1)}px ${outer.toFixed(1)}px 0; padding: 0 ${px(14)}px 0 ${px(12)}px;`);
+        }
         this._fill.set_style(style);
     }
 

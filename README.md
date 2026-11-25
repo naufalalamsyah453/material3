@@ -171,6 +171,13 @@ lpstat/colormgr/boltctl.
   dan perangkat Thunderbolt langsung dari D-Bus / `lpstat` / `colormgr` / `boltctl`,
   lengkap dengan aksi ganti nama, printer default, dan otorisasi Thunderbolt.
   Panel yang belum ditiru tetap bisa dibuka lewat `gnome-control-center`.
+- **Wi-Fi & Jaringan**: detail tiap jaringan (IP, gateway, DNS, MAC, link speed),
+  switch connect automatically dan metered, edit DNS, forget, hotspot Wi-Fi
+  start/stop, koneksi jaringan tersembunyi, impor VPN OpenVPN/WireGuard, serta
+  proxy manual per protokol (HTTP/HTTPS/FTP/SOCKS).
+- **Bluetooth**: nama perangkat dan visibilitas, detail perangkat dengan tipe,
+  baterai dan status trusted, plus rename, trust/untrust, kirim file, dan forget.
+- **Suara**: pemilih perangkat output dan input langsung dari `wpctl`.
 - Drop-down memakai pil Material 3 dengan menu translusen dan chevron yang beranimasi;
   navigasi sidebar memakai ripple dan halaman dapat membuka halaman lain.
 - Kecepatan animasi (`anim-scale`) tetap diatur extension (`St.Settings.slow_down_factor`).
@@ -184,7 +191,8 @@ lpstat/colormgr/boltctl.
   `~/.cache/material3/` and layered over the base stylesheet.
 - Right-click Wi-Fi, Bluetooth or Power Mode to open a pane over the tile
   grid: networks in range (click to connect/disconnect), paired Bluetooth
-  devices (click to connect/disconnect), or the available power modes.
+  devices (click to connect/disconnect), or the available power modes. The
+  Wi-Fi and Bluetooth panes carry the radio's on/off switch in the header.
   Back button, Escape, or closing the menu dismisses it.
 - `disable-shadows` removes the drop shadows from every surface (panels,
   menus, dock, switcher, date menu) while keeping text shadows so labels stay
