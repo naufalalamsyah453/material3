@@ -1,5 +1,6 @@
 import Clutter from 'gi://Clutter';
 import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
 import Shell from 'gi://Shell';
 import St from 'gi://St';
 
@@ -112,6 +113,29 @@ function onPress(actor, callback) {
  * @param {function(): void} done called after an entry ran (to close menus)
  * @returns {Array<object>}
  */
+/** Copy the launcher to the Desktop folder, runnable and trusted. */
+function addToDesktop(source, target) {
+    try {
+        source.copy(target, Gio.FileCopyFlags.OVERWRITE, null, null);
+        target.set_attribute_uint32('unix::mode', 0o755, Gio.FileQueryInfoFlags.NONE, null);
+        try {
+            target.set_attribute_string('metadata::trusted', 'true', Gio.FileQueryInfoFlags.NONE, null);
+        } catch {
+            // Not every file system keeps metadata.
+        }
+    } catch (e) {
+        console.error(`material3: cannot add to desktop: ${e.message}`);
+    }
+}
+
+function removeFromDesktop(target) {
+    try {
+        target.trash(null);
+    } catch (e) {
+        console.error(`material3: cannot remove from desktop: ${e.message}`);
+    }
+}
+
 export function appContextItems(app, done, {reopen = null} = {}) {
     const run = callback => () => {
         done();
@@ -171,6 +195,19 @@ export function appContextItems(app, done, {reopen = null} = {}) {
     }
 
     const path = info?.get_filename?.();
+    if (path) {
+        const desktopDir = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DESKTOP);
+        const target = desktopDir ? Gio.File.new_for_path(GLib.build_filenamev([desktopDir, GLib.path_get_basename(path)])) : null;
+        if (target) {
+            const present = target.query_exists(null);
+            items.push({separator: true});
+            items.push({
+                icon: present ? 'remove_circle' : 'add_to_home_screen',
+                label: present ? _('Remove from Desktop') : _('Add to Desktop'),
+                activate: run(() => (present ? removeFromDesktop(target) : addToDesktop(Gio.File.new_for_path(path), target))),
+            });
+        }
+    }
     if (path && reopen) {
         const file = Gio.File.new_for_path(path);
         items.push({separator: true});

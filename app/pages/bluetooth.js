@@ -50,7 +50,17 @@ export function build() {
     }
     const power = customSwitch({
         title: _('Bluetooth'), icon: 'bluetooth', get: () => false,
-        set: on => fire(run(['bluetoothctl', 'power', on ? 'on' : 'off']).then(() => page.refresh())),
+        set: on => fire((async () => {
+            // A soft block (airplane mode) makes `power on` fail silently.
+            if (on)
+                await run(['rfkill', 'unblock', 'bluetooth']);
+            const r = await run(['bluetoothctl', 'power', on ? 'on' : 'off'], {timeout: 10});
+            if (!r.ok) {
+                toast(_('Could not change'));
+                power.settle(!on);
+            }
+            page.refresh();
+        })()),
     });
     const nameRow = row({
         title: _('Device name'), sub: '', icon: 'badge',

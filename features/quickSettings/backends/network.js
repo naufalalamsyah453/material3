@@ -58,7 +58,7 @@ export class WifiBackend extends Backend {
         };
     }
 
-    toggle() {
+    toggle(target) {
         const client = this._client;
         if (!client)
             return;
@@ -67,7 +67,7 @@ export class WifiBackend extends Backend {
             this._NM.DBUS_PATH,
             this._NM.DBUS_INTERFACE,
             'WirelessEnabled',
-            new GLib.Variant('b', !client.wireless_enabled),
+            new GLib.Variant('b', target ?? !client.wireless_enabled),
             2000,
             null,
             (source, result) => {

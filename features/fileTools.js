@@ -4,7 +4,7 @@ import GLib from 'gi://GLib';
 import St from 'gi://St';
 
 import * as ModalDialog from 'resource:///org/gnome/shell/ui/modalDialog.js';
-import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
+import {createSwitch} from './quickSettings/switch.js';
 
 import {_} from '../i18n.js';
 
@@ -200,12 +200,15 @@ function showPropertiesFor(item) {
         const line = new St.BoxLayout({x_expand: true, style: 'spacing: 12px;'});
         line.add_child(new St.Label({text: _('Allow executing as a program'), x_expand: true,
             y_align: Clutter.ActorAlign.CENTER}));
-        const toggle = new PopupMenu.Switch(originalExec);
-        toggle.y_align = Clutter.ActorAlign.CENTER;
-        line.add_child(toggle);
+        // The extension's own switch; its styles need an m3-qs ancestor.
+        let on = originalExec;
+        const toggle = createSwitch({onClicked: () => toggle.setActive(on = !on, true)});
+        toggle.setActive(on);
+        const holder = new St.Bin({style_class: 'm3-qs m3-dark', child: toggle, y_align: Clutter.ActorAlign.CENTER});
+        line.add_child(holder);
         row.set_child(line);
-        row.connect('clicked', () => toggle.toggle());
-        exec = {get checked() { return toggle.state; }};
+        row.connect('clicked', () => toggle.setActive(on = !on, true));
+        exec = {get checked() { return on; }};
         box.add_child(row);
     }
     dialog.contentLayout.add_child(box);

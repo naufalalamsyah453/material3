@@ -108,6 +108,9 @@ msgstr ""
 msgid "Add reminder..."
 msgstr ""
 
+msgid "Add to Desktop"
+msgstr ""
+
 msgid "Address"
 msgstr ""
 
@@ -1390,6 +1393,9 @@ msgid "Removable"
 msgstr ""
 
 msgid "Removable media"
+msgstr ""
+
+msgid "Remove from Desktop"
 msgstr ""
 
 msgid "Rename"

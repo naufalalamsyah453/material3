@@ -64,13 +64,14 @@ export class BluetoothBackend extends Backend {
         };
     }
 
-    toggle() {
+    toggle(target) {
         if (!this._client || !this._proxy)
             return;
 
-        const active = this._client.default_adapter_powered;
+        // `target` is the wanted state; without it the current one is flipped.
+        const active = target === undefined ? this._client.default_adapter_powered : !target;
         this._proxy.BluetoothAirplaneMode = active;
-        if (!this._client.default_adapter_powered)
+        if (target !== false && !this._client.default_adapter_powered)
             this._client.default_adapter_powered = true;
     }
 

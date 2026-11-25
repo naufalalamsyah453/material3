@@ -667,10 +667,41 @@ export function gsSwitch({schema, key, title, sub = '', icon: iconName = null, i
 export function customSwitch({title, sub = '', icon: iconName = null, get, set}) {
     const toggle = new M3Switch();
     toggle.active = !!get();
-    toggle.connect('user-toggled', (_w, state) => set(state));
+    // After a click the backend needs a moment to catch up. Refreshes that
+    // still report the old state in that window must not flip the switch
+    // back, which made it look stuck.
+    let pending = null;
+    let pendingTimer = 0;
+    const clearPending = () => {
+        pending = null;
+        if (pendingTimer) {
+            GLib.source_remove(pendingTimer);
+            pendingTimer = 0;
+        }
+    };
+    toggle.connect('user-toggled', (_w, state) => {
+        clearPending();
+        pending = state;
+        pendingTimer = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 4000, () => {
+            pendingTimer = 0;
+            pending = null;
+            return GLib.SOURCE_REMOVE;
+        });
+        set(state);
+    });
     const line = row({title, sub, icon: iconName, trailing: toggle});
     line.toggle = toggle;
     line.setActive = value => {
+        value = !!value;
+        if (pending !== null && value !== pending)
+            return;
+        if (value === pending)
+            clearPending();
+        toggle.active = value;
+    };
+    // The caller reports a failed change: show the real state again.
+    line.settle = value => {
+        clearPending();
         toggle.active = !!value;
     };
     return line;

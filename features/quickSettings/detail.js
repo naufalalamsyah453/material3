@@ -1,8 +1,10 @@
 import Clutter from 'gi://Clutter';
+import GLib from 'gi://GLib';
 import St from 'gi://St';
 
 import {_} from '../../i18n.js';
 import {Ease, lerp, tweenerFor} from './animation.js';
+import {createSwitch} from './switch.js';
 import {px} from './ui.js';
 import {iconButton, pressFeedback, symbolIcon, textLabel, truncatedLabel} from './widgets.js';
 
@@ -63,7 +65,8 @@ export class DetailPane {
         this._title = textLabel('', 'm3-detail-title', {x_expand: true});
         header.add_child(this._title);
         // On/off switch of the tile this pane belongs to (Wi-Fi, Bluetooth).
-        this._switch = this._buildSwitch();
+        this._switch = createSwitch({onClicked: () => this._userToggle()});
+        this._switch.visible = false;
         header.add_child(this._switch);
         // Gear: the matching page of the extension's Settings app.
         this._gear = iconButton('settings', {size: 18, buttonSize: HEADER_HEIGHT});
@@ -100,55 +103,12 @@ export class DetailPane {
         this.actor.connect('destroy', () => this._unsubscribe?.());
     }
 
-    _buildSwitch() {
-        const W = 52;
-        const H = 32;
-        const button = new St.Button({
-            style_class: 'm3-switch',
-            can_focus: true,
-            reactive: true,
-            track_hover: true,
-            width: px(W),
-            height: px(H),
-            y_align: Clutter.ActorAlign.CENTER,
-            visible: false,
-        });
-        const track = new St.Widget({
-            layout_manager: new Clutter.BinLayout(),
-            x_expand: true,
-            y_expand: true,
-            x_align: Clutter.ActorAlign.FILL,
-            y_align: Clutter.ActorAlign.FILL,
-        });
-        const thumb = new St.Widget({
-            style_class: 'm3-switch-thumb',
-            x_align: Clutter.ActorAlign.START,
-            y_align: Clutter.ActorAlign.CENTER,
-        });
-        track.add_child(thumb);
-        button.set_child(track);
-        button.connect('clicked', () => this._provider?.toggle?.());
-
-        // Off: small thumb at the left (6px in); on: large thumb 4px from the right.
-        // The thumb always sits at the left; the move is a translation.
-        const inner = W - 4;
-        thumb.set_style(`margin-left: ${px(6)}px;`);
-        button._set = (on, animate) => {
-            const d = on ? 24 : 16;
-            const shift = on ? inner - 24 - 4 - 6 : 0;
-            thumb.set_size(px(d), px(d));
-            if (animate && thumb.mapped) {
-                thumb.ease({translation_x: px(shift), duration: 200, mode: Clutter.AnimationMode.EASE_OUT_CUBIC});
-            } else {
-                thumb.translation_x = px(shift);
-            }
-            if (on)
-                button.add_style_class_name('active');
-            else
-                button.remove_style_class_name('active');
-        };
-        button._on = null;
-        return button;
+    /** Optimistic: the switch moves at once, the backend catches up. */
+    _userToggle() {
+        const next = !this._switch.active;
+        this._switchPending = {value: next, until: GLib.get_monotonic_time() / 1000 + 2500};
+        this._switch.setActive(next, true);
+        this._provider?.toggle?.(next);
     }
 
     _syncSwitch(animate) {
@@ -159,10 +119,15 @@ export class DetailPane {
             return;
         this._switch.reactive = state.available !== false;
         this._switch.opacity = state.available !== false ? 255 : 128;
-        if (this._switch._on !== state.active) {
-            this._switch._on = state.active;
-            this._switch._set(state.active, animate && this._switch._on !== null);
+        // Updates that still show the old state right after a click are ignored.
+        const pending = this._switchPending;
+        if (pending) {
+            if (state.active === pending.value || GLib.get_monotonic_time() / 1000 > pending.until)
+                this._switchPending = null;
+            else
+                return;
         }
+        this._switch.setActive(state.active, animate);
     }
 
     get isOpen() {
@@ -178,7 +143,8 @@ export class DetailPane {
         this._headerIcon.set_text(provider.icon);
         this._title.set_text(provider.title);
         this._gear.visible = !!provider.settingsPage;
-        this._switch._on = null;
+        this._switch.active = null;
+        this._switchPending = null;
         this._syncSwitch(false);
         this._unsubscribe = provider.subscribe(() => this._render());
         provider.onOpen?.();

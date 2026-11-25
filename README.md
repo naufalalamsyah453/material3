@@ -108,7 +108,9 @@ features/dock/
   kosong = sama dengan font utama), ukuran menu (`context-scale`) dan ukuran teks
   (`context-font-scale`) 0.7–1.6, serta tampil/tidaknya ikon tiap entri
   (`context-show-icons`). Border menu punya grupnya sendiri
-  (`border-ctx-width`, `border-ctx-radius`, `border-ctx-color`).
+  (`border-ctx-width`, `border-ctx-radius`, `border-ctx-color`). Menu aplikasi
+  juga punya **Add to Desktop / Remove from Desktop**: launcher disalin ke folder
+  Desktop, dibuat executable dan ditandai trusted.
 - **App menu**: lebar (`appmenu-width`, 360-900 px; kartu aplikasi membagi lebarnya
   sama rata) dan tinggi grid (`appmenu-height`) punya pengaturan terpisah di
   "Dock and app menu".
@@ -197,6 +199,9 @@ lpstat/colormgr/boltctl.
 - `disable-shadows` removes the drop shadows from every surface (panels,
   menus, dock, switcher, date menu) while keeping text shadows so labels stay
   readable on the wallpaper.
+- The on/off switch is one shared component (`features/quickSettings/switch.js`)
+  painted the same way as the Settings app switch, used by the option panes, the
+  file properties dialog and the app.
 - Border width, radius and color are set per surface: Quick Settings, app menu,
   dock, context menus, Settings app, date menu, switcher, OSD, display prompt
   and desktop selection (`border-<surface>-width`, `-radius`, `-color`).
